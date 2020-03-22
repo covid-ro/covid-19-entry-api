@@ -22,7 +22,7 @@
     }
   ],
   "paths": {
-    "/validate-phone-number": {
+    "/phone/validate": {
       "post": {
         "tags": [
           "Covid-19 Monitor API"
@@ -40,7 +40,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/ValidatePhoneNumberRequest"
+              "$ref": "#/definitions/ValidatePhoneRequest"
             }
           }
         ],
@@ -48,7 +48,39 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/ValidatePhoneNumberResponse"
+              "$ref": "#/definitions/ValidatePhoneResponse"
+            }
+          }
+        }
+      }
+    },
+    "/phone/check": {
+      "post": {
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Check phone number code",
+        "operationId": "CheckPhoneNumber",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CheckPhoneRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CheckPhoneResponse"
             }
           }
         }
@@ -56,7 +88,7 @@
     }
   },
   "definitions": {
-    "ValidatePhoneNumberRequest": {
+    "ValidatePhoneRequest": {
       "type": "object",
       "properties": {
         "phone": {
@@ -76,7 +108,7 @@
         }
       }
     },
-    "ValidatePhoneNumberResponse": {
+    "ValidatePhoneResponse": {
       "type": "object",
       "properties": {
         "status": {
@@ -86,6 +118,44 @@
         "message": {
           "type": "string",
           "example": "SMS sent to phone"
+        }
+      }
+    },
+    "CheckPhoneRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "722334455",
+          "required": true
+        },
+        "phone_country_prefix": {
+          "type": "string",
+          "example": "40",
+          "required": true
+        },
+        "phone_identifier": {
+          "type": "string",
+          "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+          "required": false
+        },
+        "phone_validation_code": {
+          "type": "integer",
+          "example": 123456,
+          "required": true
+        }
+      }
+    },
+    "CheckPhoneResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Phone validated"
         }
       }
     }

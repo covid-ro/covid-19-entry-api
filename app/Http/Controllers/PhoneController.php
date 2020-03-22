@@ -18,24 +18,24 @@ class PhoneController extends Controller
      */
     public function validatePhone(Request $request)
     {
-        $data = [];
+        $responseData = [];
 
         /**
          * TODO: implement phone validation, based on the country rules
          */
         if (false) { // validation failed
-            $data['status'] = 'failure';
-            $data['message'] = 'Validation failure';
-            return response()->json($data, 400);
+            $responseData['status'] = 'failure';
+            $responseData['message'] = 'Validation failure';
+            return response()->json($responseData, 400);
         }
 
         /**
          * TOOD: send SMS
          */
         if (false) { // failed to send SMS
-            $data['status'] = 'failure';
-            $data['message'] = 'Failed to send SMS to phone';
-            return response()->json($data, 409);
+            $responseData['status'] = 'failure';
+            $responseData['message'] = 'Failed to send SMS to phone';
+            return response()->json($responseData, 409);
         }
 
         $phoneCode = new PhoneCode();
@@ -45,9 +45,27 @@ class PhoneController extends Controller
         $phoneCode->phone_identifier = $request->get('phone_identifier', null);
         $phoneCode->save();
 
-        $data['status'] = 'success';
-        $data['message'] = 'SMS sent to phone';
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'SMS sent to phone';
 
-        return response()->json($data);
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkPhone(Request $request)
+    {
+        $responseData = [];
+
+        /**
+         * TODO: implement validation
+         */
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Phone validated';
+
+        return response()->json($responseData);
     }
 }

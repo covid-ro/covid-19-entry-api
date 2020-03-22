@@ -22,5 +22,6 @@ Route::get('/docs', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('/validate-phone-number', 'PhoneController@validatePhone');
+    Route::post('/phone/validate', 'PhoneController@validatePhone');
+    Route::post('/phone/check', 'PhoneController@checkPhone');
 });
