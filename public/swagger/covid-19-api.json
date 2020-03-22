@@ -68,6 +68,11 @@
           "type": "string",
           "example": "40",
           "required": true
+        },
+        "phone_identifier": {
+          "type": "string",
+          "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+          "required": false
         }
       }
     },

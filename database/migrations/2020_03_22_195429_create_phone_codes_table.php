@@ -21,8 +21,11 @@ class CreatePhoneCodesTable extends Migration
             $table->unsignedMediumInteger('code');
             $table->string('country_prefix', 3);
             $table->string('phone_number', 32);
+            $table->string('phone_identifier')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['country_prefix', 'phone_number']);
         });
     }
 

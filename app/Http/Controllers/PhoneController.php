@@ -42,6 +42,7 @@ class PhoneController extends Controller
         $phoneCode->code = PhoneCode::generateCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');
         $phoneCode->phone_number = $request->get('phone');
+        $phoneCode->phone_identifier = $request->get('phone_identifier', null);
         $phoneCode->save();
 
         $data['status'] = 'success';
