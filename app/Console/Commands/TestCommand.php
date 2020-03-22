@@ -30,7 +30,8 @@ class TestCommand extends Command
 
         $phoneCode = new PhoneCode();
         $phoneCode->code = PhoneCode::generateCode();
-        $phoneCode->phone_number = '+40729031984';
+        $phoneCode->country_prefix = '40';
+        $phoneCode->phone_number = '729031984';
         $phoneCode->save();
 
         dd($phoneCode->attributesToArray());

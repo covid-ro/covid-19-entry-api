@@ -22,14 +22,13 @@
     }
   ],
   "paths": {
-    "/ping": {
-      "get": {
+    "/validate-phone-number": {
+      "post": {
         "tags": [
-          "Test"
+          "Covid-19 Monitor API"
         ],
-        "summary": "Test the API by ping",
-        "description": "",
-        "operationId": "GetPing",
+        "summary": "Validate phone number",
+        "operationId": "ValidatePhoneNumber",
         "produces": [
           "application/json"
         ],
@@ -37,13 +36,19 @@
           "application/json"
         ],
         "parameters": [
-
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ValidatePhoneNumberRequest"
+            }
+          }
         ],
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/GetPingResponse"
+              "$ref": "#/definitions/ValidatePhoneNumberResponse"
             }
           }
         }
@@ -51,7 +56,22 @@
     }
   },
   "definitions": {
-    "GetPingResponse": {
+    "ValidatePhoneNumberRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "722334455",
+          "required": true
+        },
+        "phone_country_prefix": {
+          "type": "string",
+          "example": "40",
+          "required": true
+        }
+      }
+    },
+    "ValidatePhoneNumberResponse": {
       "type": "object",
       "properties": {
         "status": {
@@ -60,7 +80,7 @@
         },
         "message": {
           "type": "string",
-          "example": "pong"
+          "example": "SMS sent to phone"
         }
       }
     }

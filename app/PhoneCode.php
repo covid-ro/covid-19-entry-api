@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property int $code
+ * @property string $country_prefix
  * @property string $phone_number
  * @property DateTime| $created_at
  * @property DateTime| $updated_at
