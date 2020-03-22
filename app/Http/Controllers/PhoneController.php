@@ -60,8 +60,35 @@ class PhoneController extends Controller
         $responseData = [];
 
         /**
+         * TODO: implement phone validation, based on the country rules
+         */
+        if (false) { // validation failed
+            $responseData['status'] = 'failure';
+            $responseData['message'] = 'Validation failure';
+            return response()->json($responseData, 400);
+        }
+
+        /**
          * TODO: implement validation
          */
+
+        /** @var PhoneCode|null $phoneCode */
+        $phoneCode = PhoneCode::where('code', $request->get('phone_validation_code'))
+            ->where('phone_number', $request->get('phone'))
+            ->where('country_prefix', $request->get('phone_country_prefix'))
+            ->where('phone_identifier', $request->get('phone_identifier'))
+            ->first();
+
+        if (empty($phoneCode)) {
+            $responseData['status'] = 'failure';
+            $responseData['message'] = 'Phone validation failed';
+            return response()->json($responseData, 409);
+        }
+
+        /**
+         * Delete PhoneCode after usage
+         */
+        $phoneCode->delete();
 
         $responseData['status'] = 'success';
         $responseData['message'] = 'Phone validated';
