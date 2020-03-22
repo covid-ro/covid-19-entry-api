@@ -35,8 +35,15 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('api', function ($request) {
             /**
-             * TODO: implement proper Auth logic!
+             * First authorization layer: X-API-KEY
              */
+            if (
+                empty($request->header('X-API-KEY')) ||
+                env('X_API_KEY') !== $request->header('X-API-KEY')
+            ) {
+                return null;
+            }
+
             return new User();
 //            if ($request->input('api_token')) {
 //                return User::where('api_token', $request->input('api_token'))->first();
