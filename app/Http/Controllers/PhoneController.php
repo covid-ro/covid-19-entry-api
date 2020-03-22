@@ -29,6 +29,15 @@ class PhoneController extends Controller
             return response()->json($data, 400);
         }
 
+        /**
+         * TOOD: send SMS
+         */
+        if (false) { // failed to send SMS
+            $data['status'] = 'failure';
+            $data['message'] = 'Failed to send SMS to phone';
+            return response()->json($data, 409);
+        }
+
         $phoneCode = new PhoneCode();
         $phoneCode->code = PhoneCode::generateCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');
