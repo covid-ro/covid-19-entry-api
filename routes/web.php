@@ -22,7 +22,5 @@ Route::get('/docs', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/ping', 'PingController@index'); // TODO: remove me
-
     Route::post('/validate-phone-number', 'PhoneController@validatePhone');
 });
