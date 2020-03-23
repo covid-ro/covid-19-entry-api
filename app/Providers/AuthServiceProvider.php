@@ -44,10 +44,19 @@ class AuthServiceProvider extends ServiceProvider
                 return null;
             }
 
+            /**
+             * User detection
+             */
+            if (!empty($request->header('authorization'))) {
+                $token = trim(str_replace(['bearer', 'Bearer'], '', $request->header('authorization')));
+
+                /** @var User|null $user */
+                $user = User::where('token', $token)->first();
+
+                return $user;
+            }
+
             return new User();
-//            if ($request->input('api_token')) {
-//                return User::where('api_token', $request->input('api_token'))->first();
-//            }
         });
     }
 }

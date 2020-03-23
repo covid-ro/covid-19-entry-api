@@ -24,4 +24,5 @@ Route::get('/docs', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/phone/validate', 'PhoneController@validatePhone');
     Route::post('/phone/check', 'PhoneController@checkPhone');
+    Route::post('/user', 'UserController@createUser');
 });
