@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\PhoneCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Twilio\Exceptions\TwilioException;
+use Twilio\Rest\Lookups;
 
 /**
  * Class PhoneController
@@ -20,10 +22,17 @@ class PhoneController extends Controller
     {
         $responseData = [];
 
-        /**
-         * TODO: implement phone validation, based on the country rules
-         */
-        if (false) { // validation failed
+        /** @var Lookups $twilioLookups */
+        $twilioLookups = app('twilioLookups');
+
+        try {
+            $twilioPhone = $twilioLookups
+                ->v1
+                ->phoneNumbers($request->get('phone_country_prefix') . $request->get('phone'))
+                ->fetch();
+
+            //print_r($twilioPhone->phoneNumber);die();
+        } catch (TwilioException $twilioException) {
             $responseData['status'] = 'failure';
             $responseData['message'] = 'Validation failure';
             return response()->json($responseData, 400);
