@@ -29,11 +29,14 @@ class PhoneController extends Controller
             $twilioPhone = $twilioLookups
                 ->v1
                 ->phoneNumbers($request->get('phone_country_prefix') . $request->get('phone'))
-                ->fetch();
+                ->fetch(['type' => 'mobile']);
 
-            //print_r($twilioPhone->phoneNumber);die();
+//            print_r($twilioPhone->countryCode);
+//            print_r($twilioPhone->phoneNumber);
+//
+//            die();
         } catch (TwilioException $twilioException) {
-            $responseData['status'] = 'failure';
+            $responseData['status'] = 'error';
             $responseData['message'] = 'Validation failure';
             return response()->json($responseData, 400);
         }
@@ -42,7 +45,7 @@ class PhoneController extends Controller
          * TOOD: send SMS
          */
         if (false) { // failed to send SMS
-            $responseData['status'] = 'failure';
+            $responseData['status'] = 'error';
             $responseData['message'] = 'Failed to send SMS to phone';
             return response()->json($responseData, 409);
         }
@@ -72,7 +75,7 @@ class PhoneController extends Controller
          * TODO: implement phone validation, based on the country rules
          */
         if (false) { // validation failed
-            $responseData['status'] = 'failure';
+            $responseData['status'] = 'error';
             $responseData['message'] = 'Validation failure';
             return response()->json($responseData, 400);
         }
@@ -89,7 +92,7 @@ class PhoneController extends Controller
             ->first();
 
         if (empty($phoneCode)) {
-            $responseData['status'] = 'failure';
+            $responseData['status'] = 'error';
             $responseData['message'] = 'Phone validation failed';
             return response()->json($responseData, 409);
         }
