@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('document_series', 16)->nullable();
             $table->string('document_number', 32)->nullable();
 
-            $table->string('travelling_from_country', 2)->nullable(); // TODO: add foreign id
+            $table->string('travelling_from_country_code', 2)->nullable();
             $table->string('travelling_from_city', 32)->nullable();
             $table->date('travelling_from_date')->nullable();
             $table->date('home_country_return_date')->nullable();

@@ -29,7 +29,7 @@ use Laravel\Lumen\Auth\Authorizable;
  * @property string|null $document_series
  * @property string|null $document_number
  *
- * @property string|null $travelling_from_country
+ * @property string|null $travelling_from_country_code
  * @property string|null $travelling_from_city
  * @property DateTime|null $travelling_from_date
  * @property DateTime $home_country_return_date
@@ -92,5 +92,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function isolationAddresses()
     {
         return $this->hasMany(IsolationAddress::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function itineraryCountries()
+    {
+        return $this->hasMany(ItineraryCountry::class);
     }
 }
