@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PhoneCode;
 use App\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Twilio\Exceptions\TwilioException;
@@ -17,28 +18,63 @@ class PhoneController extends Controller
 {
     /**
      * @param Request $request
+     * @throws Exception
+     */
+    private function validatePhoneRequest(Request $request)
+    {
+        if (empty($request->get('phone_country_prefix'))) {
+            throw new Exception('Missing required parameter: phone_country_prefix');
+        }
+
+        if (strlen($request->get('phone_country_prefix')) > 3) {
+            throw new Exception('Invalid value for parameter: phone_country_prefix');
+        }
+
+        if (empty($request->get('phone'))) {
+            throw new Exception('Missing required parameter: phone');
+        }
+
+        if (strlen($request->get('phone')) > 32) {
+            throw new Exception('Invalid value for parameter: phone');
+        }
+
+        if (empty($request->get('phone_identifier'))) {
+            throw new Exception('Missing required parameter: phone_identifier');
+        }
+    }
+
+    /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function validatePhone(Request $request)
     {
         $responseData = [];
 
-        /** @var Lookups $twilioLookups */
-        $twilioLookups = app('twilioLookups');
-
         /**
-         * TODO: Validate required fields
+         * Validate user input
          */
+        try {
+            $this->validatePhoneRequest($request);
+        } catch (Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
 
         $phoneCode = new PhoneCode();
         $phoneCode->code = PhoneCode::generateCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');
         $phoneCode->phone_number = $request->get('phone');
-        $phoneCode->phone_identifier = $request->get('phone_identifier', null);
+        $phoneCode->phone_identifier = $request->get('phone_identifier');
         $phoneCode->status = PhoneCode::STATUS_ACTIVE;
         $phoneCode->save();
 
         try {
+            /** @var Lookups $twilioLookups */
+            $twilioLookups = app('twilioLookups');
+
             $twilioPhone = $twilioLookups
                 ->v1
                 ->phoneNumbers($request->get('phone_country_prefix') . $request->get('phone'))
@@ -84,15 +120,43 @@ class PhoneController extends Controller
 
     /**
      * @param Request $request
+     * @throws Exception
+     */
+    private function validateCheckPhoneRequest(Request $request)
+    {
+        if (empty($request->get('phone_identifier'))) {
+            throw new Exception('Missing required parameter: phone_identifier');
+        }
+
+        if (empty($request->get('phone_validation_code'))) {
+            throw new Exception('Missing required parameter: phone_validation_code');
+        }
+
+        if (
+            6 !== strlen($request->get('phone_validation_code')) ||
+            intval($request->get('phone_validation_code')) < 100000 ||
+            intval($request->get('phone_validation_code')) > 999999
+        ) {
+            throw new Exception('Invalid value for parameter: phone_validation_code');
+        }
+    }
+
+    /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function checkPhone(Request $request)
     {
         $responseData = [];
 
-        /**
-         * TODO: implement validation
-         */
+        try {
+            $this->validateCheckPhoneRequest($request);
+        } catch (Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
 
         /** @var PhoneCode|null $phoneCode */
         $phoneCode = PhoneCode::where('phone_identifier', $request->get('phone_identifier'))

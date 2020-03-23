@@ -23,7 +23,7 @@ class CreatePhoneCodesTable extends Migration
             $table->string('country_code', 2)->nullable();
             $table->string('phone_number', 32);
             $table->string('formatted_phone_number', 32)->nullable();
-            $table->string('phone_identifier')->nullable();
+            $table->string('phone_identifier');
             $table->string('notes')->nullable();
             $table->string('status', 16)->default('active');
             $table->timestamps();
