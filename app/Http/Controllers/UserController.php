@@ -6,6 +6,7 @@ use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,31 @@ use Illuminate\Support\Facades\Auth;
  */
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    private function validateCreateUserRequest(Request $request)
+    {
+        if (empty($request->get('name'))) {
+            throw new Exception('Missing required parameter: name');
+        }
+
+        if (strlen($request->get('name') > 64)) {
+            throw new Exception('Invalid value for parameter: name');
+        }
+
+        if (empty($request->get('surname'))) {
+            throw new Exception('Missing required parameter: surname');
+        }
+
+        if (strlen($request->get('surname') > 64)) {
+            throw new Exception('Invalid value for parameter: surname');
+        }
+
+        // TODO: validate the rest of the fields! @andrei
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -41,9 +67,14 @@ class UserController extends Controller
          * TODO: erase user history???
          */
 
-        /**
-         * TODO: validate fields
-         */
+        try {
+            $this->validateCreateUserRequest($request);
+        } catch (Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
 
         $user->name = $request->get('name');
         $user->surname = $request->get('surname');
@@ -57,10 +88,6 @@ class UserController extends Controller
         $user->travelling_from_city = $request->get('travelling_from_city');
         $user->travelling_from_date = $request->get('travelling_from_date');
         $user->home_country_return_date = Carbon::now();
-
-//        if (empty($request->get('isolation_addresses'))) {
-//            // validation error
-//        }
 
         /** @var array $isolationAddressData */
         foreach ($request->get('isolation_addresses') as $isolationAddressData) {
