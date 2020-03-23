@@ -93,7 +93,7 @@ class PhoneController extends Controller
 
         if (empty($phoneCode)) {
             $responseData['status'] = 'error';
-            $responseData['message'] = 'Phone validation failed';
+            $responseData['message'] = 'Phone check failed';
             return response()->json($responseData, 409);
         }
 
