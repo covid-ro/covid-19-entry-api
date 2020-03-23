@@ -10,15 +10,21 @@
     "https"
   ],
   "securityDefinitions": {
-    "Authorization": {
+    "API-KEY": {
       "type": "apiKey",
       "name": "X-API-KEY",
       "in": "header"
+    },
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Standard user authorization header using the Bearer scheme. Example: \"bearer {token}\""
     }
   },
   "security": [
     {
-      "Authorization": []
+      "API-KEY": []
     }
   ],
   "paths": {
@@ -81,6 +87,44 @@
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/CheckPhoneResponse"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Create user",
+        "operationId": "CreateUser",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CreateUserResponse"
             }
           }
         }
@@ -151,6 +195,18 @@
           "type": "string",
           "example": "3415d1e8ee3b65e1641326512eef739a"
         }
+      }
+    },
+    "CreateUserRequest": {
+      "type": "object",
+      "properties": {
+
+      }
+    },
+    "CreateUserResponse": {
+      "type": "object",
+      "properties": {
+
       }
     }
   }
