@@ -124,16 +124,6 @@
     "CheckPhoneRequest": {
       "type": "object",
       "properties": {
-        "phone": {
-          "type": "string",
-          "example": "722334455",
-          "required": true
-        },
-        "phone_country_prefix": {
-          "type": "string",
-          "example": "40",
-          "required": true
-        },
         "phone_identifier": {
           "type": "string",
           "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
@@ -156,6 +146,10 @@
         "message": {
           "type": "string",
           "example": "Phone validated"
+        },
+        "token": {
+          "type": "string",
+          "example": "3415d1e8ee3b65e1641326512eef739a"
         }
       }
     }

@@ -20,12 +20,16 @@ class CreatePhoneCodesTable extends Migration
             $table->id();
             $table->unsignedMediumInteger('code');
             $table->string('country_prefix', 3);
+            $table->string('country_code', 2)->nullable();
             $table->string('phone_number', 32);
+            $table->string('formatted_phone_number', 32)->nullable();
             $table->string('phone_identifier')->nullable();
+            $table->string('notes')->nullable();
+            $table->string('status', 16)->default('active');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['country_prefix', 'phone_number']);
+            $table->index(['phone_identifier', 'code', 'status']);
         });
     }
 
