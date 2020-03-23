@@ -34,8 +34,8 @@ class TestCommand extends Command
 //        $isolationAddress->save();
 
 //        /** @var User $user */
-//        $user = User::find(1);
+//        $user = User::with('isolationAddresses')->with('itineraryCountries')->find(1);
 //
-//        print_r($user->isolationAddresses()->get());
+//        print_r($user);
     }
 }
