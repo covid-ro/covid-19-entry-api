@@ -7,6 +7,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Laravel\Lumen\Auth\Authorizable;
@@ -83,5 +84,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public static function generateToken(): string
     {
         return Str::random(32);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function isolationAddresses()
+    {
+        return $this->hasMany(IsolationAddress::class);
     }
 }

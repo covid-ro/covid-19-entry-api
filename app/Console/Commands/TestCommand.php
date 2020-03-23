@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\PhoneCode;
+use App\IsolationAddress;
+use App\User;
 use Illuminate\Console\Command;
 
 /**
@@ -26,14 +27,15 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        $this->info('Testing PhoneCode...');
+//        $isolationAddress = new IsolationAddress();
+//        $isolationAddress->user_id = 1;
+//        $isolationAddress->city_full_address = 'Home sweet home';
+//        $isolationAddress->city_arrival_date = new \DateTime();
+//        $isolationAddress->save();
 
-        $phoneCode = new PhoneCode();
-        $phoneCode->code = PhoneCode::generateCode();
-        $phoneCode->country_prefix = '40';
-        $phoneCode->phone_number = '729031984';
-        $phoneCode->save();
-
-        dd($phoneCode->attributesToArray());
+//        /** @var User $user */
+//        $user = User::find(1);
+//
+//        print_r($user->isolationAddresses()->get());
     }
 }
