@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\IsolationAddress;
+use App\ItineraryCountry;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -56,9 +58,21 @@ class UserController extends Controller
         $user->travelling_from_date = $request->get('travelling_from_date');
         $user->home_country_return_date = Carbon::now();
 
-        /**
-         * Isolation addresses (todo)
-         */
+//        if (empty($request->get('isolation_addresses'))) {
+//            // validation error
+//        }
+
+        /** @var array $isolationAddressData */
+        foreach ($request->get('isolation_addresses') as $isolationAddressData) {
+            $isolationAddress = new IsolationAddress();
+            $isolationAddress->user_id = $user->id;
+            $isolationAddress->city_id = null; // TODO
+            $isolationAddress->county_id = null; // TODO
+            $isolationAddress->city_full_address = $isolationAddressData['city_full_address'];
+            $isolationAddress->city_arrival_date = $isolationAddressData['city_arrival_date'];
+            $isolationAddress->city_departure_date = $isolationAddressData['city_departure_date'] ?? null;
+            $isolationAddress->save();
+        }
 
         $user->question_1_answer = $request->get('question_1_answer');
         $user->question_2_answer = $request->get('question_2_answer');
@@ -69,9 +83,13 @@ class UserController extends Controller
         $user->symptom_breathing = (bool)$request->get('symptom_breathing');
         $user->symptom_cough = (bool)$request->get('symptom_cough');
 
-        /**
-         * Itinerary countries (todo)
-         */
+        /** @var string $countryIso2Code */
+        foreach ($request->get('itinerary_countries') as $countryIso2Code) {
+            $itineraryCountry = new ItineraryCountry();
+            $itineraryCountry->user_id = $user->id;
+            $itineraryCountry->country_code = $countryIso2Code;
+            $itineraryCountry->save();
+        }
 
         $user->vehicle_type = $request->get('vehicle_type');
         $user->vehicle_registration_no = $request->get('vehicle_registration_no');

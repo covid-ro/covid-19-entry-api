@@ -247,8 +247,17 @@
         },
         "travelling_from_date": {
           "type": "string",
-          "example": "2020-03-23 16:16:16",
-          "description": "ISO 8601 date"
+          "example": "2020-03-23",
+          "required": true
+        },
+        "isolation_addresses": {
+          "type": "array",
+          "description": "List of Isolation Addresses",
+          "minItems": 1,
+          "required": true,
+          "items": {
+            "$ref": "#/definitions/IsolationAddress"
+          }
         },
         "question_1_answer": {
           "type": "string",
@@ -285,6 +294,18 @@
           "example": false,
           "required": true
         },
+        "itinerary_countries": {
+          "type": "array",
+          "description": "List of ISO2 country code",
+          "minItems": 1,
+          "required": true,
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "IT", "FR", "HU"
+          ]
+        },
         "vehicle_type": {
           "type": "string",
           "example": "auto",
@@ -300,7 +321,41 @@
     "CreateUserResponse": {
       "type": "object",
       "properties": {
-
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "User created"
+        }
+      }
+    },
+    "IsolationAddress": {
+      "type": "object",
+      "properties": {
+        "city_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "county_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "city_full_address": {
+          "type": "string",
+          "example": "Full city address"
+        },
+        "city_arrival_date": {
+          "type": "string",
+          "example": "2020-03-20",
+          "required": true
+        },
+        "city_departure_date": {
+          "type": "string",
+          "example": "2020-03-23",
+          "required": false
+        }
       }
     }
   }

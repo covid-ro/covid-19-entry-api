@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $user_id
  * @property int|null $city_id
- * @property int|null $country_id
+ * @property int|null $county_id
  * @property string $city_full_address
  * @property DateTime $city_arrival_date
  * @property DateTime|null $city_departure_date
