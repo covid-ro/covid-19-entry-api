@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('phone_number', 32)->index();
             $table->string('country_code', 2);
-            $table->string('token', 64)->index();
+            $table->string('token', 32)->index();
             $table->timestamps();
             $table->softDeletes();
         });

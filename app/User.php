@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Laravel\Lumen\Auth\Authorizable;
 
 /**
@@ -49,6 +50,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public static function generateToken(): string
     {
-        return bin2hex(random_bytes(16));
+        return Str::random(32);
     }
 }
