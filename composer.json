@@ -6,6 +6,9 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "ext-mbstring": "*",
+        "ext-xml": "*",
+        "ext-zip": "*",
         "laravel/lumen-framework": "^7.2.",
         "twilio/sdk": "^6.1"
     },
