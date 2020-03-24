@@ -101,4 +101,40 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany(ItineraryCountry::class);
     }
+
+    /**
+     * Resets user data
+     */
+    public function resetData()
+    {
+        $this->name = null;
+        $this->surname = null;
+        $this->email = null;
+        $this->cnp = null;
+        $this->document_type = null;
+        $this->document_series = null;
+        $this->document_number = null;
+
+        $this->travelling_from_country_code = null;
+        $this->travelling_from_city = null;
+        $this->travelling_from_date = null;
+        $this->home_country_return_date = null;
+
+        $this->question_1_answer = null;
+        $this->question_2_answer = null;
+        $this->question_3_answer = null;
+
+        $this->symptom_fever = false;
+        $this->symptom_swallow = false;
+        $this->symptom_breathing = false;
+        $this->symptom_cough = false;
+
+        $this->vehicle_type = null;
+        $this->vehicle_registration_no = null;
+
+        $this->isolationAddresses()->delete();
+        $this->itineraryCountries()->delete();
+
+        $this->save();
+    }
 }

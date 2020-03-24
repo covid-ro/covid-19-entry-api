@@ -260,8 +260,11 @@ class UserController extends Controller
         }
 
         /**
-         * TODO: erase user history???
+         * TODO: check this when adding family members!!! @andrei
          */
+        if (!empty($user->name)) {
+            $user->resetData();
+        }
 
         try {
             $this->validateCreateUserRequest($request);
