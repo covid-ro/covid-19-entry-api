@@ -1,0 +1,7 @@
+---
+- name: Staging provisioning
+  hosts: "{{ target }}"
+  become: true
+
+  roles:
+    - mysql

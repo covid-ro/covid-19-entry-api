@@ -1,0 +1,46 @@
+---
+apps:
+  api:
+    docroot: /var/www/covid-api
+    public: /var/www/covid-api/current/public
+    servername: covid-api-dev.citizennext.ro
+    template: api.tpl
+    certificate: "covid-api-dev.citizennext.ro"
+    dhparam_path: "/etc/ssl/dhparam.pem"
+    fastcgi_pass: unix:/var/run/php/php{{ php_version }}-fpm.sock
+
+mysql_root_password: !vault |
+                     $ANSIBLE_VAULT;1.1;AES256
+                     64653739643730336236653963616365373337393130393764376663643865333266623434323964
+                     6262323635666366623461333163363662316439373762310a343932623638626139326664333365
+                     37353630303864623431373732323139306663386666366462613836613466333234643766306361
+                     6237383562643436640a613134396566356537383634656364393066336135633635373030346165
+                     37663763343263643536316233663535346234386432343134313731306463343766
+
+mysql_dbs:
+  covid_api_db:                         # some meaningful tag name for this database/user combo - it will not be used on server
+    db_collation: "utf8mb4_unicode_ci"  # default in role
+    encoding: "utf8mb4"                 # default in role
+    database: "covid_api"
+    db_host: "172.31.39.174"            # web app will connect to this ip
+
+mysql_users:
+  covid_api_user:
+    user: covid_api_user
+    password: !vault |
+              $ANSIBLE_VAULT;1.1;AES256
+              66653735386237646137323966613333386161616434393336663463333935303462333131343664
+              3064623561653835313163373963303062636361623365660a306134663030313563663465643932
+              33386666636661383061613334636438363337663330333630366537626662613038666130386666
+              6338646532653531640a343534386432336633656439623130656535646436623335623431663832
+              32643435613632653830393836383165626162393531353665626636623064303666
+    host: '%'
+    privileges: "covid_api.*:ALL"                               # db.table:priv1,priv2 OR db1.table1:priv/db2.table2:priv
+    append_privs: no                                            # default in role
+
+mysql_config:
+  - section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+
+php_fpm_custom_user: true
