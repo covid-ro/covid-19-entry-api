@@ -30,6 +30,12 @@
   shell: hostname
   register: current_hostname
 
+- name: Upload root login config file
+  template:
+    dest: /root/.my.cnf
+    src: my.cnf
+  when: mysql_root_password is defined
+  
 - name: Update MySQL root password
   mysql_user:
     name: root
