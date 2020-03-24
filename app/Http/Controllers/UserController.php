@@ -40,18 +40,68 @@ class UserController extends Controller
             throw new Exception('Invalid value for parameter: surname');
         }
 
-        if (!empty($request->get('email'))) {
-            if (!filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
-                throw new Exception('Invalid value for parameter: email');
-            }
+        if (
+            !empty($request->get('email')) && // optional
+            !filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)
+        ) {
+            throw new Exception('Invalid value for parameter: email');
         }
 
         if (empty($request->get('cnp'))) {
-            throw new Exception('Missing required parameter: surname');
+            throw new Exception('Missing required parameter: cnp');
         }
 
         if (!Cnp::validate($request->get('cnp'))) {
             throw new Exception('Invalid value for parameter: cnp');
+        }
+
+        if (empty($request->get('document_type'))) {
+            throw new Exception('Missing required parameter: document_type');
+        }
+
+        if (!in_array($request->get('document_type'), [User::DOCUMENT_TYPE_IDENTITY_CARD, User::DOCUMENT_TYPE_PASSPORT])) {
+            throw new Exception('Invalid value for parameter: document_type');
+        }
+
+        if (
+            !empty($request->get('document_series')) && // optional
+            strlen($request->get('document_series')) > 16
+        ) {
+            throw new Exception('Invalid value for parameter: document_series');
+        }
+
+        if (empty($request->get('document_number'))) {
+            throw new Exception('Missing required parameter: document_number');
+        }
+
+        if (strlen($request->get('document_number')) > 32) {
+            throw new Exception('Invalid value for parameter: document_number');
+        }
+
+        if (empty($request->get('travelling_from_country_code'))) {
+            throw new Exception('Missing required parameter: travelling_from_country_code');
+        }
+
+        if (2 !== strlen($request->get('travelling_from_country_code'))) {
+            throw new Exception('Invalid value for parameter: travelling_from_country_code');
+        }
+
+        if (empty($request->get('travelling_from_city'))) {
+            throw new Exception('Missing required parameter: travelling_from_city');
+        }
+
+        if (strlen($request->get('travelling_from_city')) > 32) {
+            throw new Exception('Invalid value for parameter: travelling_from_city');
+        }
+
+        if (empty($request->get('travelling_from_date'))) {
+            throw new Exception('Missing required parameter: travelling_from_date');
+        }
+
+        try {
+            Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
+        } catch (\Exception $exception) {
+            throw new Exception('Invalid value for parameter: travelling_from_date');
         }
 
         // TODO: validate the rest of the fields! @andrei
@@ -101,7 +151,7 @@ class UserController extends Controller
 
         $user->travelling_from_country_code = $request->get('travelling_from_country_code');
         $user->travelling_from_city = $request->get('travelling_from_city');
-        $user->travelling_from_date = $request->get('travelling_from_date');
+        $user->travelling_from_date = Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
         $user->home_country_return_date = Carbon::now();
 
         /** @var array $isolationAddressData */
