@@ -50,3 +50,6 @@ mysql_config:
     value: 0.0.0.0
 
 php_fpm_custom_user: true
+
+ssl_domains:
+  - "covid-api-dev.citizennext.ro"
