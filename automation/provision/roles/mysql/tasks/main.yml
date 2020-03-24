@@ -40,6 +40,7 @@
     password: '{{ mysql_root_password }}'
     login_user: root
     login_password: '{{ mysql_root_password }}'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
   with_items:
     - 127.0.0.1
     - ::1
@@ -54,6 +55,7 @@
     encoding: "{{ item.value.encoding | default('utf8mb4') }}"
     login_user: root
     login_password: '{{ mysql_root_password }}'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
   with_dict: "{{ mysql_dbs }}"
   when: mysql_dbs is defined
 
