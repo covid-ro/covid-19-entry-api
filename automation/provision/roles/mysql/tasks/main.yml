@@ -4,6 +4,12 @@
     update_cache: yes
     cache_valid_time: 3600
 
+- name: Make sure pymysql is present
+  become: true
+  pip:
+    name: pymysql
+    state: present
+
 - name: Check if requested MySQL version is supported
   fail:
     msg: "MySQL version {{ mysql_version }} is not supported by this role. You can install only 5.7 and 8.0."
