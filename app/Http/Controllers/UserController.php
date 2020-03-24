@@ -104,7 +104,126 @@ class UserController extends Controller
             throw new Exception('Invalid value for parameter: travelling_from_date');
         }
 
-        // TODO: validate the rest of the fields! @andrei
+        /**
+         * Validate Isolation Addresses
+         */
+        if (empty($request->get('isolation_addresses'))) {
+            throw new Exception('Missing required parameter: isolation_addresses');
+        }
+
+        /** @var array $isolationAddress */
+        foreach ($request->get('isolation_addresses') as $isolationAddress) {
+            // TODO: validate county
+
+            // TODO: validate city
+
+            if (empty($isolationAddress['city_full_address'])) {
+                throw new Exception('Missing required parameter: isolation_addresses|city_full_address');
+            }
+
+            if (strlen($isolationAddress['city_full_address']) > 256) {
+                throw new Exception('Invalid value for parameter: isolation_addresses|city_full_address');
+            }
+
+            try {
+                Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
+            } catch (\Exception $exception) {
+                throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
+            }
+
+            if (!empty($isolationAddress['city_departure_date'])) {
+                try {
+                    Carbon::createFromFormat('Y-m-d', $isolationAddress['city_departure_date']);
+                } catch (\Exception $exception) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|city_departure_date');
+                }
+            }
+        }
+
+        if (empty($request->get('question_1_answer'))) {
+            throw new Exception('Missing required parameter: question_1_answer');
+        }
+
+        if (strlen($request->get('question_1_answer')) > 512) {
+            throw new Exception('Invalid value for parameter: question_1_answer');
+        }
+
+        if (empty($request->get('question_2_answer'))) {
+            throw new Exception('Missing required parameter: question_2_answer');
+        }
+
+        if (strlen($request->get('question_2_answer')) > 512) {
+            throw new Exception('Invalid value for parameter: question_2_answer');
+        }
+
+        if (empty($request->get('question_3_answer'))) {
+            throw new Exception('Missing required parameter: question_3_answer');
+        }
+
+        if (strlen($request->get('question_3_answer')) > 512) {
+            throw new Exception('Invalid value for parameter: question_3_answer');
+        }
+
+        if (!$request->has('symptom_fever')) {
+            throw new Exception('Missing required parameter: symptom_fever');
+        }
+
+        if (!in_array($request->get('symptom_fever'), [0, 1, 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: symptom_fever');
+        }
+
+        if (!$request->has('symptom_swallow')) {
+            throw new Exception('Missing required parameter: symptom_swallow');
+        }
+
+        if (!in_array($request->get('symptom_swallow'), [0, 1, 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: symptom_swallow');
+        }
+
+        if (!$request->has('symptom_breathing')) {
+            throw new Exception('Missing required parameter: symptom_breathing');
+        }
+
+        if (!in_array($request->get('symptom_breathing'), [0, 1, 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: symptom_breathing');
+        }
+
+        if (!$request->has('symptom_cough')) {
+            throw new Exception('Missing required parameter: symptom_cough');
+        }
+
+        if (!in_array($request->get('symptom_cough'), [0, 1, 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: symptom_cough');
+        }
+
+        /**
+         * Validate Itinerary Countries
+         */
+        if (empty($request->get('itinerary_countries'))) {
+            throw new Exception('Missing required parameter: itinerary_countries');
+        }
+
+        /** @var string $itineraryCountry */
+        foreach ($request->get('itinerary_countries') as $itineraryCountry) {
+            if (2 !== strlen($itineraryCountry)) {
+                throw new Exception('Invalid value for parameter: itinerary_countries');
+            }
+        }
+
+        if (empty($request->get('vehicle_type'))) {
+            throw new Exception('Missing required parameter: vehicle_type');
+        }
+
+        if (!in_array($request->get('vehicle_type'), [User::VEHICLE_TYPE_AUTO, User::VEHICLE_TYPE_AMBULANCE])) {
+            throw new Exception('Invalid value for parameter: vehicle_type');
+        }
+
+        if (
+            !empty($request->get('vehicle_registration_no')) && // optional
+            strlen($request->get('vehicle_registration_no')) > 16
+        ) {
+            throw new Exception('Invalid value for parameter: vehicle_registration_no');
+        }
     }
 
     /**
@@ -161,8 +280,8 @@ class UserController extends Controller
             $isolationAddress->city_id = null; // TODO
             $isolationAddress->county_id = null; // TODO
             $isolationAddress->city_full_address = $isolationAddressData['city_full_address'];
-            $isolationAddress->city_arrival_date = $isolationAddressData['city_arrival_date'];
-            $isolationAddress->city_departure_date = $isolationAddressData['city_departure_date'] ?? null;
+            $isolationAddress->city_arrival_date = Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']);
+            $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;
             $isolationAddress->save();
         }
 
