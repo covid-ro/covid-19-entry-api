@@ -5,9 +5,26 @@
   include_tasks: "{{ project_deploy_hook_on_initialize }}"
   when: project_deploy_hook_on_initialize is defined
 
+- name: Ensure project root exists
+  file:
+    path: "{{ project_root }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    recurse: yes
+  when: project_root_create|bool == true and project_root is defined
+  become: true
+  become_user: root
+
 - name: Initialize
   deploy_helper: "path={{ project_root }} release={{ project_release|default(omit) }} state=present shared_path={{ project_shared_path }}"
 
+- name: Ensure .ssh folder exists in user\'s home
+  file: path=~/.ssh state=directory mode=0700
+  when: project_deploy_key is defined
+
+- name: Copy SSH key for deploy
+  copy: src="{{ project_deploy_key }}" dest="~/.ssh/id_rsa" mode=0600
+  when: project_deploy_key is defined and not project_deploy_key == false
 
 ### Update source
 - name: Include update_source hook
