@@ -6,11 +6,12 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
-        "ext-mysqli": "*",
         "ext-curl": "*",
         "ext-mbstring": "*",
+        "ext-mysqli": "*",
         "ext-xml": "*",
         "ext-zip": "*",
+        "alcea/cnp": "^2.1",
         "laravel/lumen-framework": "^7.2.",
         "twilio/sdk": "^6.1"
     },

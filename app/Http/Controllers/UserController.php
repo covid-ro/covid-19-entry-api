@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use alcea\cnp\Cnp;
 use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\User;
@@ -37,6 +38,20 @@ class UserController extends Controller
 
         if (strlen($request->get('surname') > 64)) {
             throw new Exception('Invalid value for parameter: surname');
+        }
+
+        if (!empty($request->get('email'))) {
+            if (!filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+                throw new Exception('Invalid value for parameter: email');
+            }
+        }
+
+        if (empty($request->get('cnp'))) {
+            throw new Exception('Missing required parameter: surname');
+        }
+
+        if (!Cnp::validate($request->get('cnp'))) {
+            throw new Exception('Invalid value for parameter: cnp');
         }
 
         // TODO: validate the rest of the fields! @andrei
