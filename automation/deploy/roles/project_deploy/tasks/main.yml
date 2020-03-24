@@ -32,7 +32,14 @@
   when: project_deploy_hook_on_update_source is defined
 
 - name: Clone project files
-  git: "repo={{ project_git_repo }} dest={{ project_source_path }} version={{ project_version }}"
+  git:
+    repo: "{{ project_git_repo }}"
+    dest: "{{ project_source_path }}"
+    version: "{{ project_version }}"
+    force: true
+    accept_hostkey: true
+    ssh_opts: '-o StrictHostKeyChecking=no'
+    depth: "{{ project_git_depth }}"
   when: project_deploy_strategy == 'git'
 
 - name: Rsync project files
