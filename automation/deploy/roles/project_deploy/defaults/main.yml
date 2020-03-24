@@ -16,6 +16,7 @@
 # - you must set a repository (no default)
 # project_git_repo: "git_repository"
 # - you can set the git ref to deploy (can be a branch, tag or commit hash)
+project_git_depth: 0
 project_version: "master"
 
 project_root_create: false
