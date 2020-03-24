@@ -56,7 +56,7 @@ ssl_domains:
   - "covid-api-dev.citizennext.ro"
 
 project_root:  /var/www/covid-api
-project_git_repo: git@github.com:citizennext/covid-19-monitor-api.git
+project_git_repo: https://github.com/f500/ansible-project_deploy.git
 
 project_deploy_key: files/id_rsa
 
