@@ -35,7 +35,7 @@
 - name: Retrieve the current hostname, because {{ ansible_hostname }} still contains the old name
   shell: hostname
   register: current_hostname
-  
+
 - name: Update MySQL root password
   mysql_user:
     name: root
@@ -46,6 +46,7 @@
     login_password: '{{ mysql_root_password }}'
     login_unix_socket: /var/run/mysqld/mysqld.sock
   with_items:
+    - "{{ current_hostname.stdout | lower }}"
     - 127.0.0.1
     - ::1
     - localhost
