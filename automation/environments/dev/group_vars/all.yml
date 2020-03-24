@@ -51,5 +51,6 @@ mysql_config:
 
 php_fpm_custom_user: true
 
+ssl_vault_selfsigned: true
 ssl_domains:
   - "covid-api-dev.citizennext.ro"
