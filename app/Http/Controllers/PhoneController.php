@@ -165,8 +165,8 @@ class PhoneController extends Controller
 
         if (empty($phoneCode)) {
             $responseData['status'] = 'error';
-            $responseData['message'] = 'Invalid code';
-            return response()->json($responseData, 409);
+            $responseData['message'] = 'Invalid value for parameter: code';
+            return response()->json($responseData, 400);
         }
 
         /**
