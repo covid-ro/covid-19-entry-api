@@ -18,6 +18,7 @@
 # - you can set the git ref to deploy (can be a branch, tag or commit hash)
 project_version: "master"
 
+project_root_create: false
 # DEPRECATED
 # For git, the .git folder is automatically removed
 #project_remove_git_folder: true
@@ -46,7 +47,7 @@ project_s3_filename: my-app-master.war
 # you do not have to download/sync the entire project on every deploy
 project_source_path: "{{ project_root }}/shared/source"
 
-# The shared_path is used to set the path for your shared assets. 
+# The shared_path is used to set the path for your shared assets.
 # Example:
 # project_shared_path: "/var/shared"
 project_shared_path: "{{ project_root }}/shared"
