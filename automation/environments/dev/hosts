@@ -1,6 +1,6 @@
 
 [dev_api]
-api ansible_host=18.156.36.34 ansible_ssh_extra_args='-o StrictHostKeyChecking=no' ansible_python_interpreter=/usr/bin/python3
+api ansible_user=jenkins ansible_host=18.156.36.34 ansible_ssh_extra_args='-o StrictHostKeyChecking=no' ansible_python_interpreter=/usr/bin/python3
 
 [dev_db]
-db ansible_host=3.122.243.219 ansible_ssh_extra_args='-o StrictHostKeyChecking=no' ansible_python_interpreter=/usr/bin/python3
+db ansible_user=jenkins ansible_host=3.122.243.219 ansible_ssh_extra_args='-o StrictHostKeyChecking=no' ansible_python_interpreter=/usr/bin/python3
