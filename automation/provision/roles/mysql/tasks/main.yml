@@ -1,4 +1,9 @@
 ---
+- name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: Check if requested MySQL version is supported
   fail:
     msg: "MySQL version {{ mysql_version }} is not supported by this role. You can install only 5.7 and 8.0."
