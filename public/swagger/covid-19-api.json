@@ -283,6 +283,7 @@
         "document_type": {
           "type": "string",
           "example": "identity_card",
+          "enum": ["identity_card", "passport"],
           "required": true
         },
         "document_series": {
@@ -369,7 +370,8 @@
         "vehicle_type": {
           "type": "string",
           "example": "auto",
-          "required": true
+          "enum": ["auto", "ambulance"],
+          "required": true,
         },
         "vehicle_registration_no": {
           "type": "string",
