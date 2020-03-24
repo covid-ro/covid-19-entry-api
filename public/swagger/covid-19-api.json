@@ -396,17 +396,20 @@
     "IsolationAddress": {
       "type": "object",
       "properties": {
-        "city_id": {
-          "type": "integer",
-          "example": 1
+        "city": {
+          "type": "string",
+          "example": "Craiova",
+          "required": true
         },
-        "county_id": {
-          "type": "integer",
-          "example": 1
+        "county": {
+          "type": "string",
+          "example": "Olt",
+          "required": true
         },
         "city_full_address": {
           "type": "string",
-          "example": "Full city address"
+          "example": "Full city address",
+          "required": true
         },
         "city_arrival_date": {
           "type": "string",

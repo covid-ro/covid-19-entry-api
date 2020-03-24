@@ -113,9 +113,21 @@ class UserController extends Controller
 
         /** @var array $isolationAddress */
         foreach ($request->get('isolation_addresses') as $isolationAddress) {
-            // TODO: validate county
+            if (empty($isolationAddress['city'])) {
+                throw new Exception('Missing required parameter: isolation_addresses|city');
+            }
 
-            // TODO: validate city
+            if (strlen($isolationAddress['city']) > 64) {
+                throw new Exception('Invalid value for parameter: isolation_addresses|city');
+            }
+
+            if (empty($isolationAddress['county'])) {
+                throw new Exception('Missing required parameter: isolation_addresses|county');
+            }
+
+            if (strlen($isolationAddress['county']) > 64) {
+                throw new Exception('Invalid value for parameter: isolation_addresses|county');
+            }
 
             if (empty($isolationAddress['city_full_address'])) {
                 throw new Exception('Missing required parameter: isolation_addresses|city_full_address');
@@ -277,8 +289,8 @@ class UserController extends Controller
         foreach ($request->get('isolation_addresses') as $isolationAddressData) {
             $isolationAddress = new IsolationAddress();
             $isolationAddress->user_id = $user->id;
-            $isolationAddress->city_id = null; // TODO
-            $isolationAddress->county_id = null; // TODO
+            $isolationAddress->city = $isolationAddressData['city'];
+            $isolationAddress->county = $isolationAddressData['county'];
             $isolationAddress->city_full_address = $isolationAddressData['city_full_address'];
             $isolationAddress->city_arrival_date = Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']);
             $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;

@@ -19,12 +19,14 @@ class CreateIsolationAddressesTable extends Migration
         Schema::create('isolation_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('city_id')->nullable();
-            $table->unsignedBigInteger('county_id')->nullable();
+            $table->string('city', 64);
+            $table->string('county', 64)->index();
             $table->string('city_full_address', 256);
             $table->date('city_arrival_date');
             $table->date('city_departure_date')->nullable();
             $table->timestamps();
+
+            $table->index(['city', 'county']);
 
             $table->foreign('user_id')
                 ->references('id')
