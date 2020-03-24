@@ -6,8 +6,8 @@
   },
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "securityDefinitions": {
     "API-KEY": {
