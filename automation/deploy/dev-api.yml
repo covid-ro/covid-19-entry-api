@@ -1,0 +1,6 @@
+---
+- name: Deploy application
+  hosts: "dev_api"
+
+  roles:
+    - project_deploy
