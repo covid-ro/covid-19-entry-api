@@ -14,6 +14,7 @@ php_composer: true
 php_fpm_daemon: php{{ php_version }}-fpm
 php_packages:
   - php{{ php_version }}-mysql
+  - php{{ php_version }}-mbstring
 
 mysql_root_password: !vault |
                      $ANSIBLE_VAULT;1.1;AES256
