@@ -94,6 +94,20 @@
   command: /bin/cp -prT {{ deploy_helper.current_path }}/{{ project_composer_vendor_path }} {{ deploy_helper.new_release_path }}/{{ project_composer_vendor_path }}
   when: project_copy_previous_composer_vendors and check_composer_vendor_path.stat.exists
 
+- name: composer auth dir
+  file:
+    path: /home/{{ ansible_user }}/.config/composer
+    state: directory
+
+# https://github.com/composer/composer/issues/3542#issuecomment-67623002
+# https://github.com/composer/composer/blob/master/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens
+# https://github.com/settings/tokens/new?scopes=repo&description=Composer+on+ip-172-31-34-140+2020-03-25+0243
+
+- name: composer gitub token
+  template:
+    src: auth.json
+    dest: /home/{{ ansible_user }}/.config/composer/auth.json
+
 - name: Do composer install
   command: "{{ project_command_for_composer_install }} chdir={{ deploy_helper.new_release_path }}"
   environment: "{{ project_environment }}"
