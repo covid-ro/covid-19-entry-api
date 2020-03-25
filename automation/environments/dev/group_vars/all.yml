@@ -34,13 +34,7 @@ mysql_dbs:
 mysql_users:
   covid_api_user:
     user: covid_api_user
-    password: !vault |
-              $ANSIBLE_VAULT;1.1;AES256
-              66653735386237646137323966613333386161616434393336663463333935303462333131343664
-              3064623561653835313163373963303062636361623365660a306134663030313563663465643932
-              33386666636661383061613334636438363337663330333630366537626662613038666130386666
-              6338646532653531640a343534386432336633656439623130656535646436623335623431663832
-              32643435613632653830393836383165626162393531353665626636623064303666
+    password: wrelQuem9ocergAm5Ox
     host: '%'
     privileges: "covid_api.*:ALL"                               # db.table:priv1,priv2 OR db1.table1:priv/db2.table2:priv
     append_privs: no                                            # default in role
@@ -113,7 +107,7 @@ project_persistent_environment:
   DB_CONNECTION: mysql
   DB_HOST: "{{ mysql_dbs.covid_api_db.db_host }}"
   DB_PORT: 3306
-  DB_DATABASE: "{{ mysql_dbs.covid_api_db.db_host }}"
+  DB_DATABASE: "{{ mysql_dbs.covid_api_db.database }}"
   DB_USERNAME: "{{ mysql_users.covid_api_user.user }}"
   DB_PASSWORD: "{{ mysql_users.covid_api_user.password }}"
   TWILIO_ACCOUNT_SID: !vault |
