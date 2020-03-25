@@ -77,9 +77,13 @@ secret_github_token: !vault |
                      33666132323532663264393733353135366132383065313337366662376363323132623734626663
                      3631363265343963383634313136316632663664313636363333
 
-project_shared_children:
-  - path: "storage/logs"
-    src: "logs"
-    writable: true
+# project_shared_children:
+#   - path: "storage/logs"
+#     src: "logs"
+#     writable: true
+
+project_writable_resources:
+  - storage
+
 
 project_deploy_hook_on_perform_build: "{{playbook_dir}}/hooks/on_perform_build.yml"
