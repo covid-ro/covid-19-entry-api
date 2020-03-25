@@ -81,3 +81,5 @@ project_shared_children:
   - path: "storage/logs"
     src: "logs"
     writable: true
+
+project_deploy_hook_on_perform_build: "{{playbook_dir}}/hooks/on_perform_build.yml"

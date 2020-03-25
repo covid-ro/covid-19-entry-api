@@ -1,0 +1,11 @@
+---
+- name: Set permissions for the web and deploy users on project writable shared resources
+  shell: |
+    chown -R :www-data {{ item.src }}/ ;
+    find {{ item.src }} -type f -exec chmod g+w {} \;
+    find {{ item.src }} -type d -exec chmod g+ws {} \;
+  args:
+    chdir: "{{ deploy_helper.shared_path }}"
+  with_items: "{{ project_shared_children }}"
+  when: project_change_dirs_config|default(true) and item.writable|default(false)
+  become: yes
