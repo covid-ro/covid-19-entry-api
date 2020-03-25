@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @package App
  *
  * @property int $id
- * @property int $user_id
+ * @property int $declaration_id
  * @property string $country_code
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
@@ -21,8 +21,8 @@ class ItineraryCountry extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function declaration()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Declaration::class);
     }
 }

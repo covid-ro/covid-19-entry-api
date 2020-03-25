@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class AlterIsolationAddressesTable
+ * Class AlterItineraryCountriesTable
  */
-class AlterIsolationAddressesTable extends Migration
+class AlterItineraryCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class AlterIsolationAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::table('isolation_addresses', function (Blueprint $table) {
+        Schema::table('itinerary_countries', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
 
@@ -34,7 +34,7 @@ class AlterIsolationAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::table('isolation_addresses', function (Blueprint $table) {
+        Schema::table('itinerary_countries', function (Blueprint $table) {
             $table->dropForeign(['declaration_id']);
             $table->dropColumn('declaration_id');
 
