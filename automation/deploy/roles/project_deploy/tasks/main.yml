@@ -191,3 +191,8 @@
 - name: Finalize the deploy
   deploy_helper: path={{ project_root }} release={{ deploy_helper.new_release }} state=finalize clean={{ project_clean|bool }} keep_releases={{ project_keep_releases|int }}
   when: project_finalize
+
+### Running post finalize routines
+- name: Include finalize hook
+  include_tasks: "{{ project_deploy_hook_post_finalize }}"
+  when: project_deploy_hook_post_finalize is defined and project_deploy_hook_post_finalize
