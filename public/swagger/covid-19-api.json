@@ -371,7 +371,7 @@
           "type": "string",
           "example": "auto",
           "enum": ["auto", "ambulance"],
-          "required": true,
+          "required": true
         },
         "vehicle_registration_no": {
           "type": "string",
