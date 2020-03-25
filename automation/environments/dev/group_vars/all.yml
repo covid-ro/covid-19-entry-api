@@ -1,0 +1,128 @@
+---
+apps:
+  api:
+    docroot: /var/www/covid-api
+    public: /var/www/covid-api/current/public
+    servername: covid-api-dev.citizennext.ro
+    template: api.tpl
+    certificate: "covid-api-dev.citizennext.ro"
+    dhparam_path: "/etc/ssl/dhparam.pem"
+    fastcgi_pass: unix:/var/run/php/php{{ php_version }}-fpm.sock
+
+php_version: 7.2
+php_composer: true
+php_fpm_daemon: php{{ php_version }}-fpm
+php_packages:
+  - php{{ php_version }}-mysql
+  - php{{ php_version }}-mbstring
+
+mysql_root_password: !vault |
+                     $ANSIBLE_VAULT;1.1;AES256
+                     64653739643730336236653963616365373337393130393764376663643865333266623434323964
+                     6262323635666366623461333163363662316439373762310a343932623638626139326664333365
+                     37353630303864623431373732323139306663386666366462613836613466333234643766306361
+                     6237383562643436640a613134396566356537383634656364393066336135633635373030346165
+                     37663763343263643536316233663535346234386432343134313731306463343766
+
+mysql_dbs:
+  covid_api_db:                         # some meaningful tag name for this database/user combo - it will not be used on server
+    db_collation: "utf8mb4_unicode_ci"  # default in role
+    encoding: "utf8mb4"                 # default in role
+    database: "covid_api"
+    db_host: "172.31.39.174"            # web app will connect to this ip
+
+mysql_users:
+  covid_api_user:
+    user: covid_api_user
+    password: wrelQuem9ocergAm5Ox
+    host: '%'
+    privileges: "covid_api.*:ALL"                               # db.table:priv1,priv2 OR db1.table1:priv/db2.table2:priv
+    append_privs: no                                            # default in role
+
+mysql_config:
+  - section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+
+php_fpm_custom_user: true
+
+ssl_vault_selfsigned: true
+ssl_domains:
+  - "covid-api-dev.citizennext.ro"
+
+project_root:  /var/www/covid-api
+project_git_repo: git@github.com:citizennext/covid-19-monitor-api.git
+
+project_deploy_key: files/id_rsa
+
+project_deploy_strategy: git
+project_version: "{{ branch|default('master') }}"
+
+project_has_composer: true
+project_copy_previous_composer_vendors: true
+project_command_for_composer_install: "{{ project_composer_binary }} install --no-scripts --optimize-autoloader"
+
+secret_github_token: !vault |
+                     $ANSIBLE_VAULT;1.1;AES256
+                     30653436366538633333303732303936666566336462306534333562653363363435353061333337
+                     3164613535373436373233653866663533656531386639630a666232646533626638633531303035
+                     38623836626463313966663136643632666132626534383864383363323838303236643333316537
+                     3635636334633631610a326265353633383036356661663431316632313031326239613736666232
+                     33666132323532663264393733353135366132383065313337366662376363323132623734626663
+                     3631363265343963383634313136316632663664313636363333
+
+# project_shared_children:
+#   - path: "storage/logs"
+#     src: "logs"
+#     writable: true
+
+project_writable_resources:
+  - storage
+
+project_deploy_hook_on_perform_build: "{{playbook_dir}}/hooks/on_perform_build.yml"
+project_deploy_hook_post_finalize: "{{playbook_dir}}/hooks/post_finalize.yml"
+
+project_environment: '{{ project_persistent_environment }}'
+project_persistent_environment:
+  APP_ENV: "{{ app_env|default('production') }}"
+  APP_KEY: !vault |
+           $ANSIBLE_VAULT;1.1;AES256
+           38633138333033333966303861303666663438393935356536653865646532346530343761663339
+           6365303166656261643134643037303434383434383762650a323332333763333337333562376263
+           64356662313364386465323630303865623035666566363164373462666232636663616363623066
+           3163613463386337620a666433653465353664636133393131383836336665636165303463636235
+           63323638333830303139653562366663393261643731616264626136643661313431333638366438
+           61383335303433646137353131363563666161303031303730323331353337623436323432663330
+           343135383166376539376462656536346566
+  APP_URL: https://covid-api-dev.citizennext.ro
+  APP_TIMEZONE: UTC
+  X_API_KEY: !vault |
+             $ANSIBLE_VAULT;1.1;AES256
+             32323163666331653738373463386334366461343635396434326135633438626634656363316637
+             3831333837303530316132643434616231623965373836350a383834383461653031373931393166
+             38666337666537373763633233323934356535616337386536613733383536353539366566643334
+             6464316535313034310a643033613137393432306233343632636661323661626137313564306632
+             63393539656663623831303231396230383038313539323862366138623831326165366331333966
+             6566376463363134386662613433316562646236356235303836
+  DB_CONNECTION: mysql
+  DB_HOST: "{{ mysql_dbs.covid_api_db.db_host }}"
+  DB_PORT: 3306
+  DB_DATABASE: "{{ mysql_dbs.covid_api_db.database }}"
+  DB_USERNAME: "{{ mysql_users.covid_api_user.user }}"
+  DB_PASSWORD: "{{ mysql_users.covid_api_user.password }}"
+  TWILIO_ACCOUNT_SID: !vault |
+                      $ANSIBLE_VAULT;1.1;AES256
+                      37373831313137346334653431613133333737313432303732666633346639636631623134323339
+                      3034623637373366636265326639633031333839623831650a613736646462613662303163306430
+                      32666433393630613833636335633963363562323635376131306335393565336336303065316461
+                      3339666663303931330a616131383161316365393034393130346634613261343463646461336333
+                      30346561663964643939356634373863323734633132323863643235656332336330303837356532
+                      3065626333613834616635633361383131613437636661633932
+  TWILIO_AUTH_TOKEN: !vault |
+                     $ANSIBLE_VAULT;1.1;AES256
+                     33343530666466613063303164313765343532396334343938346433393639336539653138663431
+                     3163613336376361366636353064393837376665303233650a323365613337633465623366353763
+                     33363937306335316232326662326434653633313232356439656332656465623632323965303663
+                     3635633335626462630a373666643965353865656265343964353631383861623332633962613232
+                     33306332313337613138306563323463323530616538643434356634336132613866373635353437
+                     6363373239636336316262303462376231393730646262663865

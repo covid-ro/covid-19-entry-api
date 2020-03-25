@@ -1,0 +1,10 @@
+---
+- name: Staging provisioning
+  hosts: "dev_api"
+  become: true
+
+  roles:
+    - nginx
+    - php
+    #- ssl-vault
+    - apps

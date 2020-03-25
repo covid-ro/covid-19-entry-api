@@ -1,0 +1,7 @@
+---
+- name: Deploy application
+  hosts: "dev_api"
+
+  roles:
+    - fastcgi_params
+    - project_deploy

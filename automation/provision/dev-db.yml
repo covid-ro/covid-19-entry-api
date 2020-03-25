@@ -1,0 +1,7 @@
+---
+- name: Staging provisioning
+  hosts: "dev_db"
+  become: true
+
+  roles:
+    - mysql
