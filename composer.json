@@ -11,9 +11,9 @@
         "ext-mysqli": "*",
         "ext-xml": "*",
         "ext-zip": "*",
-        "alcea/cnp": "^2.1",
-        "laravel/lumen-framework": "^7.2.",
-        "twilio/sdk": "^6.1"
+        "alcea/cnp": "2.1.6",
+        "laravel/lumen-framework": "7.0.2",
+        "twilio/sdk": "6.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
