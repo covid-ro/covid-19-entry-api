@@ -2,14 +2,14 @@
 #- name: Run composer post update scripts
 #  shell: cd {{deploy_helper.new_release_path}} && composer run-script post-update-cmd
 
-- name: Install assets
-  shell: cd {{deploy_helper.new_release_path}} && php bin/console assets:install
+#- name: Install assets
+#  shell: cd {{deploy_helper.new_release_path}} && php bin/console assets:install
 
-- name: Dump assets
-  shell: cd {{deploy_helper.new_release_path}} && php bin/console assetic:dump
+#- name: Dump assets
+#  shell: cd {{deploy_helper.new_release_path}} && php bin/console assetic:dump
 
-- name: Force database schema update
-  shell: cd {{deploy_helper.new_release_path}} && php bin/console doctrine:schema:update --force
+#- name: Force database schema update
+#  shell: cd {{deploy_helper.new_release_path}} && php bin/console doctrine:schema:update --force
 
 - name: Clear the opcache
   service: name=php7.2-fpm state=restarted
