@@ -1,4 +1,7 @@
 ---
+- name: Run artisan migrate
+  shell: cd {{deploy_helper.new_release_path}} && php artian migrate
+
 #- name: Run composer post update scripts
 #  shell: cd {{deploy_helper.new_release_path}} && composer run-script post-update-cmd
 
