@@ -87,3 +87,4 @@ project_writable_resources:
 
 
 project_deploy_hook_on_perform_build: "{{playbook_dir}}/hooks/on_perform_build.yml"
+project_deploy_hook_post_finalize: "{{playbook_dir}}/hooks/post_finalize.yml"
