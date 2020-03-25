@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @package App
  *
  * @property int $id
- * @property int $user_id
+ * @property int $declaration_id
  * @property string $city
  * @property string $county
  * @property string $city_full_address
@@ -25,8 +25,8 @@ class IsolationAddress extends Model
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function declaration()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Declaration::class);
     }
 }

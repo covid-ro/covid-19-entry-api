@@ -241,6 +241,7 @@ class UserController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @deprecated To be removed
      */
     public function createUser(Request $request)
     {
@@ -257,13 +258,6 @@ class UserController extends Controller
                 'status' => 'error',
                 'reason' => 'Unauthorized'
             ], 401);
-        }
-
-        /**
-         * TODO: check this when adding family members!!! @andrei
-         */
-        if (!empty($user->name)) {
-            $user->resetData();
         }
 
         try {
@@ -324,6 +318,20 @@ class UserController extends Controller
 
         $responseData['status'] = 'success';
         $responseData['message'] = 'User created';
+
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createDeclaration(Request $request)
+    {
+        $responseData = [];
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'User declaration saved';
+        $responseData['declaration'];
 
         return response()->json($responseData);
     }

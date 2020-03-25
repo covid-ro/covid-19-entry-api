@@ -20,6 +20,7 @@ class CreateCodesTable extends Migration
             $table->id();
             $table->string('code', 6)->unique()->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
