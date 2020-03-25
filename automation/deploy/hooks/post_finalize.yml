@@ -1,6 +1,6 @@
 ---
-- name: Run composer post update scripts
-  shell: cd {{deploy_helper.new_release_path}} && composer run-script post-update-cmd
+#- name: Run composer post update scripts
+#  shell: cd {{deploy_helper.new_release_path}} && composer run-script post-update-cmd
 
 - name: Install assets
   shell: cd {{deploy_helper.new_release_path}} && php bin/console assets:install
