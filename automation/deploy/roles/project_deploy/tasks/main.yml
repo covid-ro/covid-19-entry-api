@@ -105,7 +105,7 @@
 
 - name: composer gitub token
   template:
-    src: auth.json
+    src: auth.json.tpl
     dest: /home/{{ ansible_user }}/.config/composer/auth.json
 
 - name: Do composer install
