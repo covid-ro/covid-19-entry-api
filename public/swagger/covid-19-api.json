@@ -134,7 +134,7 @@
         }
       }
     },
-    "/user": {
+    "/declaration": {
       "post": {
         "security": [
           {
@@ -145,8 +145,8 @@
         "tags": [
           "Covid-19 Monitor API"
         ],
-        "summary": "Create user",
-        "operationId": "CreateUser",
+        "summary": "Create declaration",
+        "operationId": "CreateDeclaration",
         "produces": [
           "application/json"
         ],
@@ -158,7 +158,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/CreateUserRequest"
+              "$ref": "#/definitions/CreateDeclarationRequest"
             }
           }
         ],
@@ -166,7 +166,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/CreateUserResponse"
+              "$ref": "#/definitions/CreateDeclarationResponse"
             }
           },
           "400": {
@@ -257,7 +257,7 @@
         }
       }
     },
-    "CreateUserRequest": {
+    "CreateDeclarationRequest": {
       "type": "object",
       "properties": {
         "name": {
@@ -283,7 +283,10 @@
         "document_type": {
           "type": "string",
           "example": "identity_card",
-          "enum": ["identity_card", "passport"],
+          "enum": [
+            "identity_card",
+            "passport"
+          ],
           "required": true
         },
         "document_series": {
@@ -364,13 +367,18 @@
             "type": "string"
           },
           "example": [
-            "IT", "FR", "HU"
+            "IT",
+            "FR",
+            "HU"
           ]
         },
         "vehicle_type": {
           "type": "string",
           "example": "auto",
-          "enum": ["auto", "ambulance"],
+          "enum": [
+            "auto",
+            "ambulance"
+          ],
           "required": true
         },
         "vehicle_registration_no": {
@@ -380,7 +388,7 @@
         }
       }
     },
-    "CreateUserResponse": {
+    "CreateDeclarationResponse": {
       "type": "object",
       "properties": {
         "status": {
@@ -389,7 +397,11 @@
         },
         "message": {
           "type": "string",
-          "example": "User created"
+          "example": "Declaration created"
+        },
+        "declaration_code": {
+          "type": "string",
+          "example": "T91KE1"
         }
       }
     },

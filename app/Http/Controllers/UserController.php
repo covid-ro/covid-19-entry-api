@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class UserController
  * @package App\Http\Controllers
+ *
+ * @deprecated
  */
 class UserController extends Controller
 {
