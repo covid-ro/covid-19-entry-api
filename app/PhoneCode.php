@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Service\CodeGenerator;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,13 +30,4 @@ class PhoneCode extends Model
 
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
-
-    /**
-     * @return int
-     */
-    public static function generateCode(): int
-    {
-        return 666666;
-        //return random_int(100000, 999999); // TODO: uncomment me!!!
-    }
 }

@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateCodesTable
+ * Class RenameCodesTableToDeclarationCodes
  */
-class CreateCodesTable extends Migration
+class RenameCodesTableToDeclarationCodes extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,7 @@ class CreateCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('codes', function (Blueprint $table) {
-            $table->id();
-            $table->string('code', 6)->unique()->index();
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        Schema::rename('codes', 'declaration_codes');
     }
 
     /**
@@ -31,6 +26,6 @@ class CreateCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('codes');
+        Schema::rename('declaration_codes', 'codes');
     }
 }

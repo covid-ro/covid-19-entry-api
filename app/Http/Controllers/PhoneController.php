@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\PhoneCode;
+use App\Service\CodeGenerator;
 use App\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -64,7 +65,7 @@ class PhoneController extends Controller
         }
 
         $phoneCode = new PhoneCode();
-        $phoneCode->code = PhoneCode::generateCode();
+        $phoneCode->code = (new CodeGenerator())->generateSmsCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');
         $phoneCode->phone_number = $request->get('phone');
         $phoneCode->phone_identifier = $request->get('phone_identifier');
@@ -183,7 +184,7 @@ class PhoneController extends Controller
             $user->country_code = $phoneCode->country_code;
         }
 
-        $user->token = User::generateToken();
+        $user->token = (new CodeGenerator())->generateUserToken(32);
         $user->save();
 
         $responseData['status'] = 'success';
