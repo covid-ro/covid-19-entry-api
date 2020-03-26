@@ -20,7 +20,10 @@ class CreateDeclarationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('code_id');
-
+            $table->string('name', 64);
+            $table->string('surname', 64);
+            $table->string('email', 255);
+            $table->string('cnp', 13);
             $table->string('document_type', 16);
             $table->string('document_series', 16);
             $table->string('document_number', 32);
@@ -37,7 +40,6 @@ class CreateDeclarationsTable extends Migration
             $table->boolean('symptom_cough');
             $table->string('vehicle_type', 16);
             $table->string('vehicle_registration_no', 16)->nullable();
-
             $table->timestamps();
             $table->softDeletes();
 

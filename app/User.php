@@ -7,9 +7,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Laravel\Lumen\Auth\Authorizable;
 
 /**
@@ -20,10 +18,6 @@ use Laravel\Lumen\Auth\Authorizable;
  * @property string $phone_number
  * @property string $country_code
  * @property string $token
- * @property string|null $name
- * @property string|null $surname
- * @property string|null $email
- * @property string|null $cnp
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
@@ -55,12 +49,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'token',
     ];
-
-    /**
-     * @return string
-     */
-    public static function generateToken(): string
-    {
-        return Str::random(32);
-    }
 }

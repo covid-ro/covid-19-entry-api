@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Code
+ * Class DeclarationCode
  * @package App
  *
  * @property int $id
@@ -16,9 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
  */
-class Code extends Model
+class DeclarationCode extends Model
 {
     use SoftDeletes;
-
-
 }

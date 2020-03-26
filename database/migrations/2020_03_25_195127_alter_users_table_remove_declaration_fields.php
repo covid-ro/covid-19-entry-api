@@ -17,6 +17,10 @@ class AlterUsersTableRemoveDeclarationFields extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('name');
+            $table->dropColumn('surname');
+            $table->dropColumn('email');
+            $table->dropColumn('cnp');
             $table->dropColumn('document_type');
             $table->dropColumn('document_series');
             $table->dropColumn('document_number');
@@ -44,6 +48,10 @@ class AlterUsersTableRemoveDeclarationFields extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('name', 64)->nullable();
+            $table->string('surname', 64)->nullable();
+            $table->string('email', 255)->nullable();
+            $table->string('cnp', 13)->nullable();
             $table->string('document_type', 16)->nullable();
             $table->string('document_series', 16)->nullable();
             $table->string('document_number', 32)->nullable();

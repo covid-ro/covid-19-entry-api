@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property int $user_id
- * @property int $code_id
+ * @property int $declarationcode_id
+ * @property string $name
+ * @property string $surname
+ * @property string $email
+ * @property string $cnp
  * @property string $document_type
  * @property string $document_series
  * @property string $document_number
@@ -50,9 +54,9 @@ class Declaration extends Model
     /**
      * @return BelongsTo
      */
-    public function code()
+    public function declarationCode()
     {
-        return $this->belongsTo(Code::class);
+        return $this->belongsTo(DeclarationCode::class);
     }
 
     /**

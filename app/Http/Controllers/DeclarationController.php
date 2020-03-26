@@ -34,6 +34,8 @@ class DeclarationController extends Controller
             ], 401);
         }
 
+        // TODO: implement me
+
         $responseData['status'] = 'success';
         $responseData['message'] = 'Declaration created';
         $responseData['declaration_code'] = 'TODO';
