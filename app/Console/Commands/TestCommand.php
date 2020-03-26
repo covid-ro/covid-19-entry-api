@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\DeclarationCode;
 use App\IsolationAddress;
+use App\Service\CodeGenerator;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -27,6 +29,9 @@ class TestCommand extends Command
      */
     public function handle()
     {
+//        $declarationCode = DeclarationCode::generateDeclarationCode();
+//        dd($declarationCode->getAttributes());
+
 //        $isolationAddress = new IsolationAddress();
 //        $isolationAddress->user_id = 1;
 //        $isolationAddress->city_full_address = 'Home sweet home';
