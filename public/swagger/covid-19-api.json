@@ -583,25 +583,29 @@
     "Declaration": {
       "type": "object",
       "properties": {
+        "code": {
+          "type": "string",
+          "example": "AAAAAA"
+        },
+        "phone": {
+          "type": "string",
+          "example": "+40722334455"
+        },
         "name": {
           "type": "string",
-          "example": "Last Name",
-          "required": true
+          "example": "Last Name"
         },
         "surname": {
           "type": "surstring",
-          "example": "First Name",
-          "required": true
+          "example": "First Name"
         },
         "email": {
           "type": "email",
-          "example": "name.surname@gmail.com",
-          "required": false
+          "example": "name.surname@gmail.com"
         },
         "cnp": {
           "type": "string",
-          "example": "2870401102315",
-          "required": true
+          "example": "2870401102315"
         },
         "document_type": {
           "type": "string",
@@ -609,83 +613,68 @@
           "enum": [
             "identity_card",
             "passport"
-          ],
-          "required": true
+          ]
         },
         "document_series": {
           "type": "string",
-          "example": "AA",
-          "required": true
+          "example": "AA"
         },
         "document_number": {
           "type": "string",
-          "example": "0123456789",
-          "required": true
+          "example": "0123456789"
         },
         "travelling_from_country_code": {
           "type": "string",
-          "example": "IT",
-          "required": true
+          "example": "IT"
         },
         "travelling_from_city": {
           "type": "string",
-          "example": "Rome",
-          "required": true
+          "example": "Rome"
         },
         "travelling_from_date": {
           "type": "string",
-          "example": "2020-03-23",
-          "required": true
+          "example": "2020-03-23"
         },
         "isolation_addresses": {
           "type": "array",
           "description": "List of Isolation Addresses",
           "minItems": 1,
-          "required": true,
           "items": {
             "$ref": "#/definitions/IsolationAddress"
           }
         },
         "question_1_answer": {
           "type": "string",
-          "example": "First question answer",
-          "required": true
+          "example": "First question answer"
         },
         "question_2_answer": {
           "type": "string",
-          "example": "Second question answer",
-          "required": true
+          "example": "Second question answer"
         },
         "question_3_answer": {
           "type": "string",
-          "example": "Third question answer",
-          "required": true
+          "example": "Third question answer"
         },
         "symptom_fever": {
           "type": "boolean",
-          "example": false,
-          "required": true
+          "example": false
         },
         "symptom_swallow": {
           "type": "boolean",
-          "example": false,
-          "required": true
+          "example": false
         },
         "symptom_breathing": {
           "type": "boolean",
-          "example": false,
-          "required": true
+          "example": false
         },
         "symptom_cough": {
           "type": "boolean",
-          "example": false,
-          "required": true
+          "example": false
         },
         "itinerary_countries": {
           "type": "array",
           "description": "List of ISO2 country code",
           "minItems": 1,
-          "required": true,
           "items": {
             "type": "string"
           },
@@ -701,13 +690,11 @@
           "enum": [
             "auto",
             "ambulance"
-          ],
-          "required": true
+          ]
         },
         "vehicle_registration_no": {
           "type": "string",
-          "example": "IF-51-MED",
-          "required": true
+          "example": "IF-51-MED"
         }
       }
     },
