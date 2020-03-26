@@ -29,8 +29,8 @@ class StsSmsServiceProvider extends ServiceProvider
 
             return new SmsClient(
                 new Client($config),
-                env('SMS_WEBAPI_USERNAME'),
-                env('SMS_WEBAPI_PASSWORD')
+                (string)env('SMS_WEBAPI_USERNAME'),
+                (string)env('SMS_WEBAPI_PASSWORD')
             );
         });
     }
