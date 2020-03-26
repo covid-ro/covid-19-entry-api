@@ -38,9 +38,9 @@ class IsolationAddress extends Model
         return [
             'city' => $this->city,
             'county' => $this->county,
-            'address' => $this->city_full_address,
-            'arrival_date' => $this->city_arrival_date,
-            'departure_date' => $this->city_departure_date
+            'city_full_address' => $this->city_full_address,
+            'city_arrival_date' => $this->city_arrival_date,
+            'city_departure_date' => $this->city_departure_date
         ];
     }
 }
