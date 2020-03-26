@@ -146,6 +146,87 @@ class DeclarationController extends Controller
     }
 
     /**
+     * @param $declarationCode
+     * @return JsonResponse
+     */
+    public function getDeclaration($declarationCode)
+    {
+        $responseData = [];
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        /**
+         * Check if the user was identified
+         */
+        if (empty($user->id)) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'Unauthorized'
+            ], 401);
+        }
+
+        /** @var Declaration|null $declaration */
+        $declaration = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->where('declarations.user_id', $user->id)
+            ->where('declaration_codes.code', $declarationCode)
+            ->select('declarations.*')
+            ->first();
+
+        if (empty($declaration)) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'Not Found'
+            ], 404);
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration details';
+        $responseData['declaration'] = $declaration->toArray();
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getDeclarationList(Request $request)
+    {
+        $responseData = [];
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        /**
+         * Check if the user was identified
+         */
+        if (empty($user->id)) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'Unauthorized'
+            ], 401);
+        }
+
+        /** @var Declaration[] $declarations */
+        $declarations = Declaration::where('user_id', $user->id)->pluck('id')->toArray();
+
+        $declarationList = [];
+
+        /** @var int $declarationId */
+        foreach ($declarations as $declarationId) {
+            /** @var Declaration $declaration */
+            $declaration = Declaration::find($declarationId);
+
+            $declarationList[] = $declaration->toArray();
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration list';
+        $responseData['declarations'] = $declarationList;
+        return response()->json($responseData);
+    }
+
+    /**
      * @param Request $request
      * @throws Exception
      */

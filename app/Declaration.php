@@ -74,4 +74,57 @@ class Declaration extends Model
     {
         return $this->hasMany(ItineraryCountry::class);
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $declarationData = [];
+        $declarationData['code'] = $this->declarationcode->code;
+        $declarationData['phone'] = $this->user->phone_number;
+        $declarationData['name'] = $this->name;
+        $declarationData['surname'] = $this->surname;
+        $declarationData['email'] = $this->email;
+        $declarationData['cnp'] = $this->cnp;
+
+        $declarationData['document_type'] = $this->document_type;
+        $declarationData['document_series'] = $this->document_series;
+        $declarationData['document_number'] = $this->document_number;
+
+        $declarationData['travelling_from_country_code'] = $this->travelling_from_country_code;
+        $declarationData['travelling_from_city'] = $this->travelling_from_city;
+        $declarationData['travelling_from_date'] = $this->travelling_from_date;
+        $declarationData['home_country_return_date'] = $this->home_country_return_date;
+
+        $declarationData['isolation_addresses'] = [];
+
+        /** @var IsolationAddress $isolationAddress */
+        foreach ($this->isolationaddresses()->get() as $isolationAddress) {
+            $declarationData['isolation_addresses'][] = $isolationAddress->toArray();
+        }
+
+        $declarationData['question_1_answer'] = $this->question_1_answer;
+        $declarationData['question_2_answer'] = $this->question_2_answer;
+        $declarationData['question_3_answer'] = $this->question_3_answer;
+
+        $declarationData['symptom_fever'] = (bool)$this->symptom_fever;
+        $declarationData['symptom_swallow'] = (bool)$this->symptom_swallow;
+        $declarationData['symptom_breathing'] = (bool)$this->symptom_breathing;
+        $declarationData['symptom_cough'] = (bool)$this->symptom_cough;
+
+        $declarationData['itinerary_country_list'] = [];
+
+        /** @var ItineraryCountry $itineraryCountry */
+        foreach ($this->itinerarycountries()->get() as $itineraryCountry) {
+            $declarationData['itinerary_country_list'][] = $itineraryCountry->country_code;
+        }
+
+        $declarationData['vehicle_type'] = $this->vehicle_type;
+        $declarationData['vehicle_registration_no'] = $this->vehicle_registration_no;
+
+        $declarationData['created_at'] = $this->created_at;
+
+        return $declarationData;
+    }
 }
