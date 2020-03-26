@@ -54,7 +54,7 @@ class Declaration extends Model
     /**
      * @return BelongsTo
      */
-    public function declarationCode()
+    public function declarationcode()
     {
         return $this->belongsTo(DeclarationCode::class);
     }
@@ -62,7 +62,7 @@ class Declaration extends Model
     /**
      * @return HasMany
      */
-    public function isolationAddresses()
+    public function isolationaddresses()
     {
         return $this->hasMany(IsolationAddress::class);
     }
@@ -70,7 +70,7 @@ class Declaration extends Model
     /**
      * @return HasMany
      */
-    public function itineraryCountries()
+    public function itinerarycountries()
     {
         return $this->hasMany(ItineraryCountry::class);
     }

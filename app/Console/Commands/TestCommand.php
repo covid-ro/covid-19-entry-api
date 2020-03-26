@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
 use App\Service\CodeGenerator;
@@ -29,6 +30,18 @@ class TestCommand extends Command
      */
     public function handle()
     {
+//        /** @var User $user */
+//        $user = User::find(1);
+//        dd($user->declarations->first()->getAttributes());
+
+//        /** @var Declaration $declaration */
+//        $declaration = Declaration::with('user')->find(1);
+//        dd($declaration->getAttributes());
+//        dd($declaration->user->getAttributes());
+//        dd($declaration->declarationCode->getAttributes());
+//        dd($declaration->isolationaddresses->first()->getAttributes());
+//        dd($declaration->itinerarycountries->first()->getAttributes());
+
 //        $declarationCode = DeclarationCode::generateDeclarationCode();
 //        dd($declarationCode->getAttributes());
 
