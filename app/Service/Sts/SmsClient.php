@@ -97,7 +97,7 @@ class SmsClient
             $response = $this->getHttpClient()->post(
                 self::API_ENDPOINT,
                 [
-                    RequestOptions::JSON => json_encode($params)
+                    RequestOptions::JSON => $params
                 ]
             );
         } catch (RequestException $requestException) {
