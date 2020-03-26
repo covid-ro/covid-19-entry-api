@@ -89,7 +89,7 @@
         "tags": [
           "Covid-19 Monitor API"
         ],
-        "summary": "Check phone number code",
+        "summary": "Check phone number validation code",
         "operationId": "CheckPhoneNumber",
         "produces": [
           "application/json"
@@ -179,6 +179,68 @@
             "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/declaration/{declarationCode}": {
+      "get": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Get declaration",
+        "operationId": "GetDeclaration",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "declarationCode",
+            "in": "path",
+            "description": "Unique declaration code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetDeclarationResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundResponse"
             }
           },
           "500": {
@@ -401,7 +463,7 @@
         },
         "declaration_code": {
           "type": "string",
-          "example": "T91KE1"
+          "example": "AAAAAA"
         }
       }
     },
@@ -435,6 +497,32 @@
         }
       }
     },
+    "GetDeclarationResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Declaration details"
+        },
+        "declaration": {
+          "type": "object",
+          "$ref": "#/definitions/Declaration"
+        }
+      }
+    },
+    "Declaration": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "AAAAAA"
+        }
+      }
+    },
     "BadRequestResponse": {
       "type": "object",
       "properties": {
@@ -444,7 +532,7 @@
         },
         "message": {
           "type": "string",
-          "example": "Missing required parameter: name"
+          "example": "Missing required parameter: parameterName"
         }
       }
     },
@@ -458,6 +546,19 @@
         "message": {
           "type": "string",
           "example": "Unauthorized"
+        }
+      }
+    },
+    "NotFoundResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "message": {
+          "type": "string",
+          "example": "Not Found"
         }
       }
     },

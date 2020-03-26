@@ -74,4 +74,16 @@ class Declaration extends Model
     {
         return $this->hasMany(ItineraryCountry::class);
     }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $declarationData = [];
+        $declarationData['code'] = $this->declarationcode->code;
+        $declarationData['name'] = 'TODO';
+
+        return $declarationData;
+    }
 }
