@@ -95,6 +95,7 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(App\Providers\TwilioLookupServiceProvider::class);
+$app->register(App\Providers\StsSmsServiceProvider::class);
 
 
 

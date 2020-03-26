@@ -6,6 +6,8 @@ use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
 use App\Service\CodeGenerator;
+use App\Sts\SmsClient;
+use App\Sts\SmsClientException;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -30,6 +32,16 @@ class TestCommand extends Command
      */
     public function handle()
     {
+//        /** @var SmsClient $smsClient */
+//        $smsClient = app('stsSms');
+
+//        try {
+//            $smsClient->sendMessage('0729031984', 'Testing SMS implementation');
+//            dd('SMS sent');
+//        } catch (\Exception $smsClientException) {
+//            echo 'Exception caught: ' . $smsClientException->getMessage();
+//        }
+
 //        /** @var User $user */
 //        $user = User::find(1);
 //        dd($user->declarations->first()->getAttributes());

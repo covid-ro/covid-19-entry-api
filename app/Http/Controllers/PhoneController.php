@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PhoneCode;
 use App\Service\CodeGenerator;
+use App\Sts\SmsClient;
 use App\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -99,14 +100,16 @@ class PhoneController extends Controller
 
         $phoneCode->save();
 
-        /**
-         * TOOD: send SMS
-         */
-        if (false) { // failed to send SMS
+        /** @var SmsClient $smsClient */
+        $smsClient = app('stsSms');
+
+        try {
+            $smsClient->sendMessage($phoneCode->formatted_phone_number, 'Codul dumneavoastra de validare este ' . $phoneCode->code);
+        } catch (\Exception $smsClientException) {
             $responseData['status'] = 'error';
             $responseData['message'] = 'Failed to send SMS to phone';
 
-            $phoneCode->notes = 'Failed to send SMS to phone';
+            $phoneCode->notes = $smsClientException->getMessage();
             $phoneCode->status = PhoneCode::STATUS_INACTIVE;
             $phoneCode->save();
 
