@@ -108,6 +108,7 @@ class PhoneController extends Controller
         } catch (\Exception $smsClientException) {
             $responseData['status'] = 'error';
             $responseData['message'] = 'Failed to send SMS to phone';
+            $responseData['details'] = $smsClientException->getMessage();
 
             $phoneCode->notes = $smsClientException->getMessage();
             $phoneCode->status = PhoneCode::STATUS_INACTIVE;
