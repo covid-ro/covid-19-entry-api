@@ -35,7 +35,6 @@ class CodeGenerator
      */
     public function generateSmsCode(): int
     {
-        return 666666; // TODO: only for testing purposes!!!
-//        return random_int(100000, 999999); // TODO: uncomment me!!!
+        return random_int(100000, 999999);
     }
 }
