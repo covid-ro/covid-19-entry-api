@@ -104,7 +104,10 @@ class PhoneController extends Controller
         $smsClient = app('stsSms');
 
         try {
-            $smsClient->sendMessage($phoneCode->formatted_phone_number, 'Codul dumneavoastra de validare este ' . $phoneCode->code);
+            $smsClient->sendMessage(
+                $smsClient->preparePhoneNumber($phoneCode->formatted_phone_number),
+                'Codul dumneavoastra de validare este ' . $phoneCode->code
+            );
         } catch (\Exception $smsClientException) {
             $responseData['status'] = 'error';
             $responseData['message'] = 'Failed to send SMS to phone';

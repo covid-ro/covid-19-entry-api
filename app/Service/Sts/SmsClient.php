@@ -134,4 +134,23 @@ class SmsClient
             }
         }
     }
+
+    /**
+     * @param string $phoneNumber
+     * @return string
+     */
+    public function preparePhoneNumber(string $phoneNumber): string
+    {
+        /**
+         * For Romania, remove the country code
+         */
+        if ('+40' == substr($phoneNumber, 0, 3)) {
+            return str_replace('+40', '0', $phoneNumber);
+        }
+
+        /**
+         * TODO: Ask STS about details (not covered by API documentation)
+         */
+        return $phoneNumber;
+    }
 }
