@@ -188,6 +188,53 @@
             }
           }
         }
+      },
+      "get": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Get declaration list",
+        "operationId": "GetDeclarationList",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetDeclarationListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
       }
     },
     "/declaration/{declarationCode}": {
@@ -511,6 +558,25 @@
         "declaration": {
           "type": "object",
           "$ref": "#/definitions/Declaration"
+        }
+      }
+    },
+    "GetDeclarationListResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Declaration details"
+        },
+        "declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Declaration"
+          }
         }
       }
     },

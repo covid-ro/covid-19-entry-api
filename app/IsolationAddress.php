@@ -29,4 +29,18 @@ class IsolationAddress extends Model
     {
         return $this->belongsTo(Declaration::class);
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'city' => $this->city,
+            'county' => $this->county,
+            'address' => $this->city_full_address,
+            'arrival_date' => $this->city_arrival_date,
+            'departure_date' => $this->city_departure_date
+        ];
+    }
 }
