@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $surname
  * @property string $email
  * @property string $cnp
+ * @property DateTime|null $birth_date
+ * @property string|null $sex
  * @property string $document_type
  * @property string $document_series
  * @property string $document_number
@@ -87,6 +89,8 @@ class Declaration extends Model
         $declarationData['surname'] = $this->surname;
         $declarationData['email'] = $this->email;
         $declarationData['cnp'] = $this->cnp;
+        $declarationData['birth_date'] = $this->birth_date;
+        $declarationData['sex'] = $this->sex;
 
         $declarationData['document_type'] = $this->document_type;
         $declarationData['document_series'] = $this->document_series;

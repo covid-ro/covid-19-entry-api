@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 
 /**
  * Class DeclarationController
@@ -73,6 +74,8 @@ class DeclarationController extends Controller
         $declaration->surname = $request->get('surname');
         $declaration->email = $request->get('email');
         $declaration->cnp = $request->get('cnp');
+        $declaration->sex = $this->getSexFromCnp($request->get('cnp'));
+        $declaration->birth_date = $this->getBirthDateFromCnp($request->get('cnp'));
 
         /**
          * Document details
@@ -143,6 +146,45 @@ class DeclarationController extends Controller
         $responseData['declaration_code'] = $declarationCode->code;
 
         return response()->json($responseData);
+    }
+
+    /**
+     * @param string $cnp
+     * @return string|null
+     *
+     * @see https://ro.wikipedia.org/wiki/Cod_numeric_personal
+     */
+    private function getSexFromCnp(string $cnp): ?string
+    {
+        /** @var array $explodedCnp */
+        $explodedCnp = str_split($cnp);
+
+        if (in_array($explodedCnp[0], [1, 3, 5, 7])) {
+            return 'M';
+        } else if (in_array($explodedCnp[0], [2, 4, 6, 8])) {
+            return 'F';
+        } else {
+            return null; // Unknown
+        }
+    }
+
+    /**
+     * @param string $cnp
+     * @return Carbon|null
+     */
+    private function getBirthDateFromCnp(string $cnp): ?Carbon
+    {
+        /** @var array $explodedCnp */
+        $explodedCnp = str_split($cnp);
+
+        try {
+            return Carbon::createFromFormat(
+                'y-m-d',
+                $explodedCnp[1] . $explodedCnp[2] . '-' . $explodedCnp[3] . $explodedCnp[4] . '-' . $explodedCnp[5] . $explodedCnp[6]
+            );
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            return null;
+        }
     }
 
     /**
@@ -281,7 +323,7 @@ class DeclarationController extends Controller
 
         try {
             Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new Exception('Invalid value for parameter: travelling_from_date');
         }
 
@@ -320,14 +362,14 @@ class DeclarationController extends Controller
 
             try {
                 Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
             }
 
             if (!empty($isolationAddress['city_departure_date'])) {
                 try {
                     Carbon::createFromFormat('Y-m-d', $isolationAddress['city_departure_date']);
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     throw new Exception('Invalid value for parameter: isolation_addresses|city_departure_date');
                 }
             }

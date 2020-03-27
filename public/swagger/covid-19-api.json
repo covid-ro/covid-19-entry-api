@@ -607,6 +607,14 @@
           "type": "string",
           "example": "2870401102315"
         },
+        "birth_date": {
+          "type": "string",
+          "example": "1999-12-31"
+        },
+        "sex": {
+          "type": "string",
+          "example": "M"
+        },
         "document_type": {
           "type": "string",
           "example": "identity_card",
