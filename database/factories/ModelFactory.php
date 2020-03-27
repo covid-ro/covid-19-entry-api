@@ -31,7 +31,7 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(DeclarationCode::class, function (Faker $faker) {
     return [
-        'code' => Str::random(6)
+        'code' => strtoupper(Str::random(6))
     ];
 });
 
