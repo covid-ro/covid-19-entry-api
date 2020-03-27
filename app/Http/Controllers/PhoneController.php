@@ -24,7 +24,7 @@ class PhoneController extends Controller
      */
     private function validatePhoneRequest(Request $request)
     {
-        if (empty($request->get('phone_country_prefix'))) {
+        if (empty($request->get('phone_country_prefix'))) { // required
             throw new Exception('Missing required parameter: phone_country_prefix');
         }
 
@@ -32,7 +32,7 @@ class PhoneController extends Controller
             throw new Exception('Invalid value for parameter: phone_country_prefix');
         }
 
-        if (empty($request->get('phone'))) {
+        if (empty($request->get('phone'))) { // required
             throw new Exception('Missing required parameter: phone');
         }
 
@@ -40,8 +40,10 @@ class PhoneController extends Controller
             throw new Exception('Invalid value for parameter: phone');
         }
 
-        if (empty($request->get('phone_identifier'))) {
-            throw new Exception('Missing required parameter: phone_identifier');
+        if ($request->has('phone_identifier')) { // optional
+            if (strlen($request->get('phone_identifier')) > 255) {
+                throw new Exception('Invalid value for parameter: phone_identifier');
+            }
         }
     }
 
@@ -132,11 +134,37 @@ class PhoneController extends Controller
      */
     private function validateCheckPhoneRequest(Request $request)
     {
-        if (empty($request->get('phone_identifier'))) {
-            throw new Exception('Missing required parameter: phone_identifier');
+        if ($request->has('phone_identifier')) { // optional
+            if (strlen($request->get('phone_identifier')) > 255) {
+                throw new Exception('Invalid value for parameter: phone_identifier');
+            }
         }
 
-        if (empty($request->get('phone_validation_code'))) {
+        if ($request->has('phone')) { // optional
+            if (strlen($request->get('phone')) > 32) {
+                throw new Exception('Invalid value for parameter: phone');
+            }
+
+            if (empty($request->get('phone_country_prefix'))) { // required
+                throw new Exception('Missing required parameter: phone_country_prefix');
+            }
+
+            if (strlen($request->get('phone_country_prefix')) > 3) {
+                throw new Exception('Invalid value for parameter: phone_country_prefix');
+            }
+        }
+
+        /**
+         * Either phone OR phone_identifier is required
+         */
+        if (
+            !$request->has('phone_identifier') &&
+            !$request->has('phone')
+        ) {
+            throw new Exception('Missing required parameter: phone OR phone_identifier');
+        }
+
+        if (empty($request->get('phone_validation_code'))) { // required
             throw new Exception('Missing required parameter: phone_validation_code');
         }
 

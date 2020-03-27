@@ -91,6 +91,7 @@
         ],
         "summary": "Check phone number validation code",
         "operationId": "CheckPhoneNumber",
+        "description": "Use either phone & phone_country_prefix OR phone_identifier",
         "produces": [
           "application/json"
         ],
@@ -373,6 +374,16 @@
     "CheckPhoneRequest": {
       "type": "object",
       "properties": {
+        "phone": {
+          "type": "string",
+          "example": "722334455",
+          "required": false
+        },
+        "phone_country_prefix": {
+          "type": "string",
+          "example": "40",
+          "required": false
+        },
         "phone_identifier": {
           "type": "string",
           "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
