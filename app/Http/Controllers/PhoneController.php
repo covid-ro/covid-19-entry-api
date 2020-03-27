@@ -201,11 +201,12 @@ class PhoneController extends Controller
         if ($request->has('phone_identifier')) {
             $phoneCode->where('phone_identifier', $request->get('phone_identifier'));
         } else if ($request->has('phone')) {
-            $phoneCode->where('phone', $request->get('phone'));
-            $phoneCode->where('country_code', $request->get('phone_country_prefix'));
+            $phoneCode->where('phone_number', $request->get('phone'));
+            $phoneCode->where('country_prefix', $request->get('phone_country_prefix'));
         }
 
         $phoneCode->where('code', $request->get('phone_validation_code'));
+        $phoneCode->whereDate('created_at', '>=', Carbon::now()->subMinutes(30)); // sent in the last 30 minutes
         $phoneCode = $phoneCode->first();
 
         if (empty($phoneCode)) {
