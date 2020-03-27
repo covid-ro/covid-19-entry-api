@@ -111,7 +111,7 @@ class DeclarationController extends Controller
          * Vehicle details
          */
         $declaration->vehicle_type = $request->get('vehicle_type');
-        $declaration->vehicle_registration_no = str_replace([' ', '-'], '', $request->get('vehicle_registration_no'));
+        $declaration->vehicle_registration_no = $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no'));
 
         $declaration->save();
 
@@ -146,6 +146,15 @@ class DeclarationController extends Controller
         $responseData['declaration_code'] = $declarationCode->code;
 
         return response()->json($responseData);
+    }
+
+    /**
+     * @param string $vehicleRegistrationNumber
+     * @return string
+     */
+    private function prepareVehicleRegistrationNumber(string $vehicleRegistrationNumber): string
+    {
+        return str_replace([' ', '-'], '', $vehicleRegistrationNumber);
     }
 
     /**
@@ -226,7 +235,17 @@ class DeclarationController extends Controller
         $responseData['status'] = 'success';
         $responseData['message'] = 'Declaration details';
 
-        $declarationList = Declaration::whereNull('deleted_at')->paginate($perPage);
+        $declarationList = Declaration::whereNull('deleted_at');
+
+        if ($request->has('vehicle_type')) {
+            $declarationList->where('declarations.vehicle_type', $request->get('vehicle_type'));
+        }
+
+        if ($request->has('vehicle_registration_no')) {
+            $declarationList->where('declarations.vehicle_registration_no', $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no')));
+        }
+
+        $declarationList = $declarationList->paginate($perPage);
 
         return response()->json($declarationList);
     }

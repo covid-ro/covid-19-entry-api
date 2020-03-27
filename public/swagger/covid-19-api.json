@@ -209,12 +209,31 @@
         ],
         "parameters": [
           {
+            "name": "vehicle_type",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "example": "auto",
+            "enum": [
+              "auto",
+              "ambulance"
+            ]
+          },
+          {
+            "name": "vehicle_registration_no",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "example": "IF-51-MED"
+          },
+          {
             "name": "page",
             "type": "integer",
             "in": "query",
-            "description": "Result page number",
+            "description": "Result pagination number",
             "required": false,
-            "example": 1
+            "example": 1,
+            "default": 1
           },
           {
             "name": "per_page",
@@ -222,7 +241,8 @@
             "in": "query",
             "description": "Number of results per page",
             "required": false,
-            "example": 100
+            "example": 50,
+            "default": 50
           }
         ],
         "responses": {
