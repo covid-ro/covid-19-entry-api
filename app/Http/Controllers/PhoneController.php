@@ -6,6 +6,7 @@ use App\PhoneCode;
 use App\Service\CodeGenerator;
 use App\Sts\SmsClient;
 use App\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -195,9 +196,17 @@ class PhoneController extends Controller
         }
 
         /** @var PhoneCode|null $phoneCode */
-        $phoneCode = PhoneCode::where('phone_identifier', $request->get('phone_identifier'))
-            ->where('code', $request->get('phone_validation_code'))
-            ->first();
+        $phoneCode = PhoneCode::whereNull('deleted_at');
+
+        if ($request->has('phone_identifier')) {
+            $phoneCode->where('phone_identifier', $request->get('phone_identifier'));
+        } else if ($request->has('phone')) {
+            $phoneCode->where('phone', $request->get('phone'));
+            $phoneCode->where('country_code', $request->get('phone_country_prefix'));
+        }
+
+        $phoneCode->where('code', $request->get('phone_validation_code'));
+        $phoneCode = $phoneCode->first();
 
         if (empty($phoneCode)) {
             $responseData['status'] = 'error';
