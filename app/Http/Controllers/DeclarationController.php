@@ -220,25 +220,15 @@ class DeclarationController extends Controller
      */
     public function getDeclarationList(Request $request)
     {
+        $perPage = $request->has('per_page') ? $request->get('per_page') : 50;
+
         $responseData = [];
-
-        /** @var Declaration[] $declarations */
-        $declarations = Declaration::pluck('id')->toArray();
-
-        $declarationList = [];
-
-        /** @var int $declarationId */
-        foreach ($declarations as $declarationId) {
-            /** @var Declaration $declaration */
-            $declaration = Declaration::find($declarationId);
-
-            $declarationList[] = $declaration->toArray();
-        }
-
         $responseData['status'] = 'success';
-        $responseData['message'] = 'Declaration list';
-        $responseData['declarations'] = $declarationList;
-        return response()->json($responseData);
+        $responseData['message'] = 'Declaration details';
+
+        $declarationList = Declaration::whereNull('deleted_at')->paginate($perPage);
+
+        return response()->json($declarationList);
     }
 
     /**

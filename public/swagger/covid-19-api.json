@@ -208,6 +208,22 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "page",
+            "type": "integer",
+            "in": "query",
+            "description": "Result page number",
+            "required": false,
+            "example": 1
+          },
+          {
+            "name": "per_page",
+            "type": "integer",
+            "in": "query",
+            "description": "Number of results per page",
+            "required": false,
+            "example": 100
+          }
         ],
         "responses": {
           "200": {
@@ -564,19 +580,55 @@
     "GetDeclarationListResponse": {
       "type": "object",
       "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
+        "current_page": {
+          "type": "integer",
+          "example": 1
         },
-        "message": {
-          "type": "string",
-          "example": "Declaration details"
-        },
-        "declarations": {
+        "data": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Declaration"
           }
+        },
+        "first_page_url": {
+          "type": "string",
+          "example": "https://application.url/resource?page=1"
+        },
+        "from": {
+          "type": "integer",
+          "example": 1
+        },
+        "last_page": {
+          "type": "integer",
+          "example": 5
+        },
+        "last_page_url": {
+          "type": "string",
+          "example": "https://application.url/resource?page=3"
+        },
+        "next_page_url": {
+          "type": "string",
+          "example": "https://application.url/resource?page=2"
+        },
+        "path": {
+          "type": "string",
+          "example": "https://application.url/resource"
+        },
+        "per_page": {
+          "type": "integer",
+          "example": 100
+        },
+        "prev_page_url": {
+          "type": "string",
+          "example": "https://application.url/resource?page=1"
+        },
+        "to": {
+          "type": "integer",
+          "example": 100
+        },
+        "total": {
+          "type": "integer",
+          "example": 100
         }
       }
     },
