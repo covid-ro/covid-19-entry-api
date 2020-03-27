@@ -111,7 +111,7 @@ class DeclarationController extends Controller
          * Vehicle details
          */
         $declaration->vehicle_type = $request->get('vehicle_type');
-        $declaration->vehicle_registration_no = $request->get('vehicle_registration_no');
+        $declaration->vehicle_registration_no = str_replace([' ', '-'], '', $request->get('vehicle_registration_no'));
 
         $declaration->save();
 
