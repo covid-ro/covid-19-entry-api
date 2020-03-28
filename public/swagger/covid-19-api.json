@@ -31,7 +31,7 @@
     "/phone/validate": {
       "post": {
         "tags": [
-          "Phone"
+          "Phone validation"
         ],
         "summary": "Validate phone number",
         "operationId": "ValidatePhoneNumber",
@@ -87,7 +87,7 @@
     "/phone/check": {
       "post": {
         "tags": [
-          "Phone"
+          "Phone validation"
         ],
         "summary": "Check phone number validation code",
         "operationId": "CheckPhoneNumber",
