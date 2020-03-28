@@ -149,6 +149,17 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "status",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "example": "active",
+            "enum": [
+              "active",
+              "inactive"
+            ]
+          }
         ],
         "responses": {
           "200": {
@@ -864,6 +875,14 @@
         "name": {
           "type": "string",
           "example": "Aeroportul Internațional Aurel Vlaicu"
+        },
+        "status": {
+          "type": "string",
+          "example": "active",
+          "enum": [
+            "active",
+            "inactive"
+          ]
         }
       }
     },
