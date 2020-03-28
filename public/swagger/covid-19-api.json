@@ -31,7 +31,7 @@
     "/phone/validate": {
       "post": {
         "tags": [
-          "Covid-19 Monitor API"
+          "Phone"
         ],
         "summary": "Validate phone number",
         "operationId": "ValidatePhoneNumber",
@@ -87,7 +87,7 @@
     "/phone/check": {
       "post": {
         "tags": [
-          "Covid-19 Monitor API"
+          "Phone"
         ],
         "summary": "Check phone number validation code",
         "operationId": "CheckPhoneNumber",
@@ -138,7 +138,7 @@
     "/border/checkpoint": {
       "get": {
         "tags": [
-          "Covid-19 Monitor API"
+          "Border checkpoint"
         ],
         "summary": "Get border checkpoint list",
         "operationId": "GetBorderCheckpointList",
@@ -198,7 +198,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Border checkpoint"
         ],
         "summary": "Get border checkpoint",
         "operationId": "GetBorderCheckpoint",
@@ -252,7 +252,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Border checkpoint"
         ],
         "summary": "Update border checkpoint",
         "operationId": "UpdateBorderCheckpoint",
@@ -319,7 +319,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Border checkpoint"
         ],
         "summary": "Delete (inactivate) border checkpoint",
         "operationId": "DeleteBorderCheckpoint",
@@ -375,7 +375,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Declaration"
         ],
         "summary": "Create declaration",
         "operationId": "CreateDeclaration",
@@ -429,7 +429,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Declaration"
         ],
         "summary": "Get declaration list",
         "operationId": "GetDeclarationList",
@@ -514,7 +514,7 @@
           }
         ],
         "tags": [
-          "Covid-19 Monitor API"
+          "Declaration"
         ],
         "summary": "Get declaration",
         "operationId": "GetDeclaration",
