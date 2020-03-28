@@ -310,6 +310,60 @@
             }
           }
         }
+      },
+      "delete": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Delete (inactivate) border checkpoint",
+        "operationId": "DeleteBorderCheckpoint",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Border checkpoint ID",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetBorderCheckpointResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
       }
     },
     "/declaration": {
@@ -1018,9 +1072,14 @@
     "UpdateBorderCheckpointRequest": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string",
+          "required": false,
+          "example": "Updated Border Checkpoint Name"
+        },
         "status": {
           "type": "string",
-          "required": true,
+          "required": false,
           "example": "active",
           "enum": [
             "active",

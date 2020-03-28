@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/border/checkpoint', 'BorderController@getCheckpointList');
     Route::get('/border/checkpoint/{id}', 'BorderController@getCheckpoint');
     Route::put('/border/checkpoint/{id}', 'BorderController@updateCheckpoint');
+    Route::delete('/border/checkpoint/{id}', 'BorderController@deleteCheckpoint');
     Route::post('/declaration', 'DeclarationController@createDeclaration');
     Route::get('/declaration', 'DeclarationController@getDeclarationList');
     Route::get('/declaration/{declarationCode}', 'DeclarationController@getDeclaration');
