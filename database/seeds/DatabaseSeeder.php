@@ -14,21 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 1000)->create()->each(function ($user) { // create User
-            factory(App\DeclarationCode::class, 1)->create()->each(function ($declarationCode) use ($user) { // create DeclarationCode
-                factory(App\Declaration::class, rand(1, 2))->create([ // create Declaration[]
-                    'declarationcode_id' => $declarationCode->id,
-                    'user_id' => $user->id
-                ])->each(function ($declaration) {
-                    factory(App\ItineraryCountry::class, rand(1, 4))->create([ // create ItineraryCountry[]
-                        'declaration_id' => $declaration->id
-                    ]);
-
-                    factory(App\IsolationAddress::class, rand(1, 3))->create([ // create IsolationCountry[]
-                        'declaration_id' => $declaration->id
-                    ]);
-                });
-            });
-        });
+        $this->call(BorderCheckpointTableSeeder::class);
+        $this->call(DevSeeder::class);
     }
 }

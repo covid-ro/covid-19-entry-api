@@ -32,6 +32,11 @@ class TestCommand extends Command
      */
     public function handle()
     {
+//        /** @var Declaration $declaration */
+//        $declaration = Declaration::find(144);
+//
+//        dd($declaration->bordercheckpoint->name);
+
 //        /** @var SmsClient $smsClient */
 //        $smsClient = app('stsSms');
 

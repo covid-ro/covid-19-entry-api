@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $user_id
  * @property int $declarationcode_id
+ * @property int $border_checkpoint_id
  * @property string $name
  * @property string $surname
  * @property string $email
@@ -62,6 +63,14 @@ class Declaration extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function bordercheckpoint()
+    {
+        return $this->belongsTo(BorderCheckpoint::class, 'border_checkpoint_id');
+    }
+
+    /**
      * @return HasMany
      */
     public function isolationaddresses()
@@ -92,6 +101,7 @@ class Declaration extends Model
         $declarationData['birth_date'] = $this->birth_date;
         $declarationData['sex'] = $this->sex;
 
+        $declarationData['border_checkpoint'] = !empty($this->bordercheckpoint) ? $this->bordercheckpoint->name : null;
         $declarationData['document_type'] = $this->document_type;
         $declarationData['document_series'] = $this->document_series;
         $declarationData['document_number'] = $this->document_number;

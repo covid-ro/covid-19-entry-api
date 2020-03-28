@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use alcea\cnp\Cnp;
+use App\BorderCheckpoint;
 use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
@@ -76,6 +77,18 @@ class DeclarationController extends Controller
         $declaration->cnp = $request->get('cnp');
         $declaration->sex = $this->getSexFromCnp($request->get('cnp'));
         $declaration->birth_date = $this->getBirthDateFromCnp($request->get('cnp'));
+
+        /**
+         * Border checkpoint
+         */
+        if ($request->has('border_checkpoint_id')) {
+            /** @var BorderCheckpoint|null $borderCheckpoint */
+            $borderCheckpoint = BorderCheckpoint::find($request->get('border_checkpoint_id'));
+
+            if (!empty($borderCheckpoint)) {
+                $declaration->border_checkpoint_id = $borderCheckpoint->id;
+            }
+        }
 
         /**
          * Document details
@@ -285,6 +298,15 @@ class DeclarationController extends Controller
 
         if (!Cnp::validate($request->get('cnp'))) {
             throw new Exception('Invalid value for parameter: cnp');
+        }
+
+        if ($request->has('border_checkpoint_id')) { // optional
+            /** @var BorderCheckpoint|null $borderCheckpoint */
+            $borderCheckpoint = BorderCheckpoint::find($request->get('border_checkpoint_id'));
+
+            if (empty($borderCheckpoint)) {
+                throw new Exception('Invalid value for parameter: border_checkpoint_id');
+            }
         }
 
         if (empty($request->get('document_type'))) {

@@ -19,17 +19,17 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('phone_number', 32)->index();
-            $table->string('country_code', 2)->nullable();
+            $table->string('country_code', 2)->nullable()->index();
             $table->string('token', 32)->index();
 
-            $table->string('name', 64)->nullable();
-            $table->string('surname', 64)->nullable();
-            $table->string('email', 255)->nullable();
-            $table->string('cnp', 13)->nullable();
+            $table->string('name', 64)->nullable()->index();
+            $table->string('surname', 64)->nullable()->index();
+            $table->string('email', 255)->nullable()->index();
+            $table->string('cnp', 13)->nullable()->index();
 
-            $table->string('document_type', 16)->nullable();
-            $table->string('document_series', 16)->nullable();
-            $table->string('document_number', 32)->nullable();
+            $table->string('document_type', 16)->nullable()->index();
+            $table->string('document_series', 16)->nullable()->index();
+            $table->string('document_number', 32)->nullable()->index();
 
             $table->string('travelling_from_country_code', 2)->nullable();
             $table->string('travelling_from_city', 32)->nullable();
@@ -45,8 +45,8 @@ class CreateUsersTable extends Migration
             $table->boolean('symptom_breathing')->default(false);
             $table->boolean('symptom_cough')->default(false);
 
-            $table->string('vehicle_type', 16)->nullable();
-            $table->string('vehicle_registration_no', 16)->nullable();
+            $table->string('vehicle_type', 16)->nullable()->index();
+            $table->string('vehicle_registration_no', 16)->nullable()->index();
 
             $table->timestamps();
             $table->softDeletes();

@@ -135,6 +135,43 @@
         }
       }
     },
+    "/border/checkpoint": {
+      "get": {
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Get border checkpoint list",
+        "operationId": "GetBorderCheckpointList",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetBorderCheckpointList"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/declaration": {
       "post": {
         "security": [
@@ -436,6 +473,11 @@
           "example": "2870401102315",
           "required": true
         },
+        "border_checkpoint_id": {
+          "type": "integer",
+          "example": 1,
+          "required": false
+        },
         "document_type": {
           "type": "string",
           "example": "identity_card",
@@ -706,6 +748,10 @@
             "passport"
           ]
         },
+        "border_checkpoint": {
+          "type": "string",
+          "example": "Aeroportul Internațional Aurel Vlaicu"
+        },
         "document_series": {
           "type": "string",
           "example": "AA"
@@ -786,6 +832,38 @@
         "vehicle_registration_no": {
           "type": "string",
           "example": "IF-51-MED"
+        }
+      }
+    },
+    "GetBorderCheckpointList": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Border Checkpoint List"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BorderCheckpoint"
+          }
+        }
+      }
+    },
+    "BorderCheckpoint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": "1"
+        },
+        "name": {
+          "type": "string",
+          "example": "Aeroportul Internațional Aurel Vlaicu"
         }
       }
     },

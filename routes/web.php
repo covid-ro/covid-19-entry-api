@@ -24,6 +24,7 @@ Route::get('/docs', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/phone/validate', 'PhoneController@validatePhone');
     Route::post('/phone/check', 'PhoneController@checkPhone');
+    Route::get('/border/checkpoint', 'BorderController@getCheckpointList');
     Route::post('/declaration', 'DeclarationController@createDeclaration');
     Route::get('/declaration', 'DeclarationController@getDeclarationList');
     Route::get('/declaration/{declarationCode}', 'DeclarationController@getDeclaration');

@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\BorderCheckpoint;
 use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
@@ -44,7 +45,7 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'birth_date' => $faker->dateTimeBetween('-50 years', '-18 years'),
         'sex' => $faker->regexify('(M|F)'),
         'document_type' => $faker->regexify('(passport|identity_card)'),
-        'document_series' => Str::random(16),
+        'document_series' => Str::random(2),
         'document_number' => $faker->numberBetween(9999, 99999999),
         'travelling_from_country_code' => $faker->countryCode,
         'travelling_from_city' => $faker->city,
@@ -75,5 +76,11 @@ $factory->define(IsolationAddress::class, function (Faker $faker) {
         'city_full_address' => $faker->streetAddress,
         'city_arrival_date' => $faker->dateTimeBetween('-1 week', '-1 day'),
         'city_departure_date' => $faker->dateTimeBetween('-1 day', '+2 days'),
+    ];
+});
+
+$factory->define(BorderCheckpoint::class, function (Faker $faker) {
+    return [
+        'name' => $faker->streetName
     ];
 });
