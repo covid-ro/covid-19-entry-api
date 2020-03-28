@@ -18,6 +18,57 @@ class BorderController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
+    public function createCheckpoint(Request $request)
+    {
+        $responseData = [];
+
+        try {
+            $this->validateCreateCheckpointRequest($request);
+        } catch (\Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+            return response()->json($responseData, 400);
+        }
+
+        /** @var BorderCheckpoint|null $existingBorderCheckpoint */
+        $existingBorderCheckpoint = BorderCheckpoint::where('name', $request->get('name'))->first();
+
+        if (!empty($existingBorderCheckpoint)) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = 'Border checkpoint already exists';
+            return response()->json($responseData, 400);
+        }
+
+        $borderCheckpoint = new BorderCheckpoint();
+        $borderCheckpoint->name = $request->get('name');
+        $borderCheckpoint->save();
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Border checkpoint';
+        $responseData['data'] = $borderCheckpoint;
+
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    private function validateCreateCheckpointRequest(Request $request)
+    {
+        if (empty($request->has('name'))) {
+            throw new Exception('Missing required parameter: name');
+        }
+
+        if (strlen($request->get('name')) > 255) {
+            throw new Exception('Invalid value for parameter: name');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getCheckpointList(Request $request)
     {
         $responseData = [];

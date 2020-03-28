@@ -24,6 +24,7 @@ Route::get('/docs', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/phone/validate', 'PhoneController@validatePhone');
     Route::post('/phone/check', 'PhoneController@checkPhone');
+    Route::post('/border/checkpoint', 'BorderController@createCheckpoint');
     Route::get('/border/checkpoint', 'BorderController@getCheckpointList');
     Route::get('/border/checkpoint/{id}', 'BorderController@getCheckpoint');
     Route::put('/border/checkpoint/{id}', 'BorderController@updateCheckpoint');
