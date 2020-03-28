@@ -168,10 +168,139 @@
               "$ref": "#/definitions/GetBorderCheckpointList"
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/border/checkpoint/{id}": {
+      "get": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Get border checkpoint",
+        "operationId": "GetBorderCheckpoint",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Border checkpoint ID",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetBorderCheckpointResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Covid-19 Monitor API"
+        ],
+        "summary": "Update border checkpoint",
+        "operationId": "UpdateBorderCheckpoint",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Border checkpoint ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateBorderCheckpointRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetBorderCheckpointResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundResponse"
             }
           },
           "500": {
@@ -870,7 +999,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "example": "1"
+          "example": 1
         },
         "name": {
           "type": "string",
@@ -883,6 +1012,36 @@
             "active",
             "inactive"
           ]
+        }
+      }
+    },
+    "UpdateBorderCheckpointRequest": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "required": true,
+          "example": "active",
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        }
+      }
+    },
+    "GetBorderCheckpointResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Border checkpoint"
+        },
+        "data": {
+          "$ref": "#/definitions/BorderCheckpoint"
         }
       }
     },

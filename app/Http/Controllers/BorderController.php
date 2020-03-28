@@ -23,16 +23,27 @@ class BorderController extends Controller
     {
         $responseData = [];
 
+        try {
+            $this->validateGetCheckpointRequest($request);
+        } catch (\Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
+
         /** @var string|null $statusFilter */
         $statusFilter = $request->get('status', null);
 
-        /** @var Builder $borderCheckpoints */
-        $borderCheckpoints = BorderCheckpoint::where(DB::raw('1'), 1);
-
-        if (BorderCheckpoint::STATUS_ACTIVE === $statusFilter) {
-            $borderCheckpoints->whereNull('deleted_at');
-        } else if (BorderCheckpoint::STATUS_INACTIVE === $statusFilter) {
-            $borderCheckpoints->whereNotNull('deleted_at');
+        if (empty($statusFilter)) { // all results
+            $borderCheckpoints = BorderCheckpoint::withTrashed();
+        } else {
+            if (BorderCheckpoint::STATUS_ACTIVE === $statusFilter) {
+                /** @var Builder $borderCheckpoints */
+                $borderCheckpoints = BorderCheckpoint::whereNull('deleted_at');
+            } else {
+                $borderCheckpoints = BorderCheckpoint::withTrashed()->whereNotNull('deleted_at');
+            }
         }
 
         /** @var BorderCheckpoint[] $borderCheckpointList */
@@ -51,10 +62,91 @@ class BorderController extends Controller
      */
     private function validateGetCheckpointRequest(Request $request)
     {
-        if ($request->has('status')) {
+        if ($request->has('status')) { // optional
             if (!in_array($request->get('status'), [BorderCheckpoint::STATUS_ACTIVE, BorderCheckpoint::STATUS_INACTIVE])) {
                 throw new Exception('Invalid value for parameter: status');
             }
         }
+    }
+
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    private function validateUpdateCheckpointRequest(Request $request)
+    {
+        if (!$request->has('status')) { // required
+            throw new Exception('Missing required parameter: status');
+        }
+
+        if (!in_array($request->get('status'), [BorderCheckpoint::STATUS_ACTIVE, BorderCheckpoint::STATUS_INACTIVE])) {
+            throw new Exception('Invalid value for parameter: status');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getCheckpoint(Request $request, $id)
+    {
+        $responseData = [];
+
+        /** @var BorderCheckpoint|null $borderCheckpoint */
+        $borderCheckpoint = BorderCheckpoint::withTrashed()->find($id);
+
+        if (empty($borderCheckpoint)) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = 'Not Found';
+            return response()->json($responseData, 404);
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Border checkpoint';
+        $responseData['data'] = $borderCheckpoint;
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function updateCheckpoint(Request $request, $id)
+    {
+        $responseData = [];
+
+        /** @var BorderCheckpoint|null $borderCheckpoint */
+        $borderCheckpoint = BorderCheckpoint::withTrashed()->find($id);
+
+        if (empty($borderCheckpoint)) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = 'Not Found';
+            return response()->json($responseData, 404);
+        }
+
+        try {
+            $this->validateUpdateCheckpointRequest($request);
+        } catch (\Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
+
+        /** @var string|null $statusValue */
+        $statusValue = $request->get('status', null);
+
+        if (BorderCheckpoint::STATUS_ACTIVE === $statusValue) {
+            $borderCheckpoint->restore();
+        } else if (BorderCheckpoint::STATUS_INACTIVE === $statusValue) {
+            $borderCheckpoint->delete();
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Border checkpoint';
+        $responseData['data'] = $borderCheckpoint;
+        return response()->json($responseData);
     }
 }
