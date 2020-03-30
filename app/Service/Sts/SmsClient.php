@@ -149,7 +149,7 @@ class SmsClient
         }
 
         if ('+' == substr($phoneNumber, 0, 1)) {
-            return str_replace('+', '00', $phoneNumber);
+            return str_replace('+', '', $phoneNumber);
         }
 
         /**
