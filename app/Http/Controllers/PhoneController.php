@@ -72,7 +72,7 @@ class PhoneController extends Controller
         $phoneCode->code = (new CodeGenerator())->generateSmsCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');
         $phoneCode->phone_number = $request->get('phone');
-        $phoneCode->phone_identifier = $request->get('phone_identifier');
+        $phoneCode->phone_identifier = $request->get('phone_identifier', '');
         $phoneCode->status = PhoneCode::STATUS_ACTIVE;
         $phoneCode->save();
 
