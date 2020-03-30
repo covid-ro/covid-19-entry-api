@@ -148,9 +148,9 @@ class SmsClient
             return str_replace('+40', '0', $phoneNumber);
         }
 
-        if ('+' == substr($phoneNumber, 0, 1)) {
-            return str_replace('+', '00', $phoneNumber);
-        }
+//        if ('+' == substr($phoneNumber, 0, 1)) {
+//            return str_replace('+', '00', $phoneNumber);
+//        }
 
         /**
          * TODO: Ask STS about details (not covered by API documentation)
