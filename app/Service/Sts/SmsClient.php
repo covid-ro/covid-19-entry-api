@@ -148,8 +148,8 @@ class SmsClient
             return str_replace('+40', '0', $phoneNumber);
         }
 
-        if ('+43' == substr($phoneNumber, 0, 3)) {
-            return str_replace('+43', '00430', $phoneNumber);
+        if ('+' == substr($phoneNumber, 0, 1)) {
+            return str_replace('+', '', $phoneNumber);
         }
 
         /**
