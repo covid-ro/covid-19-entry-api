@@ -990,9 +990,9 @@
             "passport"
           ]
         },
-        "border_checkpoint": {
-          "type": "string",
-          "example": "Aeroportul Internațional Aurel Vlaicu"
+        "border_checkpoint_id": {
+          "type": "int",
+          "example": 1
         },
         "document_series": {
           "type": "string",
