@@ -990,9 +990,9 @@
             "passport"
           ]
         },
-        "border_checkpoint_id": {
-          "type": "int",
-          "example": 1
+        "border_checkpoint": {
+          "type": "object",
+          "$ref": "#/definitions/BorderCheckpoint"
         },
         "document_series": {
           "type": "string",

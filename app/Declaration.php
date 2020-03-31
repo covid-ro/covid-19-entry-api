@@ -101,7 +101,7 @@ class Declaration extends Model
         $declarationData['birth_date'] = $this->birth_date;
         $declarationData['sex'] = $this->sex;
 
-        $declarationData['border_checkpoint_id'] = !empty($this->border_checkpoint_id) ? $this->border_checkpoint_id : null;
+        $declarationData['border_checkpoint'] = !empty($this->bordercheckpoint) ? $this->bordercheckpoint : null;
         $declarationData['document_type'] = $this->document_type;
         $declarationData['document_series'] = $this->document_series;
         $declarationData['document_number'] = $this->document_number;
