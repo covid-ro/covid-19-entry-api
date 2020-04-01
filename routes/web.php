@@ -31,5 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/border/checkpoint/{id}', 'BorderController@deleteCheckpoint');
     Route::post('/declaration', 'DeclarationController@createDeclaration');
     Route::get('/declaration', 'DeclarationController@getDeclarationList');
+    Route::get('/declaration/{declarationCode}/signature', 'DeclarationController@getDeclarationSignature');
     Route::get('/declaration/{declarationCode}', 'DeclarationController@getDeclaration');
 });

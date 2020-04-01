@@ -6,6 +6,7 @@ use alcea\cnp\Cnp;
 use App\BorderCheckpoint;
 use App\Declaration;
 use App\DeclarationCode;
+use App\DeclarationSignature;
 use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\User;
@@ -152,6 +153,13 @@ class DeclarationController extends Controller
             $itineraryCountry->declaration_id = $declaration->id;
             $itineraryCountry->country_code = $countryIso2Code;
             $itineraryCountry->save();
+        }
+
+        if ($request->has('signature')) {
+            $declarationSignature = new DeclarationSignature();
+            $declarationSignature->declaration_id = $declaration->id;
+            $declarationSignature->image = $request->get('signature');
+            $declarationSignature->save();
         }
 
         $responseData['status'] = 'success';
@@ -490,5 +498,45 @@ class DeclarationController extends Controller
         ) {
             throw new Exception('Invalid value for parameter: vehicle_registration_no');
         }
+
+        if ($request->has('signature')) {
+            if (base64_encode(base64_decode($request->get('signature'), true)) !== $request->get('signature')) {
+                throw new Exception('Invalid value for parameter: signature');
+            }
+        }
+    }
+
+    /**
+     * @param $declarationCode
+     * @return JsonResponse
+     */
+    public function getDeclarationSignature($declarationCode)
+    {
+        $responseData = [];
+
+        /** @var Declaration|null $declaration */
+        $declaration = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->where('declaration_codes.code', $declarationCode)
+            ->select('declarations.*')
+            ->first();
+
+        if (empty($declaration)) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'Not Found'
+            ], 404);
+        }
+
+        if (empty($declaration->declarationsignature)) {
+            return response()->json([
+                'status' => 'error',
+                'reason' => 'Not Found'
+            ], 404);
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration details';
+        $responseData['signature'] = $declaration->declarationsignature->image;
+        return response()->json($responseData);
     }
 }

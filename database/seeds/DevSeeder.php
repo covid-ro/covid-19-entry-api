@@ -29,6 +29,10 @@ class DevSeeder extends Seeder
                     factory(App\IsolationAddress::class, rand(1, 3))->create([ // create IsolationCountry[]
                         'declaration_id' => $declaration->id
                     ]);
+
+                    factory(App\DeclarationSignature::class, 1)->create([ // create DeclarationSignature[]
+                        'declaration_id' => $declaration->id
+                    ]);
                 });
             });
         });

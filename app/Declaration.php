@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -87,6 +88,14 @@ class Declaration extends Model
     }
 
     /**
+     * @return HasOne
+     */
+    public function declarationsignature()
+    {
+        return $this->hasOne(DeclarationSignature::class);
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -137,7 +146,9 @@ class Declaration extends Model
         $declarationData['vehicle_type'] = $this->vehicle_type;
         $declarationData['vehicle_registration_no'] = $this->vehicle_registration_no;
 
-        $declarationData['created_at'] = $this->created_at;
+        $declarationData['signed'] = !empty($this->declarationsignature);
+
+        $declarationData['created_at'] = $this->created_at->format(DateTime::ISO8601);
 
         return $declarationData;
     }

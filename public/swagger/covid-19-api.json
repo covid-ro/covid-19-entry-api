@@ -614,6 +614,68 @@
           }
         }
       }
+    },
+    "/declaration/{declarationCode}/signature": {
+      "get": {
+        "security": [
+          {
+            "API-KEY": [],
+            "Authorization": []
+          }
+        ],
+        "tags": [
+          "Declaration"
+        ],
+        "summary": "Get declaration signature",
+        "operationId": "GetDeclarationSignature",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "declarationCode",
+            "in": "path",
+            "description": "Unique declaration code",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GetDeclarationSignatureResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/UnauthorizedResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/NotFoundResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -825,6 +887,11 @@
           "type": "string",
           "example": "IF-51-MED",
           "required": true
+        },
+        "signature": {
+          "type": "string",
+          "required": false,
+          "description": "Base64 encoded image representing owner's digital signature"
         }
       }
     },
@@ -1104,6 +1171,15 @@
         "vehicle_registration_no": {
           "type": "string",
           "example": "IF-51-MED"
+        },
+        "signed": {
+          "type": "boolean",
+          "example": true
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2020-04-01T18:37:19+0000",
+          "description": "ISO 8601 date"
         }
       }
     },
@@ -1189,6 +1265,23 @@
         },
         "data": {
           "$ref": "#/definitions/BorderCheckpoint"
+        }
+      }
+    },
+    "GetDeclarationSignatureResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "success"
+        },
+        "message": {
+          "type": "string",
+          "example": "Declaration signature"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Base64 encoded image representing owner's digital signature"
         }
       }
     },
