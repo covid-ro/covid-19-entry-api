@@ -760,7 +760,7 @@
           "minItems": 1,
           "required": true,
           "items": {
-            "$ref": "#/definitions/IsolationAddress"
+            "$ref": "#/definitions/CreateIsolationAddress"
           }
         },
         "question_1_answer": {
@@ -846,6 +846,36 @@
       }
     },
     "IsolationAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "city": {
+          "type": "string",
+          "example": "Craiova"
+        },
+        "county": {
+          "type": "string",
+          "example": "Olt"
+        },
+        "city_full_address": {
+          "type": "string",
+          "example": "Full city address"
+        },
+        "city_arrival_date": {
+          "type": "string",
+          "example": "2020-03-20"
+        },
+        "city_departure_date": {
+          "type": "string",
+          "example": "2020-03-23",
+          "required": false
+        }
+      }
+    },
+    "CreateIsolationAddress": {
       "type": "object",
       "properties": {
         "city": {

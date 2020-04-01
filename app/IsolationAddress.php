@@ -36,6 +36,7 @@ class IsolationAddress extends Model
     public function toArray()
     {
         return [
+            'id' => $this->id,
             'city' => $this->city,
             'county' => $this->county,
             'city_full_address' => $this->city_full_address,
