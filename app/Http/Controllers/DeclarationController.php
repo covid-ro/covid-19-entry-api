@@ -109,9 +109,9 @@ class DeclarationController extends Controller
         /**
          * Questions answers
          */
-        $declaration->question_1_answer = $request->get('question_1_answer');
-        $declaration->question_2_answer = $request->get('question_2_answer');
-        $declaration->question_3_answer = $request->get('question_3_answer');
+        $declaration->q_visited = $request->get('q_visited');
+        $declaration->q_contacted = $request->get('q_contacted');
+        $declaration->q_hospitalized = $request->get('q_hospitalized');
 
         /**
          * Symptoms details
@@ -414,35 +414,35 @@ class DeclarationController extends Controller
             }
         }
 
-        if (empty($request->get('question_1_answer'))) {
-            throw new Exception('Missing required parameter: question_1_answer');
+        if (!$request->has('q_visited')) {
+            throw new Exception('Missing required parameter: q_visited');
         }
 
-        if (strlen($request->get('question_1_answer')) > 512) {
-            throw new Exception('Invalid value for parameter: question_1_answer');
+        if (!in_array($request->get('q_visited'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: q_visited');
         }
 
-        if (empty($request->get('question_2_answer'))) {
-            throw new Exception('Missing required parameter: question_2_answer');
+        if (!$request->has('q_contacted')) {
+            throw new Exception('Missing required parameter: q_contacted');
         }
 
-        if (strlen($request->get('question_2_answer')) > 512) {
-            throw new Exception('Invalid value for parameter: question_2_answer');
+        if (!in_array($request->get('q_contacted'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: q_contacted');
         }
 
-        if (empty($request->get('question_3_answer'))) {
-            throw new Exception('Missing required parameter: question_3_answer');
+        if (!$request->has('q_hospitalized')) {
+            throw new Exception('Missing required parameter: q_hospitalized');
         }
 
-        if (strlen($request->get('question_3_answer')) > 512) {
-            throw new Exception('Invalid value for parameter: question_3_answer');
+        if (!in_array($request->get('q_hospitalized'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+            throw new Exception('Invalid value for parameter: q_hospitalized');
         }
 
         if (!$request->has('symptom_fever')) {
             throw new Exception('Missing required parameter: symptom_fever');
         }
 
-        if (!in_array($request->get('symptom_fever'), [0, 1, 'true', 'false'])) {
+        if (!in_array($request->get('symptom_fever'), [0, 1, true, false, 'true', 'false'])) {
             throw new Exception('Invalid value for parameter: symptom_fever');
         }
 
@@ -450,7 +450,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: symptom_swallow');
         }
 
-        if (!in_array($request->get('symptom_swallow'), [0, 1, 'true', 'false'])) {
+        if (!in_array($request->get('symptom_swallow'), [0, 1, true, false, 'true', 'false'])) {
             throw new Exception('Invalid value for parameter: symptom_swallow');
         }
 
@@ -458,7 +458,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: symptom_breathing');
         }
 
-        if (!in_array($request->get('symptom_breathing'), [0, 1, 'true', 'false'])) {
+        if (!in_array($request->get('symptom_breathing'), [0, 1, true, false, 'true', 'false'])) {
             throw new Exception('Invalid value for parameter: symptom_breathing');
         }
 
@@ -466,7 +466,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: symptom_cough');
         }
 
-        if (!in_array($request->get('symptom_cough'), [0, 1, 'true', 'false'])) {
+        if (!in_array($request->get('symptom_cough'), [0, 1, true, false, 'true', 'false'])) {
             throw new Exception('Invalid value for parameter: symptom_cough');
         }
 

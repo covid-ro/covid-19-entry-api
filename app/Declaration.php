@@ -30,9 +30,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $travelling_from_city
  * @property DateTime $travelling_from_date
  * @property DateTime $home_country_return_date
- * @property string $question_1_answer
- * @property string $question_2_answer
- * @property string $question_3_answer
+ * @property bool $q_visited
+ * @property bool $q_contacted
+ * @property bool $q_hospitalized
  * @property bool $symptom_fever
  * @property bool $symptom_swallow
  * @property bool $symptom_breathing
@@ -127,9 +127,9 @@ class Declaration extends Model
             $declarationData['isolation_addresses'][] = $isolationAddress->toArray();
         }
 
-        $declarationData['question_1_answer'] = $this->question_1_answer;
-        $declarationData['question_2_answer'] = $this->question_2_answer;
-        $declarationData['question_3_answer'] = $this->question_3_answer;
+        $declarationData['q_visited'] = (bool)$this->q_visited;
+        $declarationData['q_contacted'] = (bool)$this->q_contacted;
+        $declarationData['q_hospitalized'] = (bool)$this->q_hospitalized;
 
         $declarationData['symptom_fever'] = (bool)$this->symptom_fever;
         $declarationData['symptom_swallow'] = (bool)$this->symptom_swallow;

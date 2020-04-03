@@ -825,19 +825,19 @@
             "$ref": "#/definitions/CreateIsolationAddress"
           }
         },
-        "question_1_answer": {
-          "type": "string",
-          "example": "First question answer",
+        "q_visited": {
+          "type": "boolean",
+          "example": true,
           "required": true
         },
-        "question_2_answer": {
-          "type": "string",
-          "example": "Second question answer",
+        "q_contacted": {
+          "type": "boolean",
+          "example": true,
           "required": true
         },
-        "question_3_answer": {
-          "type": "string",
-          "example": "Third question answer",
+        "q_hospitalized": {
+          "type": "boolean",
+          "example": true,
           "required": true
         },
         "symptom_fever": {
@@ -1119,17 +1119,17 @@
             "$ref": "#/definitions/IsolationAddress"
           }
         },
-        "question_1_answer": {
-          "type": "string",
-          "example": "First question answer"
+        "q_visited": {
+          "type": "boolean",
+          "example": true
         },
-        "question_2_answer": {
-          "type": "string",
-          "example": "Second question answer"
+        "q_contacted": {
+          "type": "boolean",
+          "example": true
         },
-        "question_3_answer": {
-          "type": "string",
-          "example": "Third question answer"
+        "q_hospitalized": {
+          "type": "boolean",
+          "example": true
         },
         "symptom_fever": {
           "type": "boolean",
