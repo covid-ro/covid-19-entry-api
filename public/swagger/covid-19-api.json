@@ -891,6 +891,7 @@
         "signature": {
           "type": "string",
           "required": false,
+          "example": "c3RyaW5n",
           "description": "Base64 encoded image representing owner's digital signature"
         }
       }
@@ -1281,6 +1282,7 @@
         },
         "signature": {
           "type": "string",
+          "example": "c3RyaW5n",
           "description": "Base64 encoded image representing owner's digital signature"
         }
       }
