@@ -5,6 +5,7 @@ namespace App;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,10 +34,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property bool $q_visited
  * @property bool $q_contacted
  * @property bool $q_hospitalized
- * @property bool $symptom_fever
- * @property bool $symptom_swallow
- * @property bool $symptom_breathing
- * @property bool $symptom_cough
  * @property string $vehicle_type
  * @property string|null $vehicle_registration_no
  * @property DateTime|null $created_at
@@ -96,6 +93,14 @@ class Declaration extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function symptoms()
+    {
+        return $this->belongsToMany(Symptom::class);
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -131,10 +136,7 @@ class Declaration extends Model
         $declarationData['q_contacted'] = (bool)$this->q_contacted;
         $declarationData['q_hospitalized'] = (bool)$this->q_hospitalized;
 
-        $declarationData['symptom_fever'] = (bool)$this->symptom_fever;
-        $declarationData['symptom_swallow'] = (bool)$this->symptom_swallow;
-        $declarationData['symptom_breathing'] = (bool)$this->symptom_breathing;
-        $declarationData['symptom_cough'] = (bool)$this->symptom_cough;
+        $declarationData['symptoms'] = $this->symptoms()->pluck('name');
 
         $declarationData['itinerary_country_list'] = [];
 

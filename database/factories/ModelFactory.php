@@ -6,8 +6,10 @@ use App\BorderCheckpoint;
 use App\Declaration;
 use App\DeclarationCode;
 use App\DeclarationSignature;
+use App\DeclarationSymptom;
 use App\IsolationAddress;
 use App\ItineraryCountry;
+use App\Symptom;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
@@ -55,10 +57,6 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'q_visited' => $faker->boolean,
         'q_contacted' => $faker->boolean,
         'q_hospitalized' => $faker->boolean,
-        'symptom_fever' => $faker->boolean,
-        'symptom_swallow' => $faker->boolean,
-        'symptom_breathing' => $faker->boolean,
-        'symptom_cough' => $faker->boolean,
         'vehicle_type' => $faker->regexify('(auto|ambulance)'),
         'vehicle_registration_no' => Str::random(8)
     ];
@@ -89,5 +87,11 @@ $factory->define(BorderCheckpoint::class, function (Faker $faker) {
 $factory->define(DeclarationSignature::class, function (Faker $faker) {
     return [
         'image' => base64_encode($faker->text(rand(64, 1024)))
+    ];
+});
+
+$factory->define(Symptom::class, function (Faker $faker) {
+    return [
+        'name' => $faker->regexify('(fever|swallow|breathing|coughs)')
     ];
 });

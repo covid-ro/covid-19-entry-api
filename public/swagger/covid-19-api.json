@@ -840,24 +840,17 @@
           "example": true,
           "required": true
         },
-        "symptom_fever": {
-          "type": "boolean",
-          "example": false,
-          "required": true
-        },
-        "symptom_swallow": {
-          "type": "boolean",
-          "example": false,
-          "required": true
-        },
-        "symptom_breathing": {
-          "type": "boolean",
-          "example": false,
-          "required": true
-        },
-        "symptom_cough": {
-          "type": "boolean",
-          "example": false,
+        "symptoms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "fever",
+            "swallow",
+            "breath",
+            "cough"
+          ],
           "required": true
         },
         "itinerary_countries": {
@@ -1132,21 +1125,17 @@
           "type": "boolean",
           "example": true
         },
-        "symptom_fever": {
-          "type": "boolean",
-          "example": false
-        },
-        "symptom_swallow": {
-          "type": "boolean",
-          "example": false
-        },
-        "symptom_breathing": {
-          "type": "boolean",
-          "example": false
-        },
-        "symptom_cough": {
-          "type": "boolean",
-          "example": false
+        "symptoms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "fever",
+            "swallow",
+            "breath",
+            "cough"
+          ]
         },
         "itinerary_countries": {
           "type": "array",
