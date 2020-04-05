@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(BorderCheckpointTableSeeder::class);
+        $this->call(SymptomTableSeeder::class);
         $this->call(DevSeeder::class);
     }
 }

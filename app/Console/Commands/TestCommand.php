@@ -7,7 +7,7 @@ use App\DeclarationCode;
 use App\IsolationAddress;
 use App\Service\CodeGenerator;
 use App\Sts\SmsClient;
-use App\Sts\SmsClientException;
+use App\Symptom;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -32,9 +32,16 @@ class TestCommand extends Command
      */
     public function handle()
     {
-//        /** @var Declaration $declaration */
-//        $declaration = Declaration::find(144);
+//        /** @var Symptom $symptom */
+//        $symptom = Symptom::find(4);
 //
+//        dd($symptom->declarations()->count());
+
+//        /** @var Declaration $declaration */
+//        $declaration = Declaration::find(1);
+//
+//        dd($declaration->symptoms()->get());
+
 //        dd($declaration->bordercheckpoint->name);
 
 //        /** @var SmsClient $smsClient */

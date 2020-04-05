@@ -9,6 +9,7 @@ use App\DeclarationCode;
 use App\DeclarationSignature;
 use App\IsolationAddress;
 use App\ItineraryCountry;
+use App\Symptom;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -114,20 +115,20 @@ class DeclarationController extends Controller
         $declaration->q_hospitalized = $request->get('q_hospitalized');
 
         /**
-         * Symptoms details
-         */
-        $declaration->symptom_fever = (bool)$request->get('symptom_fever');
-        $declaration->symptom_swallow = (bool)$request->get('symptom_swallow');
-        $declaration->symptom_breathing = (bool)$request->get('symptom_breathing');
-        $declaration->symptom_cough = (bool)$request->get('symptom_cough');
-
-        /**
          * Vehicle details
          */
         $declaration->vehicle_type = $request->get('vehicle_type');
         $declaration->vehicle_registration_no = $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no'));
 
         $declaration->save();
+
+        /**
+         * Symptoms
+         */
+        foreach ($request->get('symptoms') as $symptomName) {
+            $symptom = Symptom::where('name', trim($symptomName))->first();
+            $declaration->symptoms()->attach($symptom);
+        }
 
         /**
          * Isolation addresses
@@ -438,36 +439,25 @@ class DeclarationController extends Controller
             throw new Exception('Invalid value for parameter: q_hospitalized');
         }
 
-        if (!$request->has('symptom_fever')) {
-            throw new Exception('Missing required parameter: symptom_fever');
+        /**
+         * Validate symptoms
+         */
+        if (!($request->has('symptoms'))) {
+            throw new Exception('Missing required parameter: symptoms');
         }
 
-        if (!in_array($request->get('symptom_fever'), [0, 1, true, false, 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: symptom_fever');
+        if (!is_array($request->get('symptoms'))) {
+            throw new Exception('Invalid value for parameter: symptoms');
         }
 
-        if (!$request->has('symptom_swallow')) {
-            throw new Exception('Missing required parameter: symptom_swallow');
-        }
+        /** @var string $symptomName */
+        foreach ($request->get('symptoms') as $symptomName) {
+            /** @var Symptom $symptom */
+            $symptom = Symptom::where('name', trim((string)$symptomName))->first();
 
-        if (!in_array($request->get('symptom_swallow'), [0, 1, true, false, 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: symptom_swallow');
-        }
-
-        if (!$request->has('symptom_breathing')) {
-            throw new Exception('Missing required parameter: symptom_breathing');
-        }
-
-        if (!in_array($request->get('symptom_breathing'), [0, 1, true, false, 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: symptom_breathing');
-        }
-
-        if (!$request->has('symptom_cough')) {
-            throw new Exception('Missing required parameter: symptom_cough');
-        }
-
-        if (!in_array($request->get('symptom_cough'), [0, 1, true, false, 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: symptom_cough');
+            if (empty($symptom)) {
+                throw new Exception('Invalid value for parameter: symptoms');
+            }
         }
 
         /**
