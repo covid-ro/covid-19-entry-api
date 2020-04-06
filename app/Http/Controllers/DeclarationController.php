@@ -110,9 +110,9 @@ class DeclarationController extends Controller
         /**
          * Questions answers
          */
-        $declaration->q_visited = $request->get('q_visited');
-        $declaration->q_contacted = $request->get('q_contacted');
-        $declaration->q_hospitalized = $request->get('q_hospitalized');
+        $declaration->q_visited = (bool)$request->get('q_visited');
+        $declaration->q_contacted = (bool)$request->get('q_contacted');
+        $declaration->q_hospitalized = (bool)$request->get('q_hospitalized');
 
         /**
          * Vehicle details
