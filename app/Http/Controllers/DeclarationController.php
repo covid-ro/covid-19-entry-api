@@ -75,7 +75,7 @@ class DeclarationController extends Controller
          */
         $declaration->name = $request->get('name');
         $declaration->surname = $request->get('surname');
-        $declaration->email = $request->get('email');
+        $declaration->email = (string)$request->get('email');
         $declaration->cnp = $request->get('cnp');
         $declaration->sex = $this->getSexFromCnp($request->get('cnp'));
         $declaration->birth_date = $this->getBirthDateFromCnp($request->get('cnp'));
