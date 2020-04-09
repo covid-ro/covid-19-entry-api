@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $travelling_from_city
  * @property DateTime $travelling_from_date
  * @property DateTime $home_country_return_date
+ * @property string|null $travel_route
  * @property bool $q_visited
  * @property bool $q_contacted
  * @property bool $q_hospitalized
@@ -124,6 +125,7 @@ class Declaration extends Model
         $declarationData['travelling_from_city'] = $this->travelling_from_city;
         $declarationData['travelling_from_date'] = $this->travelling_from_date;
         $declarationData['home_country_return_date'] = $this->home_country_return_date;
+        $declarationData['travel_route'] = $this->travel_route;
 
         $declarationData['isolation_addresses'] = [];
 

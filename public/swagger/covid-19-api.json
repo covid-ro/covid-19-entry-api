@@ -816,6 +816,11 @@
           "example": "2020-03-23",
           "required": true
         },
+        "travel_route": {
+          "type": "string",
+          "example": "Roma, Venetia, Bucuresti",
+          "required": false
+        },
         "isolation_addresses": {
           "type": "array",
           "description": "List of Isolation Addresses",
@@ -1104,6 +1109,11 @@
         "travelling_from_date": {
           "type": "string",
           "example": "2020-03-23"
+        },
+        "travel_route": {
+          "type": "string",
+          "example": "Roma, Venetia, Bucuresti",
+          "required": false
         },
         "isolation_addresses": {
           "type": "array",

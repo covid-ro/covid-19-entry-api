@@ -6,7 +6,6 @@ use App\BorderCheckpoint;
 use App\Declaration;
 use App\DeclarationCode;
 use App\DeclarationSignature;
-use App\DeclarationSymptom;
 use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\Symptom;
@@ -54,6 +53,7 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'travelling_from_city' => $faker->city,
         'travelling_from_date' => $faker->dateTimeBetween('-1 year', '-1 week'),
         'home_country_return_date' => $faker->dateTimeBetween('-1 week', '-1 day'),
+        'travel_route' => $faker->address,
         'q_visited' => $faker->boolean,
         'q_contacted' => $faker->boolean,
         'q_hospitalized' => $faker->boolean,

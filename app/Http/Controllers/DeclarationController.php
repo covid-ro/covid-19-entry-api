@@ -106,6 +106,7 @@ class DeclarationController extends Controller
         $declaration->travelling_from_city = $request->get('travelling_from_city');
         $declaration->travelling_from_date = Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
         $declaration->home_country_return_date = Carbon::now();
+        $declaration->travel_route = $request->get('travel_route', null);
 
         /**
          * Questions answers
@@ -365,6 +366,12 @@ class DeclarationController extends Controller
             Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
         } catch (Exception $exception) {
             throw new Exception('Invalid value for parameter: travelling_from_date');
+        }
+
+        if (!empty($request->get('travel_route'))) {
+            if (strlen($request->get('travel_route') > 255)) {
+                throw new Exception('Invalid value for parameter: travel_route');
+            }
         }
 
         /**
