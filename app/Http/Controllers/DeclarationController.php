@@ -31,7 +31,6 @@ class DeclarationController extends Controller
     public function createDeclaration(Request $request)
     {
         $responseData = [];
-        $responseData['declaration_code'] = null;
 
         /** @var User $user */
         $user = Auth::user();
@@ -283,7 +282,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: name');
         }
 
-        if (strlen($request->get('name') > 64)) {
+        if (!is_string($request->get('name')) || strlen($request->get('name') > 64)) {
             throw new Exception('Invalid value for parameter: name');
         }
 
@@ -291,7 +290,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: surname');
         }
 
-        if (strlen($request->get('surname') > 64)) {
+        if (!is_string($request->get('surname')) || strlen($request->get('surname') > 64)) {
             throw new Exception('Invalid value for parameter: surname');
         }
 
@@ -329,7 +328,7 @@ class DeclarationController extends Controller
 
         if (
             !empty($request->get('document_series')) && // optional
-            strlen($request->get('document_series')) > 16
+            (!is_string($request->get('document_series')) || strlen($request->get('document_series')) > 16)
         ) {
             throw new Exception('Invalid value for parameter: document_series');
         }
@@ -338,7 +337,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: document_number');
         }
 
-        if (strlen($request->get('document_number')) > 32) {
+        if (!is_string($request->get('document_number')) || strlen($request->get('document_number')) > 32) {
             throw new Exception('Invalid value for parameter: document_number');
         }
 
@@ -346,7 +345,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: travelling_from_country_code');
         }
 
-        if (2 !== strlen($request->get('travelling_from_country_code'))) {
+        if (!is_string($request->get('travelling_from_country_code')) || 2 !== strlen($request->get('travelling_from_country_code'))) {
             throw new Exception('Invalid value for parameter: travelling_from_country_code');
         }
 
@@ -354,7 +353,7 @@ class DeclarationController extends Controller
             throw new Exception('Missing required parameter: travelling_from_city');
         }
 
-        if (strlen($request->get('travelling_from_city')) > 32) {
+        if (!is_string($request->get('travelling_from_city')) || strlen($request->get('travelling_from_city')) > 32) {
             throw new Exception('Invalid value for parameter: travelling_from_city');
         }
 
@@ -369,7 +368,7 @@ class DeclarationController extends Controller
         }
 
         if (!empty($request->get('travel_route'))) {
-            if (strlen($request->get('travel_route') > 255)) {
+            if (!is_string($request->get('travel_route')) || strlen($request->get('travel_route') > 255)) {
                 throw new Exception('Invalid value for parameter: travel_route');
             }
         }
@@ -387,7 +386,7 @@ class DeclarationController extends Controller
                 throw new Exception('Missing required parameter: isolation_addresses|city');
             }
 
-            if (strlen($isolationAddress['city']) > 64) {
+            if (!is_string($isolationAddress['city']) || strlen($isolationAddress['city']) > 64) {
                 throw new Exception('Invalid value for parameter: isolation_addresses|city');
             }
 
@@ -395,7 +394,7 @@ class DeclarationController extends Controller
                 throw new Exception('Missing required parameter: isolation_addresses|county');
             }
 
-            if (strlen($isolationAddress['county']) > 64) {
+            if (!is_string($isolationAddress['county']) || strlen($isolationAddress['county']) > 64) {
                 throw new Exception('Invalid value for parameter: isolation_addresses|county');
             }
 
@@ -403,7 +402,7 @@ class DeclarationController extends Controller
                 throw new Exception('Missing required parameter: isolation_addresses|city_full_address');
             }
 
-            if (strlen($isolationAddress['city_full_address']) > 256) {
+            if (!is_string($isolationAddress['city_full_address']) || strlen($isolationAddress['city_full_address']) > 256) {
                 throw new Exception('Invalid value for parameter: isolation_addresses|city_full_address');
             }
 
@@ -476,7 +475,7 @@ class DeclarationController extends Controller
 
         /** @var string $itineraryCountry */
         foreach ($request->get('itinerary_countries') as $itineraryCountry) {
-            if (2 !== strlen($itineraryCountry)) {
+            if (!is_string($itineraryCountry) || 2 !== strlen($itineraryCountry)) {
                 throw new Exception('Invalid value for parameter: itinerary_countries');
             }
         }
@@ -491,7 +490,10 @@ class DeclarationController extends Controller
 
         if (
             !empty($request->get('vehicle_registration_no')) && // optional
-            strlen($request->get('vehicle_registration_no')) > 16
+            (
+                !is_string($request->get('vehicle_registration_no')) ||
+                strlen($request->get('vehicle_registration_no')) > 16
+            )
         ) {
             throw new Exception('Invalid value for parameter: vehicle_registration_no');
         }
