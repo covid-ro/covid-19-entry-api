@@ -495,12 +495,6 @@ class DeclarationController extends Controller
         ) {
             throw new Exception('Invalid value for parameter: vehicle_registration_no');
         }
-
-        if ($request->has('signature')) {
-            if (base64_encode(base64_decode($request->get('signature'), true)) !== $request->get('signature')) {
-                throw new Exception('Invalid value for parameter: signature');
-            }
-        }
     }
 
     /**
