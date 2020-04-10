@@ -42,7 +42,7 @@ class DeclarationController extends Controller
         if (empty($user->id)) {
             return response()->json([
                 'status' => 'error',
-                'reason' => 'Unauthorized'
+                'message' => 'Unauthorized'
             ], 401);
         }
 
@@ -236,7 +236,7 @@ class DeclarationController extends Controller
         if (empty($declaration)) {
             return response()->json([
                 'status' => 'error',
-                'reason' => 'Not Found'
+                'message' => 'Not Found'
             ], 404);
         }
 
@@ -514,14 +514,14 @@ class DeclarationController extends Controller
         if (empty($declaration)) {
             return response()->json([
                 'status' => 'error',
-                'reason' => 'Not Found'
+                'message' => 'Not Found'
             ], 404);
         }
 
         if (empty($declaration->declarationsignature)) {
             return response()->json([
                 'status' => 'error',
-                'reason' => 'Not Found'
+                'message' => 'Not Found'
             ], 404);
         }
 
