@@ -75,8 +75,17 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
+/**
+ * Enable CORS middleware for all endpoints
+ * Check config for paths
+ */
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
+
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'cors' => Fruitcake\Cors\HandleCors::class
 ]);
 
 /*
