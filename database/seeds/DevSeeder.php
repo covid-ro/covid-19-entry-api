@@ -35,9 +35,11 @@ class DevSeeder extends Seeder
                         'declaration_id' => $declaration->id
                     ]);
 
-                    factory(App\DeclarationSignature::class, 1)->create([ // create DeclarationSignature[]
-                        'declaration_id' => $declaration->id
-                    ]);
+                    if (1 === rand(1, 3)) {
+                        factory(App\DeclarationSignature::class, 1)->create([ // create DeclarationSignature[]
+                            'declaration_id' => $declaration->id
+                        ]);
+                    }
                 });
             });
         });
