@@ -26,7 +26,7 @@ class BorderCheckpointTableSeeder extends Seeder
             /** @var stdClass $record */
             foreach ($data->RECORDS as $record) {
                 DB::table('border_checkpoints')->insert([
-                    ['name' => str_replace('P.T.F. ', '', $record->name), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+                    ['name' => $record->name, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
                 ]);
             }
         }
