@@ -794,7 +794,7 @@
         "document_series": {
           "type": "string",
           "example": "AA",
-          "required": true
+          "required": false
         },
         "document_number": {
           "type": "string",
