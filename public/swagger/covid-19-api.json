@@ -1190,6 +1190,11 @@
           "example": "2020-04-01T18:37:19+0000",
           "description": "ISO 8601 date"
         },
+        "border_crossed_at": {
+          "type": "string",
+          "example": "2020-04-01T19:37:19+0000",
+          "description": "ISO 8601 date. Nullable"
+        },
         "border_validated_at": {
           "type": "string",
           "example": "2020-04-01T19:37:19+0000",

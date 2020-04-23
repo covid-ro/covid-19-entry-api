@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $vehicle_type
  * @property string|null $vehicle_registration_no
  * @property string $status
+ * @property DateTime|null $border_crossed_at
  * @property DateTime|null $border_validated_at
  * @property DateTime|null $dsp_validated_at
  * @property DateTime|null $created_at
@@ -115,6 +116,14 @@ class Declaration extends Model
     }
 
     /**
+     * @return HasOne
+     */
+    public function dspdeclaration()
+    {
+        return $this->hasOne(DspDeclaration::class);
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -166,6 +175,7 @@ class Declaration extends Model
         $declarationData['signed'] = !empty($this->declarationsignature);
         $declarationData['status'] = self::STATUS_LIST[$this->status];
         $declarationData['created_at'] = $this->created_at->format(DateTime::ISO8601);
+        $declarationData['border_crossed_at'] = !empty($this->border_crossed_at) ? $this->border_crossed_at->format(DateTime::ISO8601) : null;
         $declarationData['border_validated_at'] = !empty($this->border_validated_at) ? $this->border_validated_at->format(DateTime::ISO8601) : null;
         $declarationData['dsp_validated_at'] = !empty($this->dsp_validated_at) ? $this->dsp_validated_at->format(DateTime::ISO8601) : null;
 
