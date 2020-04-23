@@ -37,6 +37,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property bool $q_hospitalized
  * @property string $vehicle_type
  * @property string|null $vehicle_registration_no
+ * @property string $status
+ * @property DateTime|null $border_validated_at
+ * @property DateTime|null $dsp_validated_at
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
@@ -44,6 +47,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Declaration extends Model
 {
     use SoftDeletes;
+
+    const STATUS_PHONE_VALIDATED = 'phone_validated';
+    const STATUS_BORDER_VALIDATED = 'border_validated';
+    const STATUS_DSP_VALIDATED = 'dsp_validated';
+
+    const STATUS_LIST = [
+        self::STATUS_PHONE_VALIDATED => 'Phone Validated',
+        self::STATUS_BORDER_VALIDATED => 'Border Validated',
+        self::STATUS_DSP_VALIDATED => 'DSP Validated'
+    ];
 
     /**
      * @return BelongsTo
