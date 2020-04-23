@@ -1176,10 +1176,29 @@
           "type": "boolean",
           "example": true
         },
+        "status": {
+            "type": "string",
+            "example": "Phone Validated",
+            "enum": [
+                "Phone Validated",
+                "Border Validated",
+                "DSP Validated"
+            ]
+        },
         "created_at": {
           "type": "string",
           "example": "2020-04-01T18:37:19+0000",
           "description": "ISO 8601 date"
+        },
+        "border_validated_at": {
+          "type": "string",
+          "example": "2020-04-01T19:37:19+0000",
+          "description": "ISO 8601 date. Nullable"
+        },
+        "dsp_validated_at": {
+          "type": "string",
+          "example": "2020-04-01T20:37:19+0000",
+          "description": "ISO 8601 date. Nullable"
         }
       }
     },

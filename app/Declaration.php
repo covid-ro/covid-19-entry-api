@@ -164,8 +164,10 @@ class Declaration extends Model
         $declarationData['vehicle_registration_no'] = $this->vehicle_registration_no;
 
         $declarationData['signed'] = !empty($this->declarationsignature);
-
+        $declarationData['status'] = self::STATUS_LIST[$this->status];
         $declarationData['created_at'] = $this->created_at->format(DateTime::ISO8601);
+        $declarationData['border_validated_at'] = $this->border_validated_at->format(DateTime::ISO8601);
+        $declarationData['dsp_validated_at'] = $this->dsp_validated_at->format(DateTime::ISO8601);
 
         return $declarationData;
     }
