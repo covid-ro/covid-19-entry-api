@@ -1181,6 +1181,7 @@
             "example": "Phone Validated",
             "enum": [
                 "Phone Validated",
+                "Border Invalid",
                 "Border Validated",
                 "DSP Validated"
             ]
