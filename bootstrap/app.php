@@ -105,6 +105,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(App\Providers\TwilioLookupServiceProvider::class);
 $app->register(App\Providers\StsSmsServiceProvider::class);
+$app->register(App\Providers\StsBorderServiceProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 

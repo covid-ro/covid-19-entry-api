@@ -6,9 +6,11 @@ use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
 use App\Service\CodeGenerator;
+use App\Service\Sts\BorderClient;
 use App\Sts\SmsClient;
 use App\Symptom;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 /**
@@ -32,6 +34,22 @@ class TestCommand extends Command
      */
     public function handle()
     {
+        try {
+            /** @var BorderClient $stsBorderClient */
+            $stsBorderClient = app('stsBorder');
+
+            $declarationListJson = $stsBorderClient->getDeclarations(
+                null,
+                null,
+                '1840329460055',
+                Carbon::now()
+            );
+
+            dd($declarationListJson);
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+        }
+
 //        /** @var Symptom $symptom */
 //        $symptom = Symptom::find(4);
 //
@@ -44,10 +62,9 @@ class TestCommand extends Command
 
 //        dd($declaration->bordercheckpoint->name);
 
-//        /** @var SmsClient $smsClient */
-//        $smsClient = app('stsSms');
-
 //        try {
+//            /** @var SmsClient $smsClient */
+//            $smsClient = app('stsSms');
 //            $smsClient->sendMessage('0729031984', 'Testing SMS implementation');
 //            dd('SMS sent');
 //        } catch (\Exception $smsClientException) {
