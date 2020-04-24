@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime|null $border_crossed_at
  * @property DateTime|null $border_validated_at
  * @property DateTime|null $dsp_validated_at
+ * @property string|null $dsp_user_name
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
@@ -180,6 +181,7 @@ class Declaration extends Model
         $declarationData['border_crossed_at'] = !empty($this->border_crossed_at) ? $this->border_crossed_at->format(DateTime::ISO8601) : null;
         $declarationData['border_validated_at'] = !empty($this->border_validated_at) ? $this->border_validated_at->format(DateTime::ISO8601) : null;
         $declarationData['dsp_validated_at'] = !empty($this->dsp_validated_at) ? $this->dsp_validated_at->format(DateTime::ISO8601) : null;
+        $declarationData['dsp_user_name'] = $this->dsp_user_name;
 
         return $declarationData;
     }

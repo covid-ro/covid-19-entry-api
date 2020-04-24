@@ -1206,7 +1206,11 @@
           "example": "2020-04-01T20:37:19+0000",
           "description": "ISO 8601 date. Nullable"
         }
-      }
+      },
+        "dsp_user_name": {
+            "type": "string",
+            "example": "FirstName LastName"
+        }
     },
     "GetBorderCheckpointList": {
       "type": "object",
