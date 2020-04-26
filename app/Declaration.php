@@ -69,6 +69,13 @@ class Declaration extends Model
         self::STATUS_DSP_VALIDATED => 'DSP Validated'
     ];
 
+    protected $dates = [
+        'created_at',
+        'border_crossed_at',
+        'border_validated_at',
+        'dsp_validated_at'
+    ];
+
     /**
      * @return BelongsTo
      */
