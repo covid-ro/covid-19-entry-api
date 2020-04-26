@@ -588,6 +588,7 @@ class DeclarationController extends Controller
 
         $declaration->status = Declaration::STATUS_DSP_VALIDATED;
         $declaration->dsp_user_name = $request->get('dsp_user_name');
+        $declaration->dsp_validated_at = Carbon::now();
         $declaration->save();
 
         $responseData['status'] = 'success';
