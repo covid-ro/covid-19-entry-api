@@ -58,7 +58,11 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'q_contacted' => $faker->boolean,
         'q_hospitalized' => $faker->boolean,
         'vehicle_type' => $faker->regexify('(auto|ambulance)'),
-        'vehicle_registration_no' => Str::random(8)
+        'vehicle_registration_no' => Str::random(8),
+        'border_crossed_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
+        'border_validated_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
+        'dsp_validated_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
+        'dsp_user_name' => $faker->firstName . ' ' . $faker->lastName
     ];
 });
 

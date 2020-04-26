@@ -55,6 +55,13 @@ class Declaration extends Model
     const STATUS_BORDER_INVALID = 'border_invalid';
     const STATUS_DSP_VALIDATED = 'dsp_validated';
 
+    const AVAILABLE_STATUS_LIST = [
+        self::STATUS_PHONE_VALIDATED,
+        self::STATUS_BORDER_VALIDATED,
+        self::STATUS_BORDER_INVALID,
+        self::STATUS_DSP_VALIDATED
+    ];
+
     const STATUS_LIST = [
         self::STATUS_PHONE_VALIDATED => 'Phone Validated',
         self::STATUS_BORDER_INVALID => 'Border Invalid',
