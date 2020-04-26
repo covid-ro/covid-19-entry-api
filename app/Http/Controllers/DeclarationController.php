@@ -532,4 +532,82 @@ class DeclarationController extends Controller
         $responseData['signature'] = $declaration->declarationsignature->image;
         return response()->json($responseData);
     }
+
+    /**
+     * @param $declarationCode
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateDeclaration($declarationCode, Request $request)
+    {
+        $responseData = [];
+
+        /** @var Declaration|null $declaration */
+        $declaration = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->where('declaration_codes.code', $declarationCode)
+            ->select('declarations.*')
+            ->first();
+
+        if (empty($declaration)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Not Found'
+            ], 404);
+        }
+
+        /**
+         * Validate input
+         */
+        try {
+            $this->validateUpdateDeclarationRequest($request);
+        } catch (Exception $validationException) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = $validationException->getMessage();
+
+            return response()->json($responseData, 400);
+        }
+
+        /**
+         * Validate Declaration status
+         */
+        if (Declaration::STATUS_DSP_VALIDATED === $declaration->status) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid declaration status',
+                'details' => 'Declaration was already validated by DSP'
+            ], 409);
+        }
+
+        if (Declaration::STATUS_BORDER_VALIDATED !== $declaration->status) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid declaration status',
+                'details' => 'Only the Declarations validated at the Border can be validated by DSP'
+            ], 409);
+        }
+
+        $declaration->status = Declaration::STATUS_DSP_VALIDATED;
+        $declaration->dsp_user_name = $request->get('dsp_user_name');
+        $declaration->save();
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration details';
+        $responseData['declaration'] = $declaration->toArray();
+        return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    private function validateUpdateDeclarationRequest(Request $request)
+    {
+        if (!$request->has('dsp_user_name')) {
+            throw new Exception('Missing required parameter: dsp_user_name');
+        }
+
+        if (empty($request->get('dsp_user_name')) || strlen($request->get('dsp_user_name')) > 64) {
+            throw new Exception('Invalid value for parameter: dsp_user_name');
+        }
+    }
 }

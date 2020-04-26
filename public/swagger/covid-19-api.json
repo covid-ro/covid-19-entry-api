@@ -1,1388 +1,1466 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "COVID-19 Monitor API"
-  },
-  "basePath": "/",
-  "schemes": [
-    "https",
-    "http"
-  ],
-  "securityDefinitions": {
-    "API-KEY": {
-      "type": "apiKey",
-      "name": "X-API-KEY",
-      "in": "header"
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "COVID-19 Monitor API"
     },
-    "Authorization": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Standard user authorization header using the Bearer scheme. \n\nExample: \"Bearer {user-token}\""
+    "basePath": "/",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "securityDefinitions": {
+        "API-KEY": {
+            "type": "apiKey",
+            "name": "X-API-KEY",
+            "in": "header"
+        },
+        "Authorization": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Standard user authorization header using the Bearer scheme. \n\nExample: \"Bearer {user-token}\""
+        }
+    },
+    "security": [
+        {
+            "API-KEY": []
+        }
+    ],
+    "paths": {
+        "/phone/validate": {
+            "post": {
+                "tags": [
+                    "Phone validation"
+                ],
+                "summary": "Validate phone number",
+                "operationId": "ValidatePhoneNumber",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ValidatePhoneRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ValidatePhoneResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/ConflictResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/phone/check": {
+            "post": {
+                "tags": [
+                    "Phone validation"
+                ],
+                "summary": "Check phone number validation code",
+                "operationId": "CheckPhoneNumber",
+                "description": "Use either phone & phone_country_prefix OR phone_identifier",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CheckPhoneRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CheckPhoneResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/border/checkpoint": {
+            "post": {
+                "tags": [
+                    "Border checkpoint"
+                ],
+                "summary": "Create new border checkpoint",
+                "operationId": "CreateBorderCheckpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateBorderCheckpointRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetBorderCheckpointResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Border checkpoint"
+                ],
+                "summary": "Get border checkpoint list",
+                "operationId": "GetBorderCheckpointList",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "example": "active",
+                        "enum": [
+                            "active",
+                            "inactive"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetBorderCheckpointList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/border/checkpoint/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Border checkpoint"
+                ],
+                "summary": "Get border checkpoint",
+                "operationId": "GetBorderCheckpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Border checkpoint ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetBorderCheckpointResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Border checkpoint"
+                ],
+                "summary": "Update border checkpoint",
+                "operationId": "UpdateBorderCheckpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Border checkpoint ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateBorderCheckpointRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetBorderCheckpointResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Border checkpoint"
+                ],
+                "summary": "Delete (inactivate) border checkpoint",
+                "operationId": "DeleteBorderCheckpoint",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Border checkpoint ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetBorderCheckpointResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/declaration": {
+            "post": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Create declaration",
+                "operationId": "CreateDeclaration",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateDeclarationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CreateDeclarationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Get declaration list",
+                "operationId": "GetDeclarationList",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "vehicle_type",
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "example": "auto",
+                        "enum": [
+                            "auto",
+                            "ambulance"
+                        ]
+                    },
+                    {
+                        "name": "vehicle_registration_no",
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "example": "IF-51-MED"
+                    },
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "in": "query",
+                        "description": "Result pagination number",
+                        "required": false,
+                        "example": 1,
+                        "default": 1
+                    },
+                    {
+                        "name": "per_page",
+                        "type": "integer",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "required": false,
+                        "example": 50,
+                        "default": 50
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/declaration/{declarationCode}": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Get declaration",
+                "operationId": "GetDeclaration",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "declarationCode",
+                        "in": "path",
+                        "description": "Unique declaration code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/declaration/{declarationCode}/signature": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Get declaration signature",
+                "operationId": "GetDeclarationSignature",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "declarationCode",
+                        "in": "path",
+                        "description": "Unique declaration code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationSignatureResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/declaration/{declarationCode}/dsp": {
+            "put": {
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Update Declaration Status by DSP",
+                "operationId": "UpdateDeclarationStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "declarationCode",
+                        "in": "path",
+                        "description": "Unique declaration code",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateDeclarationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/ConflictResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ValidatePhoneRequest": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "example": "722334455",
+                    "required": true
+                },
+                "phone_country_prefix": {
+                    "type": "string",
+                    "example": "40",
+                    "required": true
+                },
+                "phone_identifier": {
+                    "type": "string",
+                    "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+                    "required": false
+                }
+            }
+        },
+        "ValidatePhoneResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "SMS sent to phone"
+                }
+            }
+        },
+        "CheckPhoneRequest": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "example": "722334455",
+                    "required": false
+                },
+                "phone_country_prefix": {
+                    "type": "string",
+                    "example": "40",
+                    "required": false
+                },
+                "phone_identifier": {
+                    "type": "string",
+                    "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+                    "required": false
+                },
+                "phone_validation_code": {
+                    "type": "integer",
+                    "example": 123456,
+                    "required": true
+                }
+            }
+        },
+        "CheckPhoneResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Phone validated"
+                },
+                "token": {
+                    "type": "string",
+                    "example": "3415d1e8ee3b65e1641326512eef739a"
+                }
+            }
+        },
+        "UpdateDeclarationRequest": {
+            "type": "object",
+            "properties": {
+                "dsp_user_name": {
+                    "type": "string",
+                    "example": "Firstname Lastname",
+                    "required": true
+                }
+            }
+        },
+        "CreateDeclarationRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Last Name",
+                    "required": true
+                },
+                "surname": {
+                    "type": "surstring",
+                    "example": "First Name",
+                    "required": true
+                },
+                "email": {
+                    "type": "email",
+                    "example": "name.surname@gmail.com",
+                    "required": false
+                },
+                "cnp": {
+                    "type": "string",
+                    "example": "2870401102315",
+                    "required": true
+                },
+                "border_checkpoint_id": {
+                    "type": "integer",
+                    "example": 1,
+                    "required": false
+                },
+                "document_type": {
+                    "type": "string",
+                    "example": "identity_card",
+                    "enum": [
+                        "identity_card",
+                        "passport"
+                    ],
+                    "required": true
+                },
+                "document_series": {
+                    "type": "string",
+                    "example": "AA",
+                    "required": false
+                },
+                "document_number": {
+                    "type": "string",
+                    "example": "0123456789",
+                    "required": true
+                },
+                "travelling_from_country_code": {
+                    "type": "string",
+                    "example": "IT",
+                    "required": true
+                },
+                "travelling_from_city": {
+                    "type": "string",
+                    "example": "Rome",
+                    "required": true
+                },
+                "travelling_from_date": {
+                    "type": "string",
+                    "example": "2020-03-23",
+                    "required": true
+                },
+                "travel_route": {
+                    "type": "string",
+                    "example": "Roma, Venetia, Bucuresti",
+                    "required": false
+                },
+                "isolation_addresses": {
+                    "type": "array",
+                    "description": "List of Isolation Addresses",
+                    "minItems": 1,
+                    "required": true,
+                    "items": {
+                        "$ref": "#/definitions/CreateIsolationAddress"
+                    }
+                },
+                "q_visited": {
+                    "type": "boolean",
+                    "example": true,
+                    "required": true
+                },
+                "q_contacted": {
+                    "type": "boolean",
+                    "example": true,
+                    "required": true
+                },
+                "q_hospitalized": {
+                    "type": "boolean",
+                    "example": true,
+                    "required": true
+                },
+                "symptoms": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "fever",
+                        "swallow",
+                        "breath",
+                        "cough"
+                    ],
+                    "required": true
+                },
+                "itinerary_countries": {
+                    "type": "array",
+                    "description": "List of ISO2 country code",
+                    "minItems": 1,
+                    "required": true,
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "IT",
+                        "FR",
+                        "HU"
+                    ]
+                },
+                "vehicle_type": {
+                    "type": "string",
+                    "example": "auto",
+                    "enum": [
+                        "auto",
+                        "ambulance"
+                    ],
+                    "required": true
+                },
+                "vehicle_registration_no": {
+                    "type": "string",
+                    "example": "IF-51-MED",
+                    "required": true
+                },
+                "signature": {
+                    "type": "string",
+                    "required": false,
+                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARUAAABlCAYAAABju3eXAAAMP0lEQVR4nO2dS4ssSRWAv5+Q/8D8BZf8AQ6d60HoWgouboJuXN1eKgqdG9Hd7ZXj7tZGRnDRLcxCXdgpDKgodjE+wI2d6gVBka4ZHzPOjJSLyKDq9q3KOJHvjDwfHG5zuyviVDxOnjhxIhIURVkiCXAOXFbyJhCPqZCi+JAAEbDCDORnlVweyNPqd2cHf98ntnxb39mBPD3Q59mBXvZvk55165MMuAV2J+QBSEfSTVFeIcJMRGsw7oDfAS85PYAlco+ZBLfAc+C6qufwCfu8+vlZ9XeX1d9dH3z2rirroaU+j+VQN2scz5jeU3+FaQPp93pB/4ZdUYgwE+YcM+heYCZql5M0JLljb3DOKxlyokZVnT7G5FAeBtZXCZxD43HN+BM0FPkY+GXVpuf049EkwBeBbQf63jPv5Z4yEgnGbb9GPY8x5BqzdGuD9SJve9DvrqVuygJIMOv/F/Q/YT6t/t0Ca+AGyCvJMGv9rBL7/1eVFJWUwIb9k7c8KP9fA3yHoeSuag8fIoxBuu9ZtytPvZTAiTGudp+eyBYz8UuMYbiopK81eVyJ3VVKK8kxBuqKvYFaszdoN+yNlURKullG+MgtsnbLaN6fBfAt4AOPz2h8ZeHYJc0t/RiQdSV2Qsf9f6VJEGHaNsV897ySopKuDNADxmgcI6VZ8HWLMaqHMZIIY/wln1/LmkgJCbus6cqQbDET5QozkDVgJ8Pm2VxgDM4a05Yf498Hz9l7CDHNgubvY/qwztNIkBlE9VYWQIIZePe0NyA23pGyHM9jaBKMsblB7tW8A/wA/xybEr8HwUpQpsZWAsRG+Z/RLpFrgxkgK9SAjMkK0xddeJZWCpr3qUuX+4blKhPDZqt+GfgTzQeaNSLqwk6PC9rHYx7HS5qQCerJW9ahjEiGiZE0CcptMINMPZH5ENPMa9nQ7XkdV31/6bAuZSBS/ANyNiayQgOqcyTBv88/Bb7Zgy65oO68h3qVHogwnol0UK3ZB1aVeZLQfrfujm4fJImwXmXipMiWORfo9m4IJHSf0XxNd+PiXUF9eUd1KR1zBnyf+s67GU07pQ+kyWaH4pP5epjb0pQnwrrilvUoHZLgzi0pUY8kJC7wC7qXvNr/hcdnHzA7hm0oBfXkLetQOsAG5Fw5JiW69RsKCfA2ckNSl/26wm/r+bamLBepsI64YflKS2JMEFaSsLZBDUooSJc6G+QnlBPMktjHa2nq8RaC8vOGZSsNsYlr0uzXG9Tyh0CG/AHSdMJn+HktWYM6UmHZygBEmOsGfFLp9VzF/ImR5Zts6ebhEeHntWQN6igE5V40/wqKhHP8DvhtUBcyBHLc/f4h8FW6X976xFp8L4JKBWUWLfVXTtAkkSkfQ1GlU6T9XtLvbp6P1+JrWCTHB3SnskOapFhfoZ0QAjmyJe6Qy4NcoM8DfssvybUIugTqgAj/rEh7PkeZNxEy76RNILYNGe7lkM8rOCLceSv3XSm/RGJM1qKPMdnQLEimTI8MmXeSM25qgCTO4rM5sHaUtUNTIRrhezlSicZNQkHqmZZMxxtNkS3FJUSCsuLONF8AK/x2dLaM/6RSuiNB9jC5YXp9LomHvCEsqy5gu+1U64BpsqNTl2atzI8rZP0+5UCl6zv8B5mXkdaUMeXvPxl84yZXqPsXEiky73SsYKwvLsNyKyzncaxmixoUJyv84iZr1DMJCXtZlmQMrJlP30e4A7c+saCEeRjTUYnxO5q+Rhs1NCJk3smWed6457rV7WE81cLjOXLvpECNSWhEyBMY18zHOzlGQf33S8dSLBRWyAfTDWpMQiRB5qGWhJFrFON+aCoNiDA5J1Jjko6ipdI3kvtOthjvJB5Fw34o0CVQp0gDsQXqmYRKjMw72TKdRLYucRlTHfdCYkzs5H3qG3SDeiah4uOhZuOoOAgpGldpTYrbO/G50k+ZHyvc3sknwI8JfxzE1LeD5p3UkODeItxgGnHOEX3lNNKrKQqW84R2nePJRtNswkgOf/2W+W8PKqex28QSDzUdR8VRqWuTfDy1ponk8N96LOWU3rGXjbuWOku/20aNigBJApPmmoSP6+pDTREw1KXs6yXsuAOxehVB2MTIPJN0HPUmSV1bLd6ouE5fFqh3EioxJnZWt9wtWPYy5xQFalRew3XXifVOlPCw+Sau2JlujZ6m4HS7vTueWuPxWeqT2Er06RQqZ7iXOvlYys2IX3G6/f4+ol6DE+MeUHO5NEfxQ5JvUqA5FlLepb4tFxF/jHFf7bhhIY2xIOylSXX9bgOxipyC+vZMx1JsKDLcg2o9km5Kf0jeR12iD5ImrKlv12DDB5LM2I/Qy6ZDI0V24bger2hOwQLjUjGy4+ka4Q8Hn6VOOo6KwVBQ38bBbStL7jwp0aBcSEiOV2xRr7QrCtxB72CQvGdliw6sUIiRLXUKdFevSwoWYFQiZINrjRqUEJBemKRJjP1Q4m77WZMiezVCcOu8hSK5MGmH5hz1iesdQLM2Khe44ydbdHCFQIz8NbL5KBouB0kfzG7ORcheLbohrJvMl8olsgvH1TsZhuCMijR+kqPxk7mTIlva7tD0gKFIkfVHOo56/sS419P60uf5I31wqDc6PCkBGRXpRdSzcruU15Asa3eYHQh9eAxPSiBGxfVy6B0mU1KXO/PlEvlSZ4329VhI3sw4eaMiyZDNx1JOac0Kv6VOOoqWiiVH1leTNfop7vtjgz0RGTgJ7gOfGiebHjmyPpskKzR+EiqS4xRW9LzOtJD23eTIqPdQCnSg9U2KuX6xS6RBWGtM9KExPdbM0Ki4PBS9pas/3gB+CHzKvr3/C3ylRZn2KkdJ8pp9YOiSdroUzMyoXAB/QwOyQ2Kzk/9I/SDxnegZ8gDsDt0ingsFsr6cBHUeigbquicBfoR80v9DWO4lsgN/h6J9Ox8KZuKp5NS7x+lYigVIDvwVv0nvGigxfvESKxkaG5sbBe5+3YylnKUumebnaLCuCxLgHeCfNDMmp4xKinxb+FC+i/brXClw9+/dWMpB/fbUFj3T0ZYEeJt2hsTKL6oyI8xN9b5LHF3qhEHBhD2VrEYpTblvR4T75Vk+8jHwBNnrQk/JGu3TEChw93UxhmJZjUIlOvjakNOdMfkE+DVm6dS0DA2yh0XBBI1K3eFAfUtgcz4DvEc3xuQnGEPSdIlz6HHGPX5nZXgKJmZUYk7v8pRo8K4JT2jnSVj5EPg2ftvM6p0sj7dw9/9bQykTcXo9rvfI+pFg4hvSLNU6+QPwjY7Kst6Jepvh8nncY+BzQyjiuskrG0KJmRMBT+kuAPtT4GcdlbVDryVYChHusTAIdVvH66GUmCkxJhfklJfnK650fF8p0YfC0thQ/3DpnXWNAiXqKp8iw+/sjEv+12FZO/Yv6tL+Wx5rTo+L3t+v9aWayndoHOUxMd3FSvqSEhOEVWOyXOqy4HsN0Oc1Fe/QKwwO8b0eYAwp0GWOYkg5PU7SMSrdofkoYLySc7qLlfQlOepRKq9SF6ztZV5Lbtte8iU8KeZE75S9kg3L7iPFzamx0zl5TWVWvt5HxRMnptvt4L4Mid4Hq0gZxKjUbTNZKVnWoI2ArzFdr+TfaCq90owtr4+nbVeFJ8jOiCzp9vsIcwPa2EbjlBRooprSjpLXx9V9FwVHyJ7CJcvwUKwxmZpnskUvlFa6pTdPpThS8LGKQvZQYkxuSZt4yQ3y10n6GJI1erBP6YeC4x5wK9IjhT6W3zBvDyVhf3jvDLNr8wL4HsbVu6f5pC95NYksAj5qUd6OfbA1Zd7trkyfY57KQ9tC8yOFHpM7zJLgrG2FHZNgdDrH6Pcckxbf9g4Rl6w5PeHf9CzLGpGspkxF6YOS4w/KVnzhSKESucU87S8xHsBTzMQ+q8RO9phX35Jnfx8d/F1y8P+2DFvmJXtjcc3eYAwd7yjx22F5gvHwPsA8DV5i3Mo1xpCv0CCrMj7Hluutl9qSI9BLlhs0rV0JmxVmnN/Q4SaAJDdlKVJiPAkNjCpKC2Lgfcaf0EPLS+A7GCMSt2tCRVEeE2Hcn7Enet9eSIFx8ULeHleUSbEirOWQzR1RI6IoI5MxP8/FZpxeoDsrijJZYoyBKTieKDO2AbH5HeqJKMpMSTBeQF7JDSb3oqhkU0nBPoaxAf5cye8Pfr959Dn7s93euqrE1pWiHoiiTJr/A6RQJ3hEr4l1AAAAAElFTkSuQmCC",
+                    "description": "Base64 encoded image representing owner's digital signature"
+                }
+            }
+        },
+        "CreateDeclarationResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Declaration created"
+                },
+                "declaration_code": {
+                    "type": "string",
+                    "example": "AAAAAA"
+                }
+            }
+        },
+        "IsolationAddress": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "city": {
+                    "type": "string",
+                    "example": "Craiova"
+                },
+                "county": {
+                    "type": "string",
+                    "example": "Olt"
+                },
+                "city_full_address": {
+                    "type": "string",
+                    "example": "Full city address"
+                },
+                "city_arrival_date": {
+                    "type": "string",
+                    "example": "2020-03-20"
+                },
+                "city_departure_date": {
+                    "type": "string",
+                    "example": "2020-03-23",
+                    "required": false
+                }
+            }
+        },
+        "CreateIsolationAddress": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "example": "Craiova",
+                    "required": true
+                },
+                "county": {
+                    "type": "string",
+                    "example": "Olt",
+                    "required": true
+                },
+                "city_full_address": {
+                    "type": "string",
+                    "example": "Full city address",
+                    "required": true
+                },
+                "city_arrival_date": {
+                    "type": "string",
+                    "example": "2020-03-20",
+                    "required": true
+                },
+                "city_departure_date": {
+                    "type": "string",
+                    "example": "2020-03-23",
+                    "required": false
+                }
+            }
+        },
+        "GetDeclarationResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Declaration details"
+                },
+                "declaration": {
+                    "type": "object",
+                    "$ref": "#/definitions/Declaration"
+                }
+            }
+        },
+        "GetDeclarationListResponse": {
+            "type": "object",
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Declaration"
+                    }
+                },
+                "first_page_url": {
+                    "type": "string",
+                    "example": "https://application.url/resource?page=1"
+                },
+                "from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "last_page": {
+                    "type": "integer",
+                    "example": 5
+                },
+                "last_page_url": {
+                    "type": "string",
+                    "example": "https://application.url/resource?page=3"
+                },
+                "next_page_url": {
+                    "type": "string",
+                    "example": "https://application.url/resource?page=2"
+                },
+                "path": {
+                    "type": "string",
+                    "example": "https://application.url/resource"
+                },
+                "per_page": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "prev_page_url": {
+                    "type": "string",
+                    "example": "https://application.url/resource?page=1"
+                },
+                "to": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 100
+                }
+            }
+        },
+        "Declaration": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "AAAAAA"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "+40722334455"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Last Name"
+                },
+                "surname": {
+                    "type": "surstring",
+                    "example": "First Name"
+                },
+                "email": {
+                    "type": "email",
+                    "example": "name.surname@gmail.com"
+                },
+                "cnp": {
+                    "type": "string",
+                    "example": "2870401102315"
+                },
+                "birth_date": {
+                    "type": "string",
+                    "example": "1999-12-31"
+                },
+                "sex": {
+                    "type": "string",
+                    "example": "M"
+                },
+                "document_type": {
+                    "type": "string",
+                    "example": "identity_card",
+                    "enum": [
+                        "identity_card",
+                        "passport"
+                    ]
+                },
+                "border_checkpoint": {
+                    "type": "object",
+                    "$ref": "#/definitions/BorderCheckpoint"
+                },
+                "document_series": {
+                    "type": "string",
+                    "example": "AA"
+                },
+                "document_number": {
+                    "type": "string",
+                    "example": "0123456789"
+                },
+                "travelling_from_country_code": {
+                    "type": "string",
+                    "example": "IT"
+                },
+                "travelling_from_city": {
+                    "type": "string",
+                    "example": "Rome"
+                },
+                "travelling_from_date": {
+                    "type": "string",
+                    "example": "2020-03-23"
+                },
+                "travel_route": {
+                    "type": "string",
+                    "example": "Roma, Venetia, Bucuresti",
+                    "required": false
+                },
+                "isolation_addresses": {
+                    "type": "array",
+                    "description": "List of Isolation Addresses",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/IsolationAddress"
+                    }
+                },
+                "q_visited": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "q_contacted": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "q_hospitalized": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "symptoms": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "fever",
+                        "swallow",
+                        "breath",
+                        "cough"
+                    ]
+                },
+                "itinerary_countries": {
+                    "type": "array",
+                    "description": "List of ISO2 country code",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "IT",
+                        "FR",
+                        "HU"
+                    ]
+                },
+                "vehicle_type": {
+                    "type": "string",
+                    "example": "auto",
+                    "enum": [
+                        "auto",
+                        "ambulance"
+                    ]
+                },
+                "vehicle_registration_no": {
+                    "type": "string",
+                    "example": "IF-51-MED"
+                },
+                "signed": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "status": {
+                    "type": "string",
+                    "example": "Phone Validated",
+                    "enum": [
+                        "Phone Validated",
+                        "Border Invalid",
+                        "Border Validated",
+                        "DSP Validated"
+                    ]
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2020-04-01T18:37:19+0000",
+                    "description": "ISO 8601 date"
+                },
+                "border_crossed_at": {
+                    "type": "string",
+                    "example": "2020-04-01T19:37:19+0000",
+                    "description": "ISO 8601 date. Nullable"
+                },
+                "border_validated_at": {
+                    "type": "string",
+                    "example": "2020-04-01T19:37:19+0000",
+                    "description": "ISO 8601 date. Nullable"
+                },
+                "dsp_validated_at": {
+                    "type": "string",
+                    "example": "2020-04-01T20:37:19+0000",
+                    "description": "ISO 8601 date. Nullable"
+                },
+                "dsp_user_name": {
+                    "type": "string",
+                    "example": "Firstname Lastname",
+                    "description": "DSP user that validated the Declaration. Nullable"
+                }
+            },
+            "dsp_user_name": {
+                "type": "string",
+                "example": "FirstName LastName"
+            }
+        },
+        "GetBorderCheckpointList": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Border Checkpoint List"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BorderCheckpoint"
+                    }
+                }
+            }
+        },
+        "BorderCheckpoint": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Aeroportul Internațional Aurel Vlaicu"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "active",
+                    "enum": [
+                        "active",
+                        "inactive"
+                    ]
+                }
+            }
+        },
+        "CreateBorderCheckpointRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "required": true,
+                    "example": "Border Checkpoint Name"
+                }
+            }
+        },
+        "UpdateBorderCheckpointRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "required": false,
+                    "example": "Updated Border Checkpoint Name"
+                },
+                "status": {
+                    "type": "string",
+                    "required": false,
+                    "example": "active",
+                    "enum": [
+                        "active",
+                        "inactive"
+                    ]
+                }
+            }
+        },
+        "GetBorderCheckpointResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Border checkpoint"
+                },
+                "data": {
+                    "$ref": "#/definitions/BorderCheckpoint"
+                }
+            }
+        },
+        "GetDeclarationSignatureResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Declaration signature"
+                },
+                "signature": {
+                    "type": "string",
+                    "example": "data:image/png;base64,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",
+                    "description": "Base64 encoded image representing owner's digital signature"
+                }
+            }
+        },
+        "BadRequestResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Missing required parameter: parameterName"
+                }
+            }
+        },
+        "UnauthorizedResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Unauthorized"
+                }
+            }
+        },
+        "NotFoundResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Not Found"
+                }
+            }
+        },
+        "ConflictResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Failed to send SMS to phone"
+                },
+                "details": {
+                    "type": "string",
+                    "example": "Gateway error details"
+                }
+            }
+        },
+        "InternalServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "An unexpected condition was encountered"
+                }
+            }
+        }
     }
-  },
-  "security": [
-    {
-      "API-KEY": []
-    }
-  ],
-  "paths": {
-    "/phone/validate": {
-      "post": {
-        "tags": [
-          "Phone validation"
-        ],
-        "summary": "Validate phone number",
-        "operationId": "ValidatePhoneNumber",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/ValidatePhoneRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/ValidatePhoneResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "schema": {
-              "$ref": "#/definitions/ConflictResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/phone/check": {
-      "post": {
-        "tags": [
-          "Phone validation"
-        ],
-        "summary": "Check phone number validation code",
-        "operationId": "CheckPhoneNumber",
-        "description": "Use either phone & phone_country_prefix OR phone_identifier",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/CheckPhoneRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/CheckPhoneResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/border/checkpoint": {
-      "post": {
-        "tags": [
-          "Border checkpoint"
-        ],
-        "summary": "Create new border checkpoint",
-        "operationId": "CreateBorderCheckpoint",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/CreateBorderCheckpointRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetBorderCheckpointResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Border checkpoint"
-        ],
-        "summary": "Get border checkpoint list",
-        "operationId": "GetBorderCheckpointList",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "status",
-            "type": "string",
-            "in": "query",
-            "required": false,
-            "example": "active",
-            "enum": [
-              "active",
-              "inactive"
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetBorderCheckpointList"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/border/checkpoint/{id}": {
-      "get": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Border checkpoint"
-        ],
-        "summary": "Get border checkpoint",
-        "operationId": "GetBorderCheckpoint",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Border checkpoint ID",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetBorderCheckpointResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Border checkpoint"
-        ],
-        "summary": "Update border checkpoint",
-        "operationId": "UpdateBorderCheckpoint",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Border checkpoint ID",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UpdateBorderCheckpointRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetBorderCheckpointResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Border checkpoint"
-        ],
-        "summary": "Delete (inactivate) border checkpoint",
-        "operationId": "DeleteBorderCheckpoint",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Border checkpoint ID",
-            "required": true,
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetBorderCheckpointResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/declaration": {
-      "post": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Declaration"
-        ],
-        "summary": "Create declaration",
-        "operationId": "CreateDeclaration",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/CreateDeclarationRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/CreateDeclarationResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Declaration"
-        ],
-        "summary": "Get declaration list",
-        "operationId": "GetDeclarationList",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "vehicle_type",
-            "type": "string",
-            "in": "query",
-            "required": false,
-            "example": "auto",
-            "enum": [
-              "auto",
-              "ambulance"
-            ]
-          },
-          {
-            "name": "vehicle_registration_no",
-            "type": "string",
-            "in": "query",
-            "required": false,
-            "example": "IF-51-MED"
-          },
-          {
-            "name": "page",
-            "type": "integer",
-            "in": "query",
-            "description": "Result pagination number",
-            "required": false,
-            "example": 1,
-            "default": 1
-          },
-          {
-            "name": "per_page",
-            "type": "integer",
-            "in": "query",
-            "description": "Number of results per page",
-            "required": false,
-            "example": 50,
-            "default": 50
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetDeclarationListResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/declaration/{declarationCode}": {
-      "get": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Declaration"
-        ],
-        "summary": "Get declaration",
-        "operationId": "GetDeclaration",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "declarationCode",
-            "in": "path",
-            "description": "Unique declaration code",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetDeclarationResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/declaration/{declarationCode}/signature": {
-      "get": {
-        "security": [
-          {
-            "API-KEY": [],
-            "Authorization": []
-          }
-        ],
-        "tags": [
-          "Declaration"
-        ],
-        "summary": "Get declaration signature",
-        "operationId": "GetDeclarationSignature",
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "declarationCode",
-            "in": "path",
-            "description": "Unique declaration code",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/GetDeclarationSignatureResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/BadRequestResponse"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/UnauthorizedResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/NotFoundResponse"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerErrorResponse"
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "ValidatePhoneRequest": {
-      "type": "object",
-      "properties": {
-        "phone": {
-          "type": "string",
-          "example": "722334455",
-          "required": true
-        },
-        "phone_country_prefix": {
-          "type": "string",
-          "example": "40",
-          "required": true
-        },
-        "phone_identifier": {
-          "type": "string",
-          "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
-          "required": false
-        }
-      }
-    },
-    "ValidatePhoneResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "SMS sent to phone"
-        }
-      }
-    },
-    "CheckPhoneRequest": {
-      "type": "object",
-      "properties": {
-        "phone": {
-          "type": "string",
-          "example": "722334455",
-          "required": false
-        },
-        "phone_country_prefix": {
-          "type": "string",
-          "example": "40",
-          "required": false
-        },
-        "phone_identifier": {
-          "type": "string",
-          "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
-          "required": false
-        },
-        "phone_validation_code": {
-          "type": "integer",
-          "example": 123456,
-          "required": true
-        }
-      }
-    },
-    "CheckPhoneResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Phone validated"
-        },
-        "token": {
-          "type": "string",
-          "example": "3415d1e8ee3b65e1641326512eef739a"
-        }
-      }
-    },
-    "CreateDeclarationRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Last Name",
-          "required": true
-        },
-        "surname": {
-          "type": "surstring",
-          "example": "First Name",
-          "required": true
-        },
-        "email": {
-          "type": "email",
-          "example": "name.surname@gmail.com",
-          "required": false
-        },
-        "cnp": {
-          "type": "string",
-          "example": "2870401102315",
-          "required": true
-        },
-        "border_checkpoint_id": {
-          "type": "integer",
-          "example": 1,
-          "required": false
-        },
-        "document_type": {
-          "type": "string",
-          "example": "identity_card",
-          "enum": [
-            "identity_card",
-            "passport"
-          ],
-          "required": true
-        },
-        "document_series": {
-          "type": "string",
-          "example": "AA",
-          "required": false
-        },
-        "document_number": {
-          "type": "string",
-          "example": "0123456789",
-          "required": true
-        },
-        "travelling_from_country_code": {
-          "type": "string",
-          "example": "IT",
-          "required": true
-        },
-        "travelling_from_city": {
-          "type": "string",
-          "example": "Rome",
-          "required": true
-        },
-        "travelling_from_date": {
-          "type": "string",
-          "example": "2020-03-23",
-          "required": true
-        },
-        "travel_route": {
-          "type": "string",
-          "example": "Roma, Venetia, Bucuresti",
-          "required": false
-        },
-        "isolation_addresses": {
-          "type": "array",
-          "description": "List of Isolation Addresses",
-          "minItems": 1,
-          "required": true,
-          "items": {
-            "$ref": "#/definitions/CreateIsolationAddress"
-          }
-        },
-        "q_visited": {
-          "type": "boolean",
-          "example": true,
-          "required": true
-        },
-        "q_contacted": {
-          "type": "boolean",
-          "example": true,
-          "required": true
-        },
-        "q_hospitalized": {
-          "type": "boolean",
-          "example": true,
-          "required": true
-        },
-        "symptoms": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "example": [
-            "fever",
-            "swallow",
-            "breath",
-            "cough"
-          ],
-          "required": true
-        },
-        "itinerary_countries": {
-          "type": "array",
-          "description": "List of ISO2 country code",
-          "minItems": 1,
-          "required": true,
-          "items": {
-            "type": "string"
-          },
-          "example": [
-            "IT",
-            "FR",
-            "HU"
-          ]
-        },
-        "vehicle_type": {
-          "type": "string",
-          "example": "auto",
-          "enum": [
-            "auto",
-            "ambulance"
-          ],
-          "required": true
-        },
-        "vehicle_registration_no": {
-          "type": "string",
-          "example": "IF-51-MED",
-          "required": true
-        },
-        "signature": {
-          "type": "string",
-          "required": false,
-          "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARUAAABlCAYAAABju3eXAAAMP0lEQVR4nO2dS4ssSRWAv5+Q/8D8BZf8AQ6d60HoWgouboJuXN1eKgqdG9Hd7ZXj7tZGRnDRLcxCXdgpDKgodjE+wI2d6gVBka4ZHzPOjJSLyKDq9q3KOJHvjDwfHG5zuyviVDxOnjhxIhIURVkiCXAOXFbyJhCPqZCi+JAAEbDCDORnlVweyNPqd2cHf98ntnxb39mBPD3Q59mBXvZvk55165MMuAV2J+QBSEfSTVFeIcJMRGsw7oDfAS85PYAlco+ZBLfAc+C6qufwCfu8+vlZ9XeX1d9dH3z2rirroaU+j+VQN2scz5jeU3+FaQPp93pB/4ZdUYgwE+YcM+heYCZql5M0JLljb3DOKxlyokZVnT7G5FAeBtZXCZxD43HN+BM0FPkY+GXVpuf049EkwBeBbQf63jPv5Z4yEgnGbb9GPY8x5BqzdGuD9SJve9DvrqVuygJIMOv/F/Q/YT6t/t0Ca+AGyCvJMGv9rBL7/1eVFJWUwIb9k7c8KP9fA3yHoeSuag8fIoxBuu9ZtytPvZTAiTGudp+eyBYz8UuMYbiopK81eVyJ3VVKK8kxBuqKvYFaszdoN+yNlURKullG+MgtsnbLaN6fBfAt4AOPz2h8ZeHYJc0t/RiQdSV2Qsf9f6VJEGHaNsV897ySopKuDNADxmgcI6VZ8HWLMaqHMZIIY/wln1/LmkgJCbus6cqQbDET5QozkDVgJ8Pm2VxgDM4a05Yf498Hz9l7CDHNgubvY/qwztNIkBlE9VYWQIIZePe0NyA23pGyHM9jaBKMsblB7tW8A/wA/xybEr8HwUpQpsZWAsRG+Z/RLpFrgxkgK9SAjMkK0xddeJZWCpr3qUuX+4blKhPDZqt+GfgTzQeaNSLqwk6PC9rHYx7HS5qQCerJW9ahjEiGiZE0CcptMINMPZH5ENPMa9nQ7XkdV31/6bAuZSBS/ANyNiayQgOqcyTBv88/Bb7Zgy65oO68h3qVHogwnol0UK3ZB1aVeZLQfrfujm4fJImwXmXipMiWORfo9m4IJHSf0XxNd+PiXUF9eUd1KR1zBnyf+s67GU07pQ+kyWaH4pP5epjb0pQnwrrilvUoHZLgzi0pUY8kJC7wC7qXvNr/hcdnHzA7hm0oBfXkLetQOsAG5Fw5JiW69RsKCfA2ckNSl/26wm/r+bamLBepsI64YflKS2JMEFaSsLZBDUooSJc6G+QnlBPMktjHa2nq8RaC8vOGZSsNsYlr0uzXG9Tyh0CG/AHSdMJn+HktWYM6UmHZygBEmOsGfFLp9VzF/ImR5Zts6ebhEeHntWQN6igE5V40/wqKhHP8DvhtUBcyBHLc/f4h8FW6X976xFp8L4JKBWUWLfVXTtAkkSkfQ1GlU6T9XtLvbp6P1+JrWCTHB3SnskOapFhfoZ0QAjmyJe6Qy4NcoM8DfssvybUIugTqgAj/rEh7PkeZNxEy76RNILYNGe7lkM8rOCLceSv3XSm/RGJM1qKPMdnQLEimTI8MmXeSM25qgCTO4rM5sHaUtUNTIRrhezlSicZNQkHqmZZMxxtNkS3FJUSCsuLONF8AK/x2dLaM/6RSuiNB9jC5YXp9LomHvCEsqy5gu+1U64BpsqNTl2atzI8rZP0+5UCl6zv8B5mXkdaUMeXvPxl84yZXqPsXEiky73SsYKwvLsNyKyzncaxmixoUJyv84iZr1DMJCXtZlmQMrJlP30e4A7c+saCEeRjTUYnxO5q+Rhs1NCJk3smWed6457rV7WE81cLjOXLvpECNSWhEyBMY18zHOzlGQf33S8dSLBRWyAfTDWpMQiRB5qGWhJFrFON+aCoNiDA5J1Jjko6ipdI3kvtOthjvJB5Fw34o0CVQp0gDsQXqmYRKjMw72TKdRLYucRlTHfdCYkzs5H3qG3SDeiah4uOhZuOoOAgpGldpTYrbO/G50k+ZHyvc3sknwI8JfxzE1LeD5p3UkODeItxgGnHOEX3lNNKrKQqW84R2nePJRtNswkgOf/2W+W8PKqex28QSDzUdR8VRqWuTfDy1ponk8N96LOWU3rGXjbuWOku/20aNigBJApPmmoSP6+pDTREw1KXs6yXsuAOxehVB2MTIPJN0HPUmSV1bLd6ouE5fFqh3EioxJnZWt9wtWPYy5xQFalRew3XXifVOlPCw+Sau2JlujZ6m4HS7vTueWuPxWeqT2Er06RQqZ7iXOvlYys2IX3G6/f4+ol6DE+MeUHO5NEfxQ5JvUqA5FlLepb4tFxF/jHFf7bhhIY2xIOylSXX9bgOxipyC+vZMx1JsKDLcg2o9km5Kf0jeR12iD5ImrKlv12DDB5LM2I/Qy6ZDI0V24bger2hOwQLjUjGy4+ka4Q8Hn6VOOo6KwVBQ38bBbStL7jwp0aBcSEiOV2xRr7QrCtxB72CQvGdliw6sUIiRLXUKdFevSwoWYFQiZINrjRqUEJBemKRJjP1Q4m77WZMiezVCcOu8hSK5MGmH5hz1iesdQLM2Khe44ydbdHCFQIz8NbL5KBouB0kfzG7ORcheLbohrJvMl8olsgvH1TsZhuCMijR+kqPxk7mTIlva7tD0gKFIkfVHOo56/sS419P60uf5I31wqDc6PCkBGRXpRdSzcruU15Asa3eYHQh9eAxPSiBGxfVy6B0mU1KXO/PlEvlSZ4329VhI3sw4eaMiyZDNx1JOac0Kv6VOOoqWiiVH1leTNfop7vtjgz0RGTgJ7gOfGiebHjmyPpskKzR+EiqS4xRW9LzOtJD23eTIqPdQCnSg9U2KuX6xS6RBWGtM9KExPdbM0Ki4PBS9pas/3gB+CHzKvr3/C3ylRZn2KkdJ8pp9YOiSdroUzMyoXAB/QwOyQ2Kzk/9I/SDxnegZ8gDsDt0ingsFsr6cBHUeigbquicBfoR80v9DWO4lsgN/h6J9Ox8KZuKp5NS7x+lYigVIDvwVv0nvGigxfvESKxkaG5sbBe5+3YylnKUumebnaLCuCxLgHeCfNDMmp4xKinxb+FC+i/brXClw9+/dWMpB/fbUFj3T0ZYEeJt2hsTKL6oyI8xN9b5LHF3qhEHBhD2VrEYpTblvR4T75Vk+8jHwBNnrQk/JGu3TEChw93UxhmJZjUIlOvjakNOdMfkE+DVm6dS0DA2yh0XBBI1K3eFAfUtgcz4DvEc3xuQnGEPSdIlz6HHGPX5nZXgKJmZUYk7v8pRo8K4JT2jnSVj5EPg2ftvM6p0sj7dw9/9bQykTcXo9rvfI+pFg4hvSLNU6+QPwjY7Kst6Jepvh8nncY+BzQyjiuskrG0KJmRMBT+kuAPtT4GcdlbVDryVYChHusTAIdVvH66GUmCkxJhfklJfnK650fF8p0YfC0thQ/3DpnXWNAiXqKp8iw+/sjEv+12FZO/Yv6tL+Wx5rTo+L3t+v9aWayndoHOUxMd3FSvqSEhOEVWOyXOqy4HsN0Oc1Fe/QKwwO8b0eYAwp0GWOYkg5PU7SMSrdofkoYLySc7qLlfQlOepRKq9SF6ztZV5Lbtte8iU8KeZE75S9kg3L7iPFzamx0zl5TWVWvt5HxRMnptvt4L4Mid4Hq0gZxKjUbTNZKVnWoI2ArzFdr+TfaCq90owtr4+nbVeFJ8jOiCzp9vsIcwPa2EbjlBRooprSjpLXx9V9FwVHyJ7CJcvwUKwxmZpnskUvlFa6pTdPpThS8LGKQvZQYkxuSZt4yQ3y10n6GJI1erBP6YeC4x5wK9IjhT6W3zBvDyVhf3jvDLNr8wL4HsbVu6f5pC95NYksAj5qUd6OfbA1Zd7trkyfY57KQ9tC8yOFHpM7zJLgrG2FHZNgdDrH6Pcckxbf9g4Rl6w5PeHf9CzLGpGspkxF6YOS4w/KVnzhSKESucU87S8xHsBTzMQ+q8RO9phX35Jnfx8d/F1y8P+2DFvmJXtjcc3eYAwd7yjx22F5gvHwPsA8DV5i3Mo1xpCv0CCrMj7Hluutl9qSI9BLlhs0rV0JmxVmnN/Q4SaAJDdlKVJiPAkNjCpKC2Lgfcaf0EPLS+A7GCMSt2tCRVEeE2Hcn7Enet9eSIFx8ULeHleUSbEirOWQzR1RI6IoI5MxP8/FZpxeoDsrijJZYoyBKTieKDO2AbH5HeqJKMpMSTBeQF7JDSb3oqhkU0nBPoaxAf5cye8Pfr959Dn7s93euqrE1pWiHoiiTJr/A6RQJ3hEr4l1AAAAAElFTkSuQmCC",
-          "description": "Base64 encoded image representing owner's digital signature"
-        }
-      }
-    },
-    "CreateDeclarationResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Declaration created"
-        },
-        "declaration_code": {
-          "type": "string",
-          "example": "AAAAAA"
-        }
-      }
-    },
-    "IsolationAddress": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 1
-        },
-        "city": {
-          "type": "string",
-          "example": "Craiova"
-        },
-        "county": {
-          "type": "string",
-          "example": "Olt"
-        },
-        "city_full_address": {
-          "type": "string",
-          "example": "Full city address"
-        },
-        "city_arrival_date": {
-          "type": "string",
-          "example": "2020-03-20"
-        },
-        "city_departure_date": {
-          "type": "string",
-          "example": "2020-03-23",
-          "required": false
-        }
-      }
-    },
-    "CreateIsolationAddress": {
-      "type": "object",
-      "properties": {
-        "city": {
-          "type": "string",
-          "example": "Craiova",
-          "required": true
-        },
-        "county": {
-          "type": "string",
-          "example": "Olt",
-          "required": true
-        },
-        "city_full_address": {
-          "type": "string",
-          "example": "Full city address",
-          "required": true
-        },
-        "city_arrival_date": {
-          "type": "string",
-          "example": "2020-03-20",
-          "required": true
-        },
-        "city_departure_date": {
-          "type": "string",
-          "example": "2020-03-23",
-          "required": false
-        }
-      }
-    },
-    "GetDeclarationResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Declaration details"
-        },
-        "declaration": {
-          "type": "object",
-          "$ref": "#/definitions/Declaration"
-        }
-      }
-    },
-    "GetDeclarationListResponse": {
-      "type": "object",
-      "properties": {
-        "current_page": {
-          "type": "integer",
-          "example": 1
-        },
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Declaration"
-          }
-        },
-        "first_page_url": {
-          "type": "string",
-          "example": "https://application.url/resource?page=1"
-        },
-        "from": {
-          "type": "integer",
-          "example": 1
-        },
-        "last_page": {
-          "type": "integer",
-          "example": 5
-        },
-        "last_page_url": {
-          "type": "string",
-          "example": "https://application.url/resource?page=3"
-        },
-        "next_page_url": {
-          "type": "string",
-          "example": "https://application.url/resource?page=2"
-        },
-        "path": {
-          "type": "string",
-          "example": "https://application.url/resource"
-        },
-        "per_page": {
-          "type": "integer",
-          "example": 100
-        },
-        "prev_page_url": {
-          "type": "string",
-          "example": "https://application.url/resource?page=1"
-        },
-        "to": {
-          "type": "integer",
-          "example": 100
-        },
-        "total": {
-          "type": "integer",
-          "example": 100
-        }
-      }
-    },
-    "Declaration": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string",
-          "example": "AAAAAA"
-        },
-        "phone": {
-          "type": "string",
-          "example": "+40722334455"
-        },
-        "name": {
-          "type": "string",
-          "example": "Last Name"
-        },
-        "surname": {
-          "type": "surstring",
-          "example": "First Name"
-        },
-        "email": {
-          "type": "email",
-          "example": "name.surname@gmail.com"
-        },
-        "cnp": {
-          "type": "string",
-          "example": "2870401102315"
-        },
-        "birth_date": {
-          "type": "string",
-          "example": "1999-12-31"
-        },
-        "sex": {
-          "type": "string",
-          "example": "M"
-        },
-        "document_type": {
-          "type": "string",
-          "example": "identity_card",
-          "enum": [
-            "identity_card",
-            "passport"
-          ]
-        },
-        "border_checkpoint": {
-          "type": "object",
-          "$ref": "#/definitions/BorderCheckpoint"
-        },
-        "document_series": {
-          "type": "string",
-          "example": "AA"
-        },
-        "document_number": {
-          "type": "string",
-          "example": "0123456789"
-        },
-        "travelling_from_country_code": {
-          "type": "string",
-          "example": "IT"
-        },
-        "travelling_from_city": {
-          "type": "string",
-          "example": "Rome"
-        },
-        "travelling_from_date": {
-          "type": "string",
-          "example": "2020-03-23"
-        },
-        "travel_route": {
-          "type": "string",
-          "example": "Roma, Venetia, Bucuresti",
-          "required": false
-        },
-        "isolation_addresses": {
-          "type": "array",
-          "description": "List of Isolation Addresses",
-          "minItems": 1,
-          "items": {
-            "$ref": "#/definitions/IsolationAddress"
-          }
-        },
-        "q_visited": {
-          "type": "boolean",
-          "example": true
-        },
-        "q_contacted": {
-          "type": "boolean",
-          "example": true
-        },
-        "q_hospitalized": {
-          "type": "boolean",
-          "example": true
-        },
-        "symptoms": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "example": [
-            "fever",
-            "swallow",
-            "breath",
-            "cough"
-          ]
-        },
-        "itinerary_countries": {
-          "type": "array",
-          "description": "List of ISO2 country code",
-          "minItems": 1,
-          "items": {
-            "type": "string"
-          },
-          "example": [
-            "IT",
-            "FR",
-            "HU"
-          ]
-        },
-        "vehicle_type": {
-          "type": "string",
-          "example": "auto",
-          "enum": [
-            "auto",
-            "ambulance"
-          ]
-        },
-        "vehicle_registration_no": {
-          "type": "string",
-          "example": "IF-51-MED"
-        },
-        "signed": {
-          "type": "boolean",
-          "example": true
-        },
-        "status": {
-            "type": "string",
-            "example": "Phone Validated",
-            "enum": [
-                "Phone Validated",
-                "Border Invalid",
-                "Border Validated",
-                "DSP Validated"
-            ]
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2020-04-01T18:37:19+0000",
-          "description": "ISO 8601 date"
-        },
-        "border_crossed_at": {
-          "type": "string",
-          "example": "2020-04-01T19:37:19+0000",
-          "description": "ISO 8601 date. Nullable"
-        },
-        "border_validated_at": {
-          "type": "string",
-          "example": "2020-04-01T19:37:19+0000",
-          "description": "ISO 8601 date. Nullable"
-        },
-        "dsp_validated_at": {
-          "type": "string",
-          "example": "2020-04-01T20:37:19+0000",
-          "description": "ISO 8601 date. Nullable"
-        }
-      },
-        "dsp_user_name": {
-            "type": "string",
-            "example": "FirstName LastName"
-        }
-    },
-    "GetBorderCheckpointList": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Border Checkpoint List"
-        },
-        "data": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BorderCheckpoint"
-          }
-        }
-      }
-    },
-    "BorderCheckpoint": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 1
-        },
-        "name": {
-          "type": "string",
-          "example": "Aeroportul Internațional Aurel Vlaicu"
-        },
-        "status": {
-          "type": "string",
-          "example": "active",
-          "enum": [
-            "active",
-            "inactive"
-          ]
-        }
-      }
-    },
-    "CreateBorderCheckpointRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "required": true,
-          "example": "Border Checkpoint Name"
-        }
-      }
-    },
-    "UpdateBorderCheckpointRequest": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "required": false,
-          "example": "Updated Border Checkpoint Name"
-        },
-        "status": {
-          "type": "string",
-          "required": false,
-          "example": "active",
-          "enum": [
-            "active",
-            "inactive"
-          ]
-        }
-      }
-    },
-    "GetBorderCheckpointResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Border checkpoint"
-        },
-        "data": {
-          "$ref": "#/definitions/BorderCheckpoint"
-        }
-      }
-    },
-    "GetDeclarationSignatureResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "success"
-        },
-        "message": {
-          "type": "string",
-          "example": "Declaration signature"
-        },
-        "signature": {
-          "type": "string",
-          "example": "data:image/png;base64,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",
-          "description": "Base64 encoded image representing owner's digital signature"
-        }
-      }
-    },
-    "BadRequestResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "error"
-        },
-        "message": {
-          "type": "string",
-          "example": "Missing required parameter: parameterName"
-        }
-      }
-    },
-    "UnauthorizedResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "error"
-        },
-        "message": {
-          "type": "string",
-          "example": "Unauthorized"
-        }
-      }
-    },
-    "NotFoundResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "error"
-        },
-        "message": {
-          "type": "string",
-          "example": "Not Found"
-        }
-      }
-    },
-    "ConflictResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "error"
-        },
-        "message": {
-          "type": "string",
-          "example": "Failed to send SMS to phone"
-        },
-        "details": {
-          "type": "string",
-          "example": "Gateway error details"
-        }
-      }
-    },
-    "InternalServerErrorResponse": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string",
-          "example": "error"
-        },
-        "message": {
-          "type": "string",
-          "example": "An unexpected condition was encountered"
-        }
-      }
-    }
-  }
 }
