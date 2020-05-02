@@ -26,9 +26,18 @@ class BorderCheckpointTableSeeder extends Seeder
             /** @var stdClass $record */
             foreach ($data->RECORDS as $record) {
                 DB::table('border_checkpoints')->insert([
-                    ['name' => $record->name, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+                    ['code' => !empty($record->code) ? $record->code : null, 'name' => $record->name, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
                 ]);
             }
+
+            /**
+             * Cleanup duplicate data, but keep the import IDs
+             */
+            BorderCheckpoint::all()->each(function (BorderCheckpoint $borderCheckpoint) {
+                if (!empty($borderCheckpoint->code)) {
+                    BorderCheckpoint::where('name', '=', $borderCheckpoint->name)->whereNull('code')->forceDelete();
+                }
+            });
         }
     }
 }

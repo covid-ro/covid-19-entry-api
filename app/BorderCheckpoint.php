@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  *
  * @property int $id
+ * @property string|null $code
  * @property string $name
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
@@ -41,6 +42,7 @@ class BorderCheckpoint extends Model
     {
         return [
             'id' => $this->id,
+            'code' => $this->code,
             'name' => $this->name,
             'status' => empty($this->deleted_at) ? self::STATUS_ACTIVE : self::STATUS_INACTIVE
         ];

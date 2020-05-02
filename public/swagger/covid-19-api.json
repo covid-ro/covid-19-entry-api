@@ -1297,6 +1297,10 @@
                     "type": "string",
                     "example": "success"
                 },
+                "code": {
+                    "type": "string",
+                    "example": "BCP25"
+                },
                 "message": {
                     "type": "string",
                     "example": "Border Checkpoint List"
