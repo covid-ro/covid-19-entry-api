@@ -80,9 +80,11 @@ class PhoneController extends Controller
             /** @var PhoneNumberUtil $phoneNumberUtil */
             $phoneNumberUtil = app('libPhoneNumber');
 
+            $region = $this->getRegionByCountryCode($request->get('phone_country_prefix'));
+
             $phone = $phoneNumberUtil->parse(
                 $request->get('phone'),
-                $this->getRegionByCountryCode($request->get('phone_country_prefix'))
+                $region
             );
 
             if (!$phoneNumberUtil->isValidNumber($phone)) {
@@ -92,8 +94,9 @@ class PhoneController extends Controller
             /**
              * Store formatted phone number and country code
              */
-            $phoneCode->country_code = $phone->getCountryCode();
-            $phoneCode->formatted_phone_number = $phone->getNationalNumber();
+            $phoneCode->country_code = $region;
+            $phoneCode->country_prefix = $phone->getCountryCode();
+            $phoneCode->formatted_phone_number = '+' . $phone->getCountryCode() . $phone->getNationalNumber();
         } catch (NumberParseException $numberParseException) {
             $responseData['status'] = 'error';
             $responseData['message'] = 'Validation failure';
@@ -112,7 +115,7 @@ class PhoneController extends Controller
 
         try {
             $smsClient->sendMessage(
-                $smsClient->preparePhoneNumber( '+' . $phoneCode->country_code . $phoneCode->formatted_phone_number),
+                $smsClient->preparePhoneNumber( $phoneCode->formatted_phone_number),
                 'Codul dumneavoastra de validare este ' . $phoneCode->code
             );
         } catch (\Exception $smsClientException) {
