@@ -16,9 +16,13 @@ class CodeGenerator
      */
     public function generateDeclarationCode($length = 6): string
     {
-        $bytes = bin2hex(random_bytes($length * 2));
+        $string = '';
 
-        return strtoupper(substr($bytes, 0, $length));
+        for ($i = 0; $i < $length; $i++) {
+            $string .= mt_rand(0, 9);
+        }
+
+        return $string;
     }
 
     /**
