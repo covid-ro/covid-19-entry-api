@@ -15,9 +15,9 @@
         "alcea/cnp": "2.1.6",
         "doctrine/dbal": "2.10.1",
         "fruitcake/laravel-cors": "^1.0",
+        "giggsey/libphonenumber-for-php": "^8.12",
         "guzzlehttp/guzzle": "6.5.2",
-        "laravel/lumen-framework": "7.0.2",
-        "twilio/sdk": "6.1.0"
+        "laravel/lumen-framework": "7.0.2"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
