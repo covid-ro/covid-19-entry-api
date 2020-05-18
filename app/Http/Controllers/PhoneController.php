@@ -95,7 +95,6 @@ class PhoneController extends Controller
              * Store formatted phone number and country code
              */
             $phoneCode->country_code = $region;
-            $phoneCode->country_prefix = $phone->getCountryCode();
             $phoneCode->formatted_phone_number = '+' . $phone->getCountryCode() . $phone->getNationalNumber();
         } catch (NumberParseException $numberParseException) {
             $responseData['status'] = 'error';
