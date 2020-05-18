@@ -112,12 +112,12 @@ class PhoneController extends Controller
 
         try {
             $smsClient->sendMessage(
-                $smsClient->preparePhoneNumber($phoneCode->country_code . $phoneCode->formatted_phone_number),
+                $smsClient->preparePhoneNumber( '+' . $phoneCode->country_code . $phoneCode->formatted_phone_number),
                 'Codul dumneavoastra de validare este ' . $phoneCode->code
             );
         } catch (\Exception $smsClientException) {
             $responseData['status'] = 'error';
-            $responseData['message'] = 'Failed to send SMS to phone ' . $phoneCode->country_code . $phoneCode->formatted_phone_number;
+            $responseData['message'] = 'Failed to send SMS to phone ' . '+' . $phoneCode->country_code . $phoneCode->formatted_phone_number;
             $responseData['details'] = $smsClientException->getMessage();
 
             $phoneCode->notes = $smsClientException->getMessage();
