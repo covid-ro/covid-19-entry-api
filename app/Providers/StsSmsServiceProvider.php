@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Sts\SmsClient;
+use App\Service\Sts\SmsClient;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 

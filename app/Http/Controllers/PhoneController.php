@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PhoneCode;
 use App\Service\CodeGenerator;
-use App\Sts\SmsClient;
+use App\Service\Sts\SmsClient;
 use App\User;
 use Carbon\Carbon;
 use Exception;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sts;
+namespace App\Service\Sts;
 
 use Exception;
 use GuzzleHttp\Client;
