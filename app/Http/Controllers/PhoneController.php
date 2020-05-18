@@ -117,7 +117,7 @@ class PhoneController extends Controller
             );
         } catch (\Exception $smsClientException) {
             $responseData['status'] = 'error';
-            $responseData['message'] = 'Failed to send SMS to phone ' . '+' . $phoneCode->country_code . $phoneCode->formatted_phone_number;
+            $responseData['message'] = 'Failed to send SMS to phone';
             $responseData['details'] = $smsClientException->getMessage();
 
             $phoneCode->notes = $smsClientException->getMessage();
