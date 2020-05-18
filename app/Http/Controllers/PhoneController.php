@@ -68,6 +68,24 @@ class PhoneController extends Controller
             return response()->json($responseData, 400);
         }
 
+        /**
+         * Throttle check
+         */
+        $throttleCheck = PhoneCode::where('country_prefix', '=', $request->get('phone_country_prefix'))
+            ->where('phone_number', '=', $request->get('phone'))
+            ->where('created_at', '>=', (Carbon::now())->subMinute())
+            ->where('status', '=', PhoneCode::STATUS_ACTIVE)
+            ->count();
+
+        if (!empty($throttleCheck)) {
+            $responseData['status'] = 'error';
+            $responseData['message'] = 'Too Many Requests';
+            $responseData['details'] = 'A message was already sent to this phone number in the last minute. Try again later.';
+
+            return response()->json($responseData, 429);
+        }
+
+
         $phoneCode = new PhoneCode();
         $phoneCode->code = (new CodeGenerator())->generateSmsCode();
         $phoneCode->country_prefix = $request->get('phone_country_prefix');

@@ -75,6 +75,12 @@
                             "$ref": "#/definitions/ConflictResponse"
                         }
                     },
+                    "429": {
+                        "description": "Too Many Requests",
+                        "schema": {
+                            "$ref": "#/definitions/ThrottledResponse"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -1450,6 +1456,23 @@
                 "details": {
                     "type": "string",
                     "example": "Gateway error details"
+                }
+            }
+        },
+        "ThrottledResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Too Many Requests"
+                },
+                "details": {
+                    "type": "string",
+                    "example": "A message was already sent to this phone number in the last minute. Try again later."
                 }
             }
         },
