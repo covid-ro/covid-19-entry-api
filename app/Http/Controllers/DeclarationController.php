@@ -110,9 +110,9 @@ class DeclarationController extends Controller
         /**
          * Questions answers
          */
-        $declaration->q_visited = (bool)$request->get('q_visited');
-        $declaration->q_contacted = (bool)$request->get('q_contacted');
-        $declaration->q_hospitalized = (bool)$request->get('q_hospitalized');
+        $declaration->q_visited = $request->has('q_visited') ? (bool)$request->get('q_visited') : null;
+        $declaration->q_contacted = $request->has('q_contacted') ? (bool)$request->get('q_contacted') : null;
+        $declaration->q_hospitalized = $request->has('q_hospitalized') ? (bool)$request->get('q_hospitalized') : null;
 
         /**
          * Vehicle details
@@ -128,9 +128,11 @@ class DeclarationController extends Controller
         /**
          * Symptoms
          */
-        foreach ($request->get('symptoms') as $symptomName) {
-            $symptom = Symptom::where('name', trim($symptomName))->first();
-            $declaration->symptoms()->attach($symptom);
+        if ($request->has('symptoms')) {
+            foreach ($request->get('symptoms') as $symptomName) {
+                $symptom = Symptom::where('name', trim($symptomName))->first();
+                $declaration->symptoms()->attach($symptom);
+            }
         }
 
         /**
@@ -143,7 +145,7 @@ class DeclarationController extends Controller
             $isolationAddress->city = $isolationAddressData['city'];
             $isolationAddress->county = $isolationAddressData['county'];
             $isolationAddress->city_full_address = $isolationAddressData['city_full_address'];
-            $isolationAddress->city_arrival_date = Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']);
+            $isolationAddress->city_arrival_date = !empty($isolationAddressData['city_arrival_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']) : null;
             $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;
             $isolationAddress->save();
         }
@@ -409,10 +411,12 @@ class DeclarationController extends Controller
                 throw new Exception('Invalid value for parameter: isolation_addresses|city_full_address');
             }
 
-            try {
-                Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
-            } catch (Exception $exception) {
-                throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
+            if (!empty($isolationAddress['city_arrival_date'])) {
+                try {
+                    Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
+                } catch (Exception $exception) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
+                }
             }
 
             if (!empty($isolationAddress['city_departure_date'])) {
@@ -424,48 +428,40 @@ class DeclarationController extends Controller
             }
         }
 
-        if (!$request->has('q_visited')) {
-            throw new Exception('Missing required parameter: q_visited');
+        if ($request->has('q_visited')) {
+            if (!in_array($request->get('q_visited'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+                throw new Exception('Invalid value for parameter: q_visited');
+            }
         }
 
-        if (!in_array($request->get('q_visited'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: q_visited');
+        if ($request->has('q_contacted')) {
+            if (!in_array($request->get('q_contacted'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+                throw new Exception('Invalid value for parameter: q_contacted');
+            }
         }
 
-        if (!$request->has('q_contacted')) {
-            throw new Exception('Missing required parameter: q_contacted');
-        }
-
-        if (!in_array($request->get('q_contacted'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: q_contacted');
-        }
-
-        if (!$request->has('q_hospitalized')) {
-            throw new Exception('Missing required parameter: q_hospitalized');
-        }
-
-        if (!in_array($request->get('q_hospitalized'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
-            throw new Exception('Invalid value for parameter: q_hospitalized');
+        if ($request->has('q_hospitalized')) {
+            if (!in_array($request->get('q_hospitalized'), [0, 1, true, false, '0', '1', 'true', 'false'])) {
+                throw new Exception('Invalid value for parameter: q_hospitalized');
+            }
         }
 
         /**
          * Validate symptoms
          */
-        if (!($request->has('symptoms'))) {
-            throw new Exception('Missing required parameter: symptoms');
-        }
-
-        if (!is_array($request->get('symptoms'))) {
-            throw new Exception('Invalid value for parameter: symptoms');
-        }
-
-        /** @var string $symptomName */
-        foreach ($request->get('symptoms') as $symptomName) {
-            /** @var Symptom $symptom */
-            $symptom = Symptom::where('name', trim((string)$symptomName))->first();
-
-            if (empty($symptom)) {
+        if ($request->has('symptoms')) {
+            if (!is_array($request->get('symptoms'))) {
                 throw new Exception('Invalid value for parameter: symptoms');
+            }
+
+            /** @var string $symptomName */
+            foreach ($request->get('symptoms') as $symptomName) {
+                /** @var Symptom $symptom */
+                $symptom = Symptom::where('name', trim((string)$symptomName))->first();
+
+                if (empty($symptom)) {
+                    throw new Exception('Invalid value for parameter: symptoms');
+                }
             }
         }
 

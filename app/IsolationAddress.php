@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $city
  * @property string $county
  * @property string $city_full_address
- * @property DateTime $city_arrival_date
+ * @property DateTime|null $city_arrival_date
  * @property DateTime|null $city_departure_date
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at

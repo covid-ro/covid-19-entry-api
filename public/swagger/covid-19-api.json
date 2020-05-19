@@ -935,7 +935,7 @@
                         "breath",
                         "cough"
                     ],
-                    "required": true
+                    "required": false
                 },
                 "itinerary_countries": {
                     "type": "array",
@@ -1051,7 +1051,7 @@
                 "city_arrival_date": {
                     "type": "string",
                     "example": "2020-03-20",
-                    "required": true
+                    "required": false
                 },
                 "city_departure_date": {
                     "type": "string",
@@ -1214,15 +1214,18 @@
                 },
                 "q_visited": {
                     "type": "boolean",
-                    "example": true
+                    "example": true,
+                    "required": false
                 },
                 "q_contacted": {
                     "type": "boolean",
-                    "example": true
+                    "example": true,
+                    "required": false
                 },
                 "q_hospitalized": {
                     "type": "boolean",
-                    "example": true
+                    "example": true,
+                    "required": false
                 },
                 "symptoms": {
                     "type": "array",
