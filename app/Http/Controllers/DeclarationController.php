@@ -120,6 +120,9 @@ class DeclarationController extends Controller
         $declaration->vehicle_type = $request->get('vehicle_type');
         $declaration->vehicle_registration_no = $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no'));
 
+        $declaration->accept_personal_data = $request->get('accept_personal_data');
+        $declaration->accept_read_law = $request->get('accept_read_law');
+
         $declaration->save();
 
         /**
