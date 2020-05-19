@@ -29,8 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $document_number
  * @property string $travelling_from_country_code
  * @property string $travelling_from_city
- * @property DateTime $travelling_from_date
- * @property DateTime $home_country_return_date
+ * @property DateTime|null $travelling_from_date
+ * @property DateTime|null $home_country_return_date
  * @property string|null $travel_route
  * @property bool|null $q_visited
  * @property bool|null $q_contacted
