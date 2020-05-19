@@ -153,12 +153,14 @@ class DeclarationController extends Controller
         /**
          * Itinerary countries
          */
-        /** @var string $countryIso2Code */
-        foreach ($request->get('itinerary_countries') as $countryIso2Code) {
-            $itineraryCountry = new ItineraryCountry();
-            $itineraryCountry->declaration_id = $declaration->id;
-            $itineraryCountry->country_code = $countryIso2Code;
-            $itineraryCountry->save();
+        if ($request->has('itinerary_countries')) {
+            /** @var string $countryIso2Code */
+            foreach ($request->get('itinerary_countries') as $countryIso2Code) {
+                $itineraryCountry = new ItineraryCountry();
+                $itineraryCountry->declaration_id = $declaration->id;
+                $itineraryCountry->country_code = $countryIso2Code;
+                $itineraryCountry->save();
+            }
         }
 
         if ($request->has('signature')) {
@@ -466,15 +468,14 @@ class DeclarationController extends Controller
         /**
          * Validate Itinerary Countries
          */
-        if (empty($request->get('itinerary_countries'))) {
-            throw new Exception('Missing required parameter: itinerary_countries');
-        }
-
-        /** @var string $itineraryCountry */
-        foreach ($request->get('itinerary_countries') as $itineraryCountry) {
-            if (!is_string($itineraryCountry) || 2 !== strlen($itineraryCountry)) {
-                throw new Exception('Invalid value for parameter: itinerary_countries');
+        if ($request->has('itinerary_countries')) {
+            /** @var string $itineraryCountry */
+            foreach ($request->get('itinerary_countries') as $itineraryCountry) {
+                if (!is_string($itineraryCountry) || 2 !== strlen($itineraryCountry)) {
+                    throw new Exception('Invalid value for parameter: itinerary_countries');
+                }
             }
+
         }
 
         if (empty($request->get('vehicle_type'))) {
