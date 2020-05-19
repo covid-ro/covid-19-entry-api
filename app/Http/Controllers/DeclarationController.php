@@ -362,7 +362,7 @@ class DeclarationController extends Controller
             throw new Exception('Invalid value for parameter: travelling_from_city');
         }
 
-        if (!empty($request->get('travelling_from_date'))) {
+        if ($request->has('travelling_from_date')) {
             try {
                 Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
             } catch (Exception $exception) {
