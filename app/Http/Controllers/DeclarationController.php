@@ -497,6 +497,21 @@ class DeclarationController extends Controller
         ) {
             throw new Exception('Invalid value for parameter: vehicle_registration_no');
         }
+
+        /**
+         * Validate accepted terms
+         */
+        if (empty($request->get('accept_personal_data'))) {
+            throw new Exception('Missing required parameter: accept_personal_data');
+        } else if (!is_bool($request->get('accept_personal_data'))) {
+            throw new Exception('Invalid value for parameter: accept_personal_data');
+        }
+
+        if (empty($request->get('accept_read_law'))) {
+            throw new Exception('Missing required parameter: accept_read_law');
+        } else if (!is_bool($request->get('accept_read_law'))) {
+            throw new Exception('Invalid value for parameter: accept_read_law');
+        }
     }
 
     /**
