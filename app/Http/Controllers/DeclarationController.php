@@ -277,8 +277,6 @@ class DeclarationController extends Controller
 
         if ($request->has('cnp')) {
             $declarationList->where('declarations.cnp', '=', $request->get('cnp'));
-            $declarationList->orderBy('id', 'desc');
-            $declarationList->take(1);
         }
 
         if ($request->has('vehicle_type')) {
@@ -289,6 +287,7 @@ class DeclarationController extends Controller
             $declarationList->where('declarations.vehicle_registration_no', $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no')));
         }
 
+        $declarationList->orderBy('id', 'desc');
         $declarationList = $declarationList->paginate($perPage);
 
         return response()->json($declarationList);
