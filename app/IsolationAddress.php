@@ -47,9 +47,7 @@ class IsolationAddress extends Model
             'number' => $this->number,
             'bloc' => $this->bloc,
             'entry' => $this->entry,
-            'apartment' => $this->apartment,
-            'city_arrival_date' => $this->city_arrival_date,
-            'city_departure_date' => $this->city_departure_date
+            'apartment' => $this->apartment
         ];
     }
 }

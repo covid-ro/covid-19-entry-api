@@ -152,8 +152,6 @@ class DeclarationController extends Controller
                 $isolationAddress->bloc = $isolationAddressData['bloc'];
                 $isolationAddress->entry = $isolationAddressData['entry'];
                 $isolationAddress->apartment = $isolationAddressData['apartment'];
-                $isolationAddress->city_arrival_date = !empty($isolationAddressData['city_arrival_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']) : null;
-                $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;
                 $isolationAddress->save();
             }
         }
@@ -452,22 +450,6 @@ class DeclarationController extends Controller
                 if (!empty($isolationAddress['apartment'])) {
                     if (strlen($isolationAddress['apartment']) > 16) {
                         throw new Exception('Invalid value for parameter: isolation_addresses|apartment');
-                    }
-                }
-
-                if (!empty($isolationAddress['city_arrival_date'])) {
-                    try {
-                        Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
-                    } catch (Exception $exception) {
-                        throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
-                    }
-                }
-
-                if (!empty($isolationAddress['city_departure_date'])) {
-                    try {
-                        Carbon::createFromFormat('Y-m-d', $isolationAddress['city_departure_date']);
-                    } catch (Exception $exception) {
-                        throw new Exception('Invalid value for parameter: isolation_addresses|city_departure_date');
                     }
                 }
             }
