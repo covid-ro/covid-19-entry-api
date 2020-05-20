@@ -178,9 +178,12 @@ class DeclarationController extends Controller
             $declarationSignature->save();
         }
 
+        /** @var Declaration $declaration */
+        $declaration = Declaration::find($declaration->id);
+
         $responseData['status'] = 'success';
         $responseData['message'] = 'Declaration created';
-        $responseData['declaration_code'] = $declarationCode->code;
+        $responseData['declaration'] = $declaration->toArray();
 
         return response()->json($responseData);
     }

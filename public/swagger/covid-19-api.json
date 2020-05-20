@@ -1005,9 +1005,9 @@
                     "type": "string",
                     "example": "Declaration created"
                 },
-                "declaration_code": {
-                    "type": "string",
-                    "example": "000000"
+                "declaration": {
+                    "type": "object",
+                    "$ref": "#/definitions/Declaration"
                 }
             }
         },
