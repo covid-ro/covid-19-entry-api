@@ -646,6 +646,7 @@ class DeclarationController extends Controller
 
         $declaration->status = Declaration::STATUS_DSP_VALIDATED;
         $declaration->dsp_user_name = $request->get('dsp_user_name');
+        $declaration->dsp_measure = $request->get('dsp_measure');
         $declaration->dsp_validated_at = Carbon::now();
         $declaration->save();
 
@@ -667,6 +668,14 @@ class DeclarationController extends Controller
 
         if (empty($request->get('dsp_user_name')) || strlen($request->get('dsp_user_name')) > 64) {
             throw new Exception('Invalid value for parameter: dsp_user_name');
+        }
+
+        if (!$request->has('dsp_measure')) {
+            throw new Exception('Missing required parameter: dsp_measure');
+        }
+
+        if (empty($request->get('dsp_measure')) || strlen($request->get('dsp_measure')) > 255) {
+            throw new Exception('Invalid value for parameter: dsp_measure');
         }
     }
 

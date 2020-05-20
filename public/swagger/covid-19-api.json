@@ -956,6 +956,11 @@
                     "type": "string",
                     "example": "Firstname Lastname",
                     "required": true
+                },
+                "dsp_measure": {
+                    "type": "string",
+                    "example": "Some measure name",
+                    "required": true
                 }
             }
         },
@@ -1477,11 +1482,19 @@
                     "type": "string",
                     "example": "Firstname Lastname",
                     "description": "DSP user that validated the Declaration. Nullable"
+                },
+                "dsp_measure": {
+                    "type": "string",
+                    "description": "DSP Measure"
                 }
             },
             "dsp_user_name": {
                 "type": "string",
                 "example": "FirstName LastName"
+            },
+            "dsp_measure": {
+                "type": "string",
+                "example": "Some measure name"
             }
         },
         "GetBorderCheckpointList": {
