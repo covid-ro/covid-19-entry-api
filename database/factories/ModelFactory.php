@@ -40,7 +40,7 @@ $factory->define(DeclarationCode::class, function (Faker $faker) {
 });
 
 $factory->define(Declaration::class, function (Faker $faker) {
-    return [
+    $data = [
         'name' => $faker->lastName,
         'surname' => $faker->firstName,
         'email' => $faker->email,
@@ -63,8 +63,15 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'border_crossed_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
         'border_validated_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
         'dsp_validated_at' => $faker->dateTimeBetween('-1 week', '-1 day'),
-        'dsp_user_name' => $faker->firstName . ' ' . $faker->lastName
+        'dsp_user_name' => $faker->firstName . ' ' . $faker->lastName,
+        'home_isolated' => $faker->boolean
     ];
+
+    if ($data['home_isolated']) {
+        $data['home_address'] = $faker->address;
+    }
+
+    return $data;
 });
 
 $factory->define(ItineraryCountry::class, function (Faker $faker) {

@@ -1038,6 +1038,11 @@
                     "example": false,
                     "required": true
                 },
+                "home_address": {
+                    "type": "string",
+                    "required": false,
+                    "example": "3382 Barrett Parkways"
+                },
                 "isolation_addresses": {
                     "type": "array",
                     "description": "List of Isolation Addresses. Required if home_isolated is false.",
