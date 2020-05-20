@@ -14,7 +14,7 @@ class CodeGenerator
      * @param int $length
      * @return string
      */
-    public function generateDeclarationCode($length = 6): string
+    public function generateDeclarationCode($length = 7): string
     {
         $string = '';
 

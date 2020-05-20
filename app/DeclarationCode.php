@@ -28,7 +28,7 @@ class DeclarationCode extends Model
     public static function generateDeclarationCode(): self
     {
         $declarationCode = new self();
-        $declarationCode->code = (new CodeGenerator())->generateDeclarationCode(6);
+        $declarationCode->code = (new CodeGenerator())->generateDeclarationCode(7);
 
         try {
             $declarationCode->save();

@@ -8,6 +8,7 @@ use App\DeclarationCode;
 use App\DeclarationSignature;
 use App\IsolationAddress;
 use App\ItineraryCountry;
+use App\Service\CodeGenerator;
 use App\Symptom;
 use App\User;
 use Faker\Generator as Faker;
@@ -34,7 +35,7 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(DeclarationCode::class, function (Faker $faker) {
     return [
-        'code' => strtoupper(Str::random(6))
+        'code' => (new CodeGenerator())->generateDeclarationCode(7)
     ];
 });
 
@@ -78,7 +79,7 @@ $factory->define(IsolationAddress::class, function (Faker $faker) {
         'county' => $faker->country,
         'street' => $faker->streetName,
         'number' => $faker->randomNumber(2),
-        'block' => $faker->randomNumber(3),
+        'bloc' => $faker->randomNumber(3),
         'entry' => $faker->randomDigitNotNull,
         'apartment' => $faker->randomLetter,
         'city_arrival_date' => $faker->dateTimeBetween('-1 week', '-1 day'),
