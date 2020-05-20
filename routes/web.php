@@ -34,4 +34,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/declaration/{declarationCode}/signature', 'DeclarationController@getDeclarationSignature');
     Route::get('/declaration/{declarationCode}', 'DeclarationController@getDeclaration');
     Route::put('/declaration/{declarationCode}/dsp', 'DeclarationController@updateDeclaration');
+    Route::get('/declaration/cnp/{cnp}', 'DeclarationController@getDeclarationByCnp');
 });

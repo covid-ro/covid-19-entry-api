@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 
@@ -649,5 +650,40 @@ class DeclarationController extends Controller
         if (empty($request->get('dsp_user_name')) || strlen($request->get('dsp_user_name')) > 64) {
             throw new Exception('Invalid value for parameter: dsp_user_name');
         }
+    }
+
+    /**
+     * @param string $cnp
+     * @return JsonResponse
+     */
+    public function getDeclarationByCnp(string $cnp)
+    {
+        $responseData = [];
+
+        /** @var Collection|null $declarations */
+        $declarations = Declaration::where('cnp', '=', $cnp)
+            ->whereNull('border_viewed_at')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $declarationList = [];
+
+        /** @var Declaration $declaration */
+        foreach ($declarations as $declaration) {
+            /**
+             * Mark Declaration as being viewed
+             * This will prevent showing the Declaration in future requests
+             */
+            $declaration->border_viewed_at = Carbon::now();
+            $declaration->save();
+
+            $declarationList[] = $declaration->toArray();
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration list';
+        $responseData['declarationList'] = $declarationList;
+
+        return response()->json($responseData);
     }
 }

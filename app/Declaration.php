@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $status
  * @property DateTime|null $border_crossed_at
  * @property DateTime|null $border_validated_at
+ * @property DateTime|null $border_viewed_at
  * @property DateTime|null $dsp_validated_at
  * @property string|null $dsp_user_name
  * @property bool $accept_personal_data
@@ -76,6 +77,7 @@ class Declaration extends Model
         'created_at',
         'border_crossed_at',
         'border_validated_at',
+        'border_viewed_at',
         'dsp_validated_at'
     ];
 
