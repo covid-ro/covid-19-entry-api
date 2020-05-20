@@ -331,12 +331,14 @@ class DeclarationController extends Controller
             throw new Exception('Invalid value for parameter: cnp');
         }
 
-        if ($request->has('birth_date')) {
-            try {
-                Carbon::createFromFormat('Y-m-d', $request->get('birth_date'));
-            } catch (Exception $exception) {
-                throw new Exception('Invalid value for parameter: birth_date');
-            }
+        if (!$request->has('birth_date')) {
+            throw new Exception('Missing required parameter: birth_date');
+        }
+
+        try {
+            Carbon::createFromFormat('Y-m-d', $request->get('birth_date'));
+        } catch (Exception $exception) {
+            throw new Exception('Invalid value for parameter: birth_date');
         }
 
         if ($request->has('border_checkpoint_id')) { // optional
