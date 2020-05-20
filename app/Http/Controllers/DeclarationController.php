@@ -78,7 +78,7 @@ class DeclarationController extends Controller
         $declaration->email = (string)$request->get('email');
         $declaration->cnp = $request->get('cnp');
         $declaration->sex = $this->getSexFromCnp($request->get('cnp'));
-        $declaration->birth_date = $this->getBirthDateFromCnp($request->get('cnp'));
+        $declaration->birth_date = $request->has('birth_date') ? Carbon::createFromFormat('Y-m-d', $request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
 
         /**
          * Border checkpoint
@@ -329,6 +329,14 @@ class DeclarationController extends Controller
 
         if (!Cnp::validate($request->get('cnp'))) {
             throw new Exception('Invalid value for parameter: cnp');
+        }
+
+        if ($request->has('birth_date')) {
+            try {
+                Carbon::createFromFormat('Y-m-d', $request->get('birth_date'));
+            } catch (Exception $exception) {
+                throw new Exception('Invalid value for parameter: birth_date');
+            }
         }
 
         if ($request->has('border_checkpoint_id')) { // optional

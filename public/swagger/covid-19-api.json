@@ -918,6 +918,12 @@
                     "example": "2870401102315",
                     "required": true
                 },
+                "birth_date": {
+                    "type": "string",
+                    "example": "2020-05-20",
+                    "description": "ISO 8601 date",
+                    "required": false
+                },
                 "border_checkpoint_id": {
                     "type": "integer",
                     "example": 32,
@@ -955,6 +961,7 @@
                 "travelling_from_date": {
                     "type": "string",
                     "example": "2020-03-23",
+                    "description": "ISO 8601 date",
                     "required": true
                 },
                 "travel_route": {
@@ -1295,7 +1302,8 @@
                 },
                 "travelling_from_date": {
                     "type": "string",
-                    "example": "2020-03-23"
+                    "example": "2020-03-23",
+                    "description": "ISO 8601 date"
                 },
                 "travel_route": {
                     "type": "string",
@@ -1379,22 +1387,22 @@
                 "created_at": {
                     "type": "string",
                     "example": "2020-04-01T18:37:19+0000",
-                    "description": "ISO 8601 date"
+                    "description": "ISO 8601 datetime"
                 },
                 "border_crossed_at": {
                     "type": "string",
                     "example": "2020-04-01T19:37:19+0000",
-                    "description": "ISO 8601 date. Nullable"
+                    "description": "ISO 8601 datetime. Nullable"
                 },
                 "border_validated_at": {
                     "type": "string",
                     "example": "2020-04-01T19:37:19+0000",
-                    "description": "ISO 8601 date. Nullable"
+                    "description": "ISO 8601 datetime. Nullable"
                 },
                 "dsp_validated_at": {
                     "type": "string",
                     "example": "2020-04-01T20:37:19+0000",
-                    "description": "ISO 8601 date. Nullable"
+                    "description": "ISO 8601 datetime. Nullable"
                 },
                 "dsp_user_name": {
                     "type": "string",
