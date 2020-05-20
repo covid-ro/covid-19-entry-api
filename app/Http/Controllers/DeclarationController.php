@@ -670,7 +670,10 @@ class DeclarationController extends Controller
 
         /** @var Collection|null $declarations */
         $declarations = Declaration::where('cnp', '=', $cnp)
-            ->whereNull('border_viewed_at')
+            ->where(function ($query) {
+                $query->whereNull('border_viewed_at');
+                $query->orWhere('border_viewed_at', '>', (Carbon::now())->subMinutes(5));
+            })
             ->orderBy('id', 'desc')
             ->get();
 
@@ -679,11 +682,12 @@ class DeclarationController extends Controller
         /** @var Declaration $declaration */
         foreach ($declarations as $declaration) {
             /**
-             * Mark Declaration as being viewed
-             * This will prevent showing the Declaration in future requests
+             * Mark Declaration as being viewed, if needed
              */
-            $declaration->border_viewed_at = Carbon::now();
-            $declaration->save();
+            if (empty($declaration->border_viewed_at)) {
+                $declaration->border_viewed_at = Carbon::now();
+                $declaration->save();
+            }
 
             $declarationList[] = $declaration->toArray();
         }

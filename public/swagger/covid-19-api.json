@@ -638,7 +638,7 @@
                 "tags": [
                     "Declaration"
                 ],
-                "summary": "Get declaration list by CNP",
+                "summary": "Get declaration list by CNP. Will mark the Declaration as being viewed. Once viewed, the declaration will be visible for the next 5 minutes. After that, the Declaration won't be returned anymore.",
                 "operationId": "GetDeclarationByCnp",
                 "produces": [
                     "application/json"

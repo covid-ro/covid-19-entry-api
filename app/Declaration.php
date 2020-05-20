@@ -203,6 +203,7 @@ class Declaration extends Model
         $declarationData['created_at'] = $this->created_at->format(DateTime::ISO8601);
         $declarationData['border_crossed_at'] = !empty($this->border_crossed_at) ? $this->border_crossed_at->format(DateTime::ISO8601) : null;
         $declarationData['border_validated_at'] = !empty($this->border_validated_at) ? $this->border_validated_at->format(DateTime::ISO8601) : null;
+        $declarationData['border_viewed_at'] = !empty($this->border_viewed_at) ? $this->border_viewed_at->format(DateTime::ISO8601) : null;
         $declarationData['dsp_validated_at'] = !empty($this->dsp_validated_at) ? $this->dsp_validated_at->format(DateTime::ISO8601) : null;
         $declarationData['dsp_user_name'] = $this->dsp_user_name;
         $declarationData['accept_personal_data'] = (bool)$this->accept_personal_data;
