@@ -698,4 +698,43 @@ class DeclarationController extends Controller
 
         return response()->json($responseData);
     }
+
+    /**
+     * @param string $declarationCode
+     * @return JsonResponse
+     */
+    public function viewDeclaration(string $declarationCode)
+    {
+        $responseData = [];
+
+        /** @var Declaration|null $declaration */
+        $declaration = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->where('declaration_codes.code', $declarationCode)
+            ->where(function ($query) {
+                $query->whereNull('declarations.border_viewed_at');
+                $query->orWhere('declarations.border_viewed_at', '>', (Carbon::now())->subMinutes(5));
+            })
+            ->select('declarations.*')
+            ->first();
+
+        if (empty($declaration)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Not Found'
+            ], 404);
+        }
+
+        /**
+         * Mark Declaration as being viewed, if needed
+         */
+        if (empty($declaration->border_viewed_at)) {
+            $declaration->border_viewed_at = Carbon::now();
+            $declaration->save();
+        }
+
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration details';
+        $responseData['declaration'] = $declaration->toArray();
+        return response()->json($responseData);
+    }
 }

@@ -627,6 +627,69 @@
                 }
             }
         },
+        "/declaration/view/{declarationCode}": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "View Declaration",
+                "description": "Will mark the Declaration as being viewed. Once viewed, the declaration will be visible for the next 5 minutes. After that, the Declaration won't be returned anymore.",
+                "operationId": "ViewDeclaration",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "declarationCode",
+                        "in": "path",
+                        "description": "Unique declaration code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/declaration/cnp/{cnp}": {
             "get": {
                 "security": [
@@ -638,7 +701,8 @@
                 "tags": [
                     "Declaration"
                 ],
-                "summary": "Get declaration list by CNP. Will mark the Declaration as being viewed. Once viewed, the declaration will be visible for the next 5 minutes. After that, the Declaration won't be returned anymore.",
+                "summary": "View declaration list by CNP",
+                "description": "Will mark the Declaration as being viewed. Once viewed, the declaration will be visible for the next 5 minutes. After that, the Declaration won't be returned anymore.",
                 "operationId": "GetDeclarationByCnp",
                 "produces": [
                     "application/json"
