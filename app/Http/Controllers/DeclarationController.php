@@ -274,6 +274,12 @@ class DeclarationController extends Controller
 
         $declarationList = Declaration::whereNull('deleted_at');
 
+        if ($request->has('cnp')) {
+            $declarationList->where('declarations.cnp', '=', $request->get('cnp'));
+            $declarationList->orderBy('id', 'desc');
+            $declarationList->take(1);
+        }
+
         if ($request->has('vehicle_type')) {
             $declarationList->where('declarations.vehicle_type', $request->get('vehicle_type'));
         }
