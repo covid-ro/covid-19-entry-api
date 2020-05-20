@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $declaration_id
  * @property string $city
  * @property string $county
- * @property string $city_full_address
+ * @property string|null $street
+ * @property string|null $number
+ * @property string|null $bloc
+ * @property string|null $entry
+ * @property string|null $apartment
  * @property DateTime|null $city_arrival_date
  * @property DateTime|null $city_departure_date
  * @property DateTime|null $created_at
@@ -39,7 +43,11 @@ class IsolationAddress extends Model
             'id' => $this->id,
             'city' => $this->city,
             'county' => $this->county,
-            'city_full_address' => $this->city_full_address,
+            'street' => $this->street,
+            'number' => $this->number,
+            'bloc' => $this->bloc,
+            'entry' => $this->entry,
+            'apartment' => $this->apartment,
             'city_arrival_date' => $this->city_arrival_date,
             'city_departure_date' => $this->city_departure_date
         ];

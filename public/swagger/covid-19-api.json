@@ -858,7 +858,7 @@
                 },
                 "border_checkpoint_id": {
                     "type": "integer",
-                    "example": 1,
+                    "example": 32,
                     "required": false
                 },
                 "document_type": {
@@ -1015,13 +1015,30 @@
                     "type": "string",
                     "example": "Olt"
                 },
-                "city_full_address": {
+                "street": {
                     "type": "string",
-                    "example": "Full city address"
+                    "example": "Lunga"
+                },
+                "number": {
+                    "type": "string",
+                    "example": "2A"
+                },
+                "bloc": {
+                    "type": "string",
+                    "example": "127C"
+                },
+                "entry": {
+                    "type": "string",
+                    "example": "B"
+                },
+                "apartment": {
+                    "type": "string",
+                    "example": "3D"
                 },
                 "city_arrival_date": {
                     "type": "string",
-                    "example": "2020-03-20"
+                    "example": "2020-03-20",
+                    "required": false,
                 },
                 "city_departure_date": {
                     "type": "string",
@@ -1043,10 +1060,25 @@
                     "example": "Olt",
                     "required": true
                 },
-                "city_full_address": {
+                "street": {
                     "type": "string",
-                    "example": "Full city address",
-                    "required": true
+                    "example": "Lunga"
+                },
+                "number": {
+                    "type": "string",
+                    "example": "2A"
+                },
+                "bloc": {
+                    "type": "string",
+                    "example": "127C"
+                },
+                "entry": {
+                    "type": "string",
+                    "example": "B"
+                },
+                "apartment": {
+                    "type": "string",
+                    "example": "3D"
                 },
                 "city_arrival_date": {
                     "type": "string",

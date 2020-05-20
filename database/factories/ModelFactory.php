@@ -76,7 +76,11 @@ $factory->define(IsolationAddress::class, function (Faker $faker) {
     return [
         'city' => $faker->city,
         'county' => $faker->country,
-        'city_full_address' => $faker->streetAddress,
+        'street' => $faker->streetName,
+        'number' => $faker->randomNumber(2),
+        'block' => $faker->randomNumber(3),
+        'entry' => $faker->randomDigitNotNull,
+        'apartment' => $faker->randomLetter,
         'city_arrival_date' => $faker->dateTimeBetween('-1 week', '-1 day'),
         'city_departure_date' => $faker->dateTimeBetween('-1 day', '+2 days'),
     ];
