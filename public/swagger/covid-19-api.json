@@ -1160,7 +1160,7 @@
             "properties": {
                 "code": {
                     "type": "string",
-                    "example": "000000"
+                    "example": "0123456"
                 },
                 "phone": {
                     "type": "string",
