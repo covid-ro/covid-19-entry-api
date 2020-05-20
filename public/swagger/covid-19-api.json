@@ -1041,7 +1041,7 @@
                 "home_address": {
                     "type": "string",
                     "required": false,
-                    "example": "3382 Barrett Parkways"
+                    "example": "Strada Soarelui numarul 56, bloc 75, scara C, apartament 44, Bucuresti, Sector 4"
                 },
                 "isolation_addresses": {
                     "type": "array",

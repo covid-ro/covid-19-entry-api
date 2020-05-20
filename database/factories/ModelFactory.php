@@ -68,7 +68,7 @@ $factory->define(Declaration::class, function (Faker $faker) {
     ];
 
     if ($data['home_isolated']) {
-        $data['home_address'] = $faker->address;
+        $data['home_address'] = $faker->streetAddress;
     }
 
     return $data;
