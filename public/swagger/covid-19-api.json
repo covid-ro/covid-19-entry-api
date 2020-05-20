@@ -900,9 +900,14 @@
                     "example": "Roma, Venetia, Bucuresti",
                     "required": false
                 },
+                "home_isolated": {
+                    "type": "boolean",
+                    "example": false,
+                    "required": true
+                },
                 "isolation_addresses": {
                     "type": "array",
-                    "description": "List of Isolation Addresses",
+                    "description": "List of Isolation Addresses. Required if home_isolated is false.",
                     "minItems": 1,
                     "required": true,
                     "items": {
@@ -996,7 +1001,7 @@
                 },
                 "declaration_code": {
                     "type": "string",
-                    "example": "AAAAAA"
+                    "example": "000000"
                 }
             }
         },
@@ -1169,7 +1174,7 @@
             "properties": {
                 "code": {
                     "type": "string",
-                    "example": "AAAAAA"
+                    "example": "000000"
                 },
                 "phone": {
                     "type": "string",

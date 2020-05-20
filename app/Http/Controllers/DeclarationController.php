@@ -135,23 +135,27 @@ class DeclarationController extends Controller
             }
         }
 
-        /**
-         * Isolation addresses
-         */
-        /** @var array $isolationAddressData */
-        foreach ($request->get('isolation_addresses') as $isolationAddressData) {
-            $isolationAddress = new IsolationAddress();
-            $isolationAddress->declaration_id = $declaration->id;
-            $isolationAddress->city = $isolationAddressData['city'];
-            $isolationAddress->county = $isolationAddressData['county'];
-            $isolationAddress->street = $isolationAddressData['street'];
-            $isolationAddress->number = $isolationAddressData['number'];
-            $isolationAddress->bloc = $isolationAddressData['bloc'];
-            $isolationAddress->entry = $isolationAddressData['entry'];
-            $isolationAddress->apartment = $isolationAddressData['apartment'];
-            $isolationAddress->city_arrival_date = !empty($isolationAddressData['city_arrival_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']) : null;
-            $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;
-            $isolationAddress->save();
+        $declaration->home_isolated = (bool)$request->get('home_isolated');
+
+        if (false === $declaration->home_isolated) {
+            /**
+             * Isolation addresses
+             */
+            /** @var array $isolationAddressData */
+            foreach ($request->get('isolation_addresses') as $isolationAddressData) {
+                $isolationAddress = new IsolationAddress();
+                $isolationAddress->declaration_id = $declaration->id;
+                $isolationAddress->city = $isolationAddressData['city'];
+                $isolationAddress->county = $isolationAddressData['county'];
+                $isolationAddress->street = $isolationAddressData['street'];
+                $isolationAddress->number = $isolationAddressData['number'];
+                $isolationAddress->bloc = $isolationAddressData['bloc'];
+                $isolationAddress->entry = $isolationAddressData['entry'];
+                $isolationAddress->apartment = $isolationAddressData['apartment'];
+                $isolationAddress->city_arrival_date = !empty($isolationAddressData['city_arrival_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_arrival_date']) : null;
+                $isolationAddress->city_departure_date = !empty($isolationAddressData['city_departure_date']) ? Carbon::createFromFormat('Y-m-d', $isolationAddressData['city_departure_date']) : null;
+                $isolationAddress->save();
+            }
         }
 
         /**
@@ -382,74 +386,80 @@ class DeclarationController extends Controller
             }
         }
 
-        /**
-         * Validate Isolation Addresses
-         */
-        if (empty($request->get('isolation_addresses'))) {
-            throw new Exception('Missing required parameter: isolation_addresses');
+        if (!$request->has('home_isolated')) {
+            throw new Exception('Missing required parameter: home_isolated');
         }
 
-        /** @var array $isolationAddress */
-        foreach ($request->get('isolation_addresses') as $isolationAddress) {
-            if (empty($isolationAddress['city'])) {
-                throw new Exception('Missing required parameter: isolation_addresses|city');
+        if (false === (bool)$request->get('home_isolated', false)) {
+            /**
+             * Validate Isolation Addresses
+             */
+            if (empty($request->get('isolation_addresses'))) {
+                throw new Exception('Missing required parameter: isolation_addresses');
             }
 
-            if (!is_string($isolationAddress['city']) || strlen($isolationAddress['city']) > 64) {
-                throw new Exception('Invalid value for parameter: isolation_addresses|city');
-            }
-
-            if (empty($isolationAddress['county'])) {
-                throw new Exception('Missing required parameter: isolation_addresses|county');
-            }
-
-            if (!is_string($isolationAddress['county']) || strlen($isolationAddress['county']) > 64) {
-                throw new Exception('Invalid value for parameter: isolation_addresses|county');
-            }
-
-            if (!empty($isolationAddress['street'])) {
-                if (strlen($isolationAddress['street']) > 64) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|street');
+            /** @var array $isolationAddress */
+            foreach ($request->get('isolation_addresses') as $isolationAddress) {
+                if (empty($isolationAddress['city'])) {
+                    throw new Exception('Missing required parameter: isolation_addresses|city');
                 }
-            }
 
-            if (!empty($isolationAddress['number'])) {
-                if (strlen($isolationAddress['number']) > 16) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|number');
+                if (!is_string($isolationAddress['city']) || strlen($isolationAddress['city']) > 64) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|city');
                 }
-            }
 
-            if (!empty($isolationAddress['bloc'])) {
-                if (strlen($isolationAddress['bloc']) > 16) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|bloc');
+                if (empty($isolationAddress['county'])) {
+                    throw new Exception('Missing required parameter: isolation_addresses|county');
                 }
-            }
 
-            if (!empty($isolationAddress['entry'])) {
-                if (strlen($isolationAddress['entry']) > 16) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|entry');
+                if (!is_string($isolationAddress['county']) || strlen($isolationAddress['county']) > 64) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|county');
                 }
-            }
 
-            if (!empty($isolationAddress['apartment'])) {
-                if (strlen($isolationAddress['apartment']) > 16) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|apartment');
+                if (!empty($isolationAddress['street'])) {
+                    if (strlen($isolationAddress['street']) > 64) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|street');
+                    }
                 }
-            }
 
-            if (!empty($isolationAddress['city_arrival_date'])) {
-                try {
-                    Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
-                } catch (Exception $exception) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
+                if (!empty($isolationAddress['number'])) {
+                    if (strlen($isolationAddress['number']) > 16) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|number');
+                    }
                 }
-            }
 
-            if (!empty($isolationAddress['city_departure_date'])) {
-                try {
-                    Carbon::createFromFormat('Y-m-d', $isolationAddress['city_departure_date']);
-                } catch (Exception $exception) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|city_departure_date');
+                if (!empty($isolationAddress['bloc'])) {
+                    if (strlen($isolationAddress['bloc']) > 16) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|bloc');
+                    }
+                }
+
+                if (!empty($isolationAddress['entry'])) {
+                    if (strlen($isolationAddress['entry']) > 16) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|entry');
+                    }
+                }
+
+                if (!empty($isolationAddress['apartment'])) {
+                    if (strlen($isolationAddress['apartment']) > 16) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|apartment');
+                    }
+                }
+
+                if (!empty($isolationAddress['city_arrival_date'])) {
+                    try {
+                        Carbon::createFromFormat('Y-m-d', $isolationAddress['city_arrival_date']);
+                    } catch (Exception $exception) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|city_arrival_date');
+                    }
+                }
+
+                if (!empty($isolationAddress['city_departure_date'])) {
+                    try {
+                        Carbon::createFromFormat('Y-m-d', $isolationAddress['city_departure_date']);
+                    } catch (Exception $exception) {
+                        throw new Exception('Invalid value for parameter: isolation_addresses|city_departure_date');
+                    }
                 }
             }
         }
