@@ -17,7 +17,7 @@ class DevSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 10000)->create()->each(function ($user) { // create User
+        factory(App\User::class, 5000)->create()->each(function ($user) { // create User
             factory(App\DeclarationCode::class, rand(1, 2))->create()->each(function ($declarationCode) use ($user) { // create DeclarationCode
 
                 $declarationStatus = Declaration::AVAILABLE_STATUS_LIST[array_rand(Declaration::AVAILABLE_STATUS_LIST)];
