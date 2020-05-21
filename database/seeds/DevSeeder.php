@@ -17,7 +17,7 @@ class DevSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 500)->create()->each(function ($user) { // create User
+        factory(App\User::class, 1000)->create()->each(function ($user) { // create User
             try {
                 factory(App\DeclarationCode::class, rand(1, 2))->create()->each(function ($declarationCode) use ($user) { // create DeclarationCode
 
