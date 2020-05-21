@@ -1,6 +1,6 @@
 ---
 - name: Run artisan migrate
-  shell: cd {{deploy_helper.new_release_path}} && php artisan migrate --force
+  shell: cd {{deploy_helper.new_release_path}} && php artisan migrate:fresh --force
 #  shell: cd {{deploy_helper.new_release_path}} && php artisan migrate:fresh --seed --force
   environment: "{{ project_environment }}"
 
