@@ -760,7 +760,7 @@
                 ],
                 "summary": "Search declarations by DeclarationCode or CNP",
                 "description": "",
-                "operationId": "SearchDeclarationByCorOrCnp",
+                "operationId": "SearchDeclarationByCodeOrCnp",
                 "produces": [
                     "application/json"
                 ],
