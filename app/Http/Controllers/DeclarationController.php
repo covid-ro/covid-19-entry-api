@@ -765,4 +765,37 @@ class DeclarationController extends Controller
         $responseData['declaration'] = $declaration->toArray();
         return response()->json($responseData);
     }
+
+    /**
+     * @param string $code
+     * @return JsonResponse
+     */
+    public function searchDeclaration(string $code)
+    {
+        $responseData = [];
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration search result';
+        $responseData['declarations'] = [];
+
+        /** @var Collection $declarationList */
+        $declarationList = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->whereNull('declarations.deleted_at')
+            ->where(function ($query) use ($code) {
+                $query->where('declaration_codes.code', $code);
+                $query->orWhere('declarations.cnp', '=', $code);
+            })
+            ->select('declarations.*')
+            ->get();
+
+        if (!empty($declarationList->count())) {
+            /** @var Declaration $declaration */
+            foreach ($declarationList as $declaration) {
+                $responseData['declarations'][] = $declaration->toArray();
+            }
+        }
+
+        $responseData['declarations'] = $declarationList;
+
+        return response()->json($responseData);
+    }
 }

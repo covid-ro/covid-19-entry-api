@@ -747,6 +747,63 @@
                 }
             }
         },
+        "/declaration/search/{code}": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Search declarations by DeclarationCode or CNP",
+                "description": "",
+                "operationId": "SearchDeclarationByCorOrCnp",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "DeclarationCode or CNP (Cod Numeric Personal)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SearchDeclarationByCodeOrCnpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/declaration/{declarationCode}/signature": {
             "get": {
                 "security": [
@@ -1252,6 +1309,25 @@
                 "message": {
                     "type": "string",
                     "example": "Declaration list"
+                },
+                "declarations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Declaration"
+                    }
+                }
+            }
+        },
+        "SearchDeclarationByCodeOrCnpResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Declaration search result"
                 },
                 "declarations": {
                     "type": "array",

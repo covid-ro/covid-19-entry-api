@@ -36,4 +36,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/declaration/{declarationCode}/dsp', 'DeclarationController@updateDeclaration');
     Route::get('/declaration/cnp/{cnp}', 'DeclarationController@getDeclarationByCnp');
     Route::get('/declaration/view/{declarationCode}', 'DeclarationController@viewDeclaration');
+    Route::get('/declaration/search/{code}', 'DeclarationController@searchDeclaration');
 });
