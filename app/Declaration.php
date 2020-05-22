@@ -160,7 +160,7 @@ class Declaration extends Model
         $declarationData['surname'] = $this->surname;
         $declarationData['email'] = $this->email;
         $declarationData['cnp'] = $this->cnp;
-        $declarationData['is_romanian'] = $this->is_romanian;
+        $declarationData['is_romanian'] = (bool)$this->is_romanian;
         $declarationData['birth_date'] = $this->birth_date;
         $declarationData['sex'] = $this->sex;
 
