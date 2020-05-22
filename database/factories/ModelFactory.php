@@ -45,6 +45,7 @@ $factory->define(Declaration::class, function (Faker $faker) {
         'surname' => $faker->firstName,
         'email' => $faker->email,
         'cnp' => $faker->numberBetween(1111111111111, 2999999999999),
+        'is_romanian' => $faker->boolean,
         'birth_date' => $faker->dateTimeBetween('-50 years', '-18 years'),
         'sex' => $faker->regexify('(M|F)'),
         'document_type' => $faker->regexify('(passport|identity_card)'),

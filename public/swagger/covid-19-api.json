@@ -987,6 +987,11 @@
                     "example": "2870401102315",
                     "required": true
                 },
+                "is_romanian": {
+                    "type": "boolean",
+                    "example": true,
+                    "required": true
+                },
                 "birth_date": {
                     "type": "string",
                     "example": "2020-05-20",
@@ -1337,6 +1342,10 @@
                 "cnp": {
                     "type": "string",
                     "example": "2870401102315"
+                },
+                "is_romanian": {
+                    "type": "boolean",
+                    "example": true
                 },
                 "birth_date": {
                     "type": "string",

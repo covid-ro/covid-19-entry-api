@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $surname
  * @property string $email
  * @property string $cnp
+ * @property bool $is_romanian
  * @property DateTime|null $birth_date
  * @property string|null $sex
  * @property string $document_type
@@ -159,6 +160,7 @@ class Declaration extends Model
         $declarationData['surname'] = $this->surname;
         $declarationData['email'] = $this->email;
         $declarationData['cnp'] = $this->cnp;
+        $declarationData['is_romanian'] = $this->is_romanian;
         $declarationData['birth_date'] = $this->birth_date;
         $declarationData['sex'] = $this->sex;
 

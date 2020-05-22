@@ -77,7 +77,8 @@ class DeclarationController extends Controller
         $declaration->surname = $request->get('surname');
         $declaration->email = (string)$request->get('email');
         $declaration->cnp = $request->get('cnp');
-        $declaration->sex = $this->getSexFromCnp($request->get('cnp'));
+        $declaration->is_romanian = (bool)$request->get('is_romanian');
+        $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
         $declaration->birth_date = $request->has('birth_date') ? Carbon::createFromFormat('Y-m-d', $request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
 
         /**
@@ -333,6 +334,14 @@ class DeclarationController extends Controller
 //        if (!Cnp::validate($request->get('cnp'))) {
 //            throw new Exception('Invalid value for parameter: cnp');
 //        }
+
+        if (!$request->has('is_romanian')) {
+            throw new Exception('Missing required parameter: is_romanian');
+        }
+
+        if (!is_bool($request->get('is_romanian'))) {
+            throw new Exception('Missing required parameter: is_romanian');
+        }
 
         if (
             !$request->has('birth_date') && // Birth date is missing
