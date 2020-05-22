@@ -97,7 +97,8 @@ $factory->define(IsolationAddress::class, function (Faker $faker) {
 
 $factory->define(BorderCheckpoint::class, function (Faker $faker) {
     return [
-        'name' => $faker->streetName
+        'name' => $faker->streetName,
+        'is_dsp_before_border' => $faker->boolean
     ];
 });
 

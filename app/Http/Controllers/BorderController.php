@@ -41,6 +41,11 @@ class BorderController extends Controller
 
         $borderCheckpoint = new BorderCheckpoint();
         $borderCheckpoint->name = $request->get('name');
+
+        if ($request->has('is_dsp_before_border')) {
+            $borderCheckpoint->is_dsp_before_border = (bool)$request->get('is_dsp_before_border');
+        }
+
         $borderCheckpoint->save();
 
         $responseData['status'] = 'success';
@@ -62,6 +67,10 @@ class BorderController extends Controller
 
         if (strlen($request->get('name')) > 255) {
             throw new Exception('Invalid value for parameter: name');
+        }
+
+        if ($request->has('is_dsp_before_border') && !is_bool($request->get('is_dsp_before_border'))) {
+            throw new Exception('Invalid value for parameter: is_dsp_before_border');
         }
     }
 
@@ -134,6 +143,10 @@ class BorderController extends Controller
             }
         }
 
+        if ($request->has('is_dsp_before_border') && !is_bool($request->get('is_dsp_before_border'))) {
+            throw new Exception('Invalid value for parameter: is_dsp_before_border');
+        }
+
         if ($request->has('status')) {
             if (!in_array($request->get('status'), [BorderCheckpoint::STATUS_ACTIVE, BorderCheckpoint::STATUS_INACTIVE])) {
                 throw new Exception('Invalid value for parameter: status');
@@ -194,6 +207,10 @@ class BorderController extends Controller
 
         if ($request->has('name')) {
             $borderCheckpoint->name = $request->get('name');
+        }
+
+        if ($request->has('is_dsp_before_border')) {
+            $borderCheckpoint->is_dsp_before_border = (bool)$request->get('is_dsp_before_border');
         }
 
         /** @var string|null $statusValue */

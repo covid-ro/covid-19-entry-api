@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string|null $code
  * @property string $name
+ * @property bool $is_dsp_before_border
  * @property DateTime|null $created_at
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
@@ -44,6 +45,7 @@ class BorderCheckpoint extends Model
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->name,
+            'is_dsp_before_border' => (bool)$this->is_dsp_before_border,
             'status' => empty($this->deleted_at) ? self::STATUS_ACTIVE : self::STATUS_INACTIVE
         ];
     }

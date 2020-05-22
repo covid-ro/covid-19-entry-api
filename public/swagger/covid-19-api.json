@@ -1540,6 +1540,10 @@
                     "type": "string",
                     "example": "Aeroportul Internațional Aurel Vlaicu"
                 },
+                "is_dsp_before_border": {
+                    "type": "boolean",
+                    "example": false
+                },
                 "status": {
                     "type": "string",
                     "example": "active",
@@ -1557,6 +1561,11 @@
                     "type": "string",
                     "required": true,
                     "example": "Border Checkpoint Name"
+                },
+                "is_dsp_before_border": {
+                    "type": "boolean",
+                    "required": false,
+                    "example": false
                 }
             }
         },
@@ -1567,6 +1576,11 @@
                     "type": "string",
                     "required": false,
                     "example": "Updated Border Checkpoint Name"
+                },
+                "is_dsp_before_border": {
+                    "type": "boolean",
+                    "example": false,
+                    "required": false
                 },
                 "status": {
                     "type": "string",
