@@ -79,7 +79,7 @@ class DeclarationController extends Controller
         $declaration->cnp = $request->get('cnp');
         $declaration->is_romanian = (bool)$request->get('is_romanian');
         $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
-        $declaration->birth_date = $request->has('birth_date') ? Carbon::createFromFormat('Y-m-d', $request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
+        $declaration->birth_date = $request->has('birth_date') ? new Carbon($request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
 
         /**
          * Border checkpoint
@@ -105,7 +105,7 @@ class DeclarationController extends Controller
          */
         $declaration->travelling_from_country_code = $request->get('travelling_from_country_code');
         $declaration->travelling_from_city = $request->get('travelling_from_city');
-        $declaration->travelling_from_date = $request->has('travelling_from_date') ? Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date')) : null;
+        $declaration->travelling_from_date = $request->has('travelling_from_date') ? new Carbon($request->get('travelling_from_date')) : null;
         $declaration->home_country_return_date = Carbon::now();
         $declaration->travel_route = $request->get('travel_route', null);
 
@@ -352,7 +352,7 @@ class DeclarationController extends Controller
 
         if ($request->has('birth_date')) {
             try {
-                Carbon::createFromFormat('Y-m-d', $request->get('birth_date'));
+                new Carbon($request->get('birth_date'));
             } catch (Exception $exception) {
                 throw new Exception('Invalid value for parameter: birth_date');
             }
@@ -408,7 +408,7 @@ class DeclarationController extends Controller
 
         if ($request->has('travelling_from_date')) {
             try {
-                Carbon::createFromFormat('Y-m-d', $request->get('travelling_from_date'));
+                new Carbon(($request->get('travelling_from_date')));
             } catch (Exception $exception) {
                 throw new Exception('Invalid value for parameter: travelling_from_date');
             }
