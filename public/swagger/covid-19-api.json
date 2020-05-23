@@ -1105,11 +1105,6 @@
                     "example": false,
                     "required": true
                 },
-                "home_address": {
-                    "type": "string",
-                    "required": false,
-                    "example": "Strada Soarelui numarul 56, bloc 75, scara C, apartament 44, Bucuresti, Sector 4"
-                },
                 "isolation_addresses": {
                     "type": "array",
                     "description": "List of Isolation Addresses. Required if home_isolated is false.",
@@ -1468,6 +1463,16 @@
                     "type": "string",
                     "example": "Roma, Venetia, Bucuresti",
                     "required": false
+                },
+                "home_isolated": {
+                    "type": "boolean",
+                    "example": false,
+                    "required": true
+                },
+                "home_address": {
+                    "type": "string",
+                    "required": false,
+                    "example": "Strada Soarelui numarul 56, bloc 75, scara C, apartament 44, Bucuresti, Sector 4"
                 },
                 "isolation_addresses": {
                     "type": "array",
