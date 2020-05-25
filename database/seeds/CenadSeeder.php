@@ -35,40 +35,40 @@ class CenadSeeder extends Seeder
                         'status' => $declarationStatus
                     ];
 
-                    /**
-                     * Case 1: Declaration status is Phone Validated
-                     */
-                    if (Declaration::STATUS_PHONE_VALIDATED === $declarationStatus) {
-                        $declarationData['border_crossed_at'] = null;
-                        $declarationData['border_validated_at'] = null;
-                        $declarationData['dsp_validated_at'] = null;
-                        $declarationData['dsp_user_name'] = null;
-                    }
+//                    /**
+//                     * Case 1: Declaration status is Phone Validated
+//                     */
+//                    if (Declaration::STATUS_PHONE_VALIDATED === $declarationStatus) {
+//                        $declarationData['border_crossed_at'] = null;
+//                        $declarationData['border_validated_at'] = null;
+//                        $declarationData['dsp_validated_at'] = null;
+//                        $declarationData['dsp_user_name'] = null;
+//                    }
+//
+//                    /**
+//                     * Case 2: Declaration status is Border Invalid
+//                     */
+//                    if (Declaration::STATUS_PHONE_VALIDATED === $declarationStatus) {
+//                        $declarationData['border_crossed_at'] = null;
+//                        $declarationData['border_validated_at'] = null;
+//                        $declarationData['dsp_validated_at'] = null;
+//                        $declarationData['dsp_user_name'] = null;
+//                    }
+//
+//                    /**
+//                     * Case 3: Declaration status is Border Validated
+//                     */
+//                    if (Declaration::STATUS_BORDER_VALIDATED === $declarationStatus) {
+//                        $declarationData['dsp_validated_at'] = null;
+//                        $declarationData['dsp_user_name'] = null;
+//                    }
 
-                    /**
-                     * Case 2: Declaration status is Border Invalid
-                     */
-                    if (Declaration::STATUS_PHONE_VALIDATED === $declarationStatus) {
-                        $declarationData['border_crossed_at'] = null;
-                        $declarationData['border_validated_at'] = null;
-                        $declarationData['dsp_validated_at'] = null;
-                        $declarationData['dsp_user_name'] = null;
-                    }
-
-                    /**
-                     * Case 3: Declaration status is Border Validated
-                     */
-                    if (Declaration::STATUS_BORDER_VALIDATED === $declarationStatus) {
-                        $declarationData['dsp_validated_at'] = null;
-                        $declarationData['dsp_user_name'] = null;
-                    }
-
-                    /**
-                     * Case 2: Declaration status is DSP Validated
-                     */
-                    if (Declaration::STATUS_DSP_VALIDATED === $declarationStatus) {
-
-                    }
+//                    /**
+//                     * Case 2: Declaration status is DSP Validated
+//                     */
+//                    if (Declaration::STATUS_DSP_VALIDATED === $declarationStatus) {
+//
+//                    }
 
                     factory(App\Declaration::class, 1)->create( // create Declaration[]
                         $declarationData
