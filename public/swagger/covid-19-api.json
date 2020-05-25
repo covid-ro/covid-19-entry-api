@@ -501,6 +501,13 @@
                         "required": false
                     },
                     {
+                        "name": "dsp_user_name",
+                        "type": "string",
+                        "example": "Firstname Lastname",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
                         "name": "vehicle_type",
                         "type": "string",
                         "in": "query",

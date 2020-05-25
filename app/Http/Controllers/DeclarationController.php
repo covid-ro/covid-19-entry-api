@@ -313,6 +313,10 @@ class DeclarationController extends Controller
             $declarationList->where('declarations.cnp', '=', $request->get('cnp'));
         }
 
+        if ($request->has('dsp_user_name')) {
+            $declarationList->where('declarations.dsp_user_name', '=', $request->get('dsp_user_name'));
+        }
+
         if ($request->has('vehicle_type')) {
             $declarationList->where('declarations.vehicle_type', $request->get('vehicle_type'));
         }
