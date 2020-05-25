@@ -1,11 +1,19 @@
 ---
 - name: Run artisan migrate
-  shell: cd {{deploy_helper.new_release_path}} && php artisan migrate --force
+  shell: cd {{deploy_helper.new_release_path}} && php artisan migrate:fresh --force
   environment: "{{ project_environment }}"
 
-#- name: Run artisan database seed
-#  shell: cd {{deploy_helper.new_release_path}} && php artisan db:seed --force
-#  environment: "{{ project_environment }}"
+- name: Run artisan database seed
+  shell: cd {{deploy_helper.new_release_path}} && php artisan db:seed --force
+  environment: "{{ project_environment }}"
+
+- name: Run artisan database seed for DEV
+  shell: cd {{deploy_helper.new_release_path}} && php artisan db:seed --force --class=DevSeeder
+  environment: "{{ project_environment }}"
+
+- name: Run artisan database seed for DEV for Cenad border
+  shell: cd {{deploy_helper.new_release_path}} && php artisan db:seed --force --class=CenadSeeder
+  environment: "{{ project_environment }}"
 
 #- name: Run composer post update scripts
 #  shell: cd {{deploy_helper.new_release_path}} && composer run-script post-update-cmd

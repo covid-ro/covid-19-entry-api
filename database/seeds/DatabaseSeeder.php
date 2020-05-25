@@ -16,6 +16,5 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BorderCheckpointTableSeeder::class);
         $this->call(SymptomTableSeeder::class);
-        //$this->call(DevSeeder::class);
     }
 }
