@@ -107,7 +107,7 @@ class DeclarationController extends Controller
         $declaration->cnp = $request->get('cnp');
         $declaration->is_romanian = (bool)$request->get('is_romanian');
         $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
-        $declaration->birth_date = $request->has('birth_date') ? new Carbon($request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
+        $declaration->birth_date = ($request->has('birth_date') && !empty($request->get('birth_date'))) ? new Carbon($request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
 
         if (!empty($evidentaPopulatieiAddress)) {
             $declaration->home_address = $evidentaPopulatieiAddress;
@@ -380,13 +380,13 @@ class DeclarationController extends Controller
         }
 
         if (
-            !$request->has('birth_date') && // Birth date is missing
+            (!$request->has('birth_date') || empty($request->get('birth_date'))) && // Birth date is missing or empty
             !Cnp::validate($request->get('cnp')) // CNP is not valid, meaning we cannot extract the birth date
         ) {
             throw new Exception('Missing required parameter: birth_date');
         }
 
-        if ($request->has('birth_date')) {
+        if ($request->has('birth_date') && !empty($request->get('birth_date'))) {
             try {
                 new Carbon($request->get('birth_date'));
             } catch (Exception $exception) {
