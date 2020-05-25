@@ -2,6 +2,7 @@
 
 use App\Declaration;
 use App\Symptom;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 /**
@@ -16,18 +17,20 @@ class CenadSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create()->each(function ($user) { // create User
+        factory(App\User::class, 75)->create()->each(function ($user) { // create User
             try {
                 factory(App\DeclarationCode::class, rand(1, 2))->create()->each(function ($declarationCode) use ($user) { // create DeclarationCode
 
                     $declarationStatus = Declaration::STATUS_BORDER_VALIDATED;
 
-                    $dspMeasures = [null, 'hospital', 'quarantine', 'isolation'];
+                    $dspMeasures = [null, 'hospitalisation', 'quarantine', 'isolation'];
 
                     $declarationData = [
                         'declarationcode_id' => $declarationCode->id,
                         'user_id' => $user->id,
                         'border_checkpoint_id' => 49, // Cenad
+                        'dsp_validated_at' => Carbon::now(),
+                        'dsp_user_name' => 'cenad-1',
                         'dsp_measure' => $dspMeasures[array_rand($dspMeasures)],
                         'status' => $declarationStatus
                     ];
