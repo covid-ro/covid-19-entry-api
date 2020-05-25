@@ -669,7 +669,10 @@ class DeclarationController extends Controller
         /**
          * Validate Declaration status
          */
-        if (Declaration::STATUS_DSP_VALIDATED === $declaration->status) {
+        if (
+            false && // TODO: disabled for the moment for testing purposes (discussed with Lucian)
+            Declaration::STATUS_DSP_VALIDATED === $declaration->status
+        ) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid declaration status',
@@ -677,7 +680,10 @@ class DeclarationController extends Controller
             ], 409);
         }
 
-        if (Declaration::STATUS_BORDER_VALIDATED !== $declaration->status) {
+        if (
+            false && // TODO: disabled for the moment for testing purposes (discussed with Lucian)
+            Declaration::STATUS_BORDER_VALIDATED !== $declaration->status
+        ) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid declaration status',
