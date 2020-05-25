@@ -6,6 +6,7 @@ use App\Service\CodeGenerator;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class PhoneCode
@@ -24,8 +25,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime| $updated_at
  * @property DateTime|null $deleted_at
  */
-class PhoneCode extends Model
+class PhoneCode extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     const STATUS_ACTIVE = 'active';

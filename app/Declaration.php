@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class Declaration
@@ -53,8 +54,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
  */
-class Declaration extends Model
+class Declaration extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     const STATUS_PHONE_VALIDATED = 'phone_validated';

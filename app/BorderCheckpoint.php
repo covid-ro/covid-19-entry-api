@@ -5,6 +5,7 @@ namespace App;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
 /**
  * Class BorderCheckpoint
@@ -18,8 +19,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property DateTime|null $updated_at
  * @property DateTime|null $deleted_at
  */
-class BorderCheckpoint extends Model
+class BorderCheckpoint extends Model implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     const STATUS_ACTIVE = 'active';

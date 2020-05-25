@@ -108,6 +108,7 @@ $app->register(App\Providers\StsSmsServiceProvider::class);
 $app->register(App\Providers\StsBorderServiceProvider::class);
 $app->register(App\Providers\EvidentaPopulatieiProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+$app->register(OwenIt\Auditing\AuditingServiceProvider::class);
 
 
 
@@ -129,5 +130,7 @@ $app->router->group([
 });
 
 $app->configure('cors');
+
+$app->configure('audit');
 
 return $app;
