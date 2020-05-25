@@ -671,7 +671,13 @@ class DeclarationController extends Controller
          */
         if (
             false && // TODO: disabled for the moment for testing purposes (discussed with Lucian)
-            Declaration::STATUS_DSP_VALIDATED === $declaration->status
+            (
+                (
+                    $request->has('is_dsp_before_border') &&
+                    true === (bool)$request->get('is_dsp_before_border', false)
+                ) ||
+                Declaration::STATUS_DSP_VALIDATED === $declaration->status
+            )
         ) {
             return response()->json([
                 'status' => 'error',
@@ -682,7 +688,13 @@ class DeclarationController extends Controller
 
         if (
             false && // TODO: disabled for the moment for testing purposes (discussed with Lucian)
-            Declaration::STATUS_BORDER_VALIDATED !== $declaration->status
+            (
+                (
+                    $request->has('is_dsp_before_border') &&
+                    true === (bool)$request->get('is_dsp_before_border', false)
+                ) ||
+                Declaration::STATUS_BORDER_VALIDATED !== $declaration->status
+            )
         ) {
             return response()->json([
                 'status' => 'error',

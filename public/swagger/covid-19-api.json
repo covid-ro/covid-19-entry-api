@@ -1018,6 +1018,11 @@
                     "type": "string",
                     "example": "Some measure name",
                     "required": true
+                },
+                "is_dsp_before_border": {
+                    "type": "boolean",
+                    "example": false,
+                    "required": false
                 }
             }
         },
