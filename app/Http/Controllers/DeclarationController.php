@@ -9,6 +9,8 @@ use App\DeclarationCode;
 use App\DeclarationSignature;
 use App\IsolationAddress;
 use App\ItineraryCountry;
+use App\Service\EvidentaPopulatiei\SearchClient;
+use App\Service\EvidentaPopulatiei\SearchClientException;
 use App\Symptom;
 use App\User;
 use Carbon\Carbon;
@@ -58,6 +60,32 @@ class DeclarationController extends Controller
             return response()->json($responseData, 400);
         }
 
+        $evidentaPopulatieiAddress = null;
+
+        /**
+         * For Romanian citizens, query Evidenta Populatiei for home address
+         */
+        if (
+            false && // TODO: to be triple-checked!!!
+            true === (bool)$request->get('is_romanian', false) &&
+            true === (bool)$request->get('home_isolated', false)
+        ) {
+            /** @var SearchClient $evidentaPopulatieiSearchClient */
+            $evidentaPopulatieiSearchClient = app('evidentaPopulatiei');
+
+            try {
+                $evidentaPopulatieiAddress = $evidentaPopulatieiSearchClient->getAddress(
+                    $request->get('cnp'),
+                    $request->get('name'),
+                    $request->get('surname')
+                );
+            } catch (SearchClientException $searchClientException) {
+                $responseData['status'] = 'error';
+                $responseData['message'] = $searchClientException->getMessage();
+                return response()->json($responseData, 400);
+            }
+        }
+
         /**
          * Generate unique declaration code
          */
@@ -80,6 +108,10 @@ class DeclarationController extends Controller
         $declaration->is_romanian = (bool)$request->get('is_romanian');
         $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
         $declaration->birth_date = $request->has('birth_date') ? new Carbon($request->get('birth_date')) : $this->getBirthDateFromCnp($request->get('cnp'));
+
+        if (!empty($evidentaPopulatieiAddress)) {
+            $declaration->home_address = $evidentaPopulatieiAddress;
+        }
 
         /**
          * Border checkpoint
@@ -790,6 +822,11 @@ class DeclarationController extends Controller
         if (!empty($declarationList->count())) {
             /** @var Declaration $declaration */
             foreach ($declarationList as $declaration) {
+                /**
+                 * Process Declaration
+                 */
+                $declaration = $this->processDeclaration($declaration);
+
                 $responseData['declarations'][] = $declaration->toArray();
             }
         }
@@ -797,5 +834,16 @@ class DeclarationController extends Controller
         $responseData['declarations'] = $declarationList;
 
         return response()->json($responseData);
+    }
+
+    /**
+     * @param Declaration $declaration
+     * @return Declaration
+     */
+    protected function processDeclaration(Declaration $declaration): Declaration
+    {
+        // TODO: implement logic @here
+
+        return $declaration;
     }
 }

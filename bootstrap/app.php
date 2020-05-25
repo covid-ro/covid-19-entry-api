@@ -106,6 +106,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\PhoneNumberUtilProvider::class);
 $app->register(App\Providers\StsSmsServiceProvider::class);
 $app->register(App\Providers\StsBorderServiceProvider::class);
+$app->register(App\Providers\EvidentaPopulatieiProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 
