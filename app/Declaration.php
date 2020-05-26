@@ -21,16 +21,16 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int $border_checkpoint_id
  * @property string $name
  * @property string $surname
- * @property string $email
+ * @property string|null $email
  * @property string $cnp
  * @property bool $is_romanian
  * @property DateTime|null $birth_date
  * @property string|null $sex
- * @property string $document_type
- * @property string $document_series
- * @property string $document_number
+ * @property string|null $document_type
+ * @property string|null $document_series
+ * @property string|null $document_number
  * @property string $travelling_from_country_code
- * @property string $travelling_from_city
+ * @property string|null $travelling_from_city
  * @property DateTime|null $travelling_from_date
  * @property DateTime|null $home_country_return_date
  * @property bool $home_isolated
@@ -39,7 +39,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property bool|null $q_visited
  * @property bool|null $q_contacted
  * @property bool|null $q_hospitalized
- * @property string $vehicle_type
+ * @property string|null $vehicle_type
  * @property string|null $vehicle_registration_no
  * @property string $status
  * @property DateTime|null $border_crossed_at
@@ -160,7 +160,7 @@ class Declaration extends Model implements Auditable
         $declarationData['phone'] = $this->user->phone_number;
         $declarationData['name'] = $this->name;
         $declarationData['surname'] = $this->surname;
-        $declarationData['email'] = $this->email;
+        $declarationData['email'] = $this->email ?? null;
         $declarationData['cnp'] = $this->cnp;
         $declarationData['is_romanian'] = (bool)$this->is_romanian;
         $declarationData['birth_date'] = $this->birth_date;

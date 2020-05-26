@@ -103,7 +103,7 @@ class DeclarationController extends Controller
          */
         $declaration->name = $request->get('name');
         $declaration->surname = $request->get('surname');
-        $declaration->email = (string)$request->get('email');
+        $declaration->email = $request->get('email');
         $declaration->cnp = $request->get('cnp');
         $declaration->is_romanian = (bool)$request->get('is_romanian');
         $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
@@ -152,7 +152,7 @@ class DeclarationController extends Controller
          * Vehicle details
          */
         $declaration->vehicle_type = $request->get('vehicle_type');
-        $declaration->vehicle_registration_no = $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no'));
+        $declaration->vehicle_registration_no = $request->has('vehicle_registration_no') ? $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no')) : null;
 
         $declaration->accept_personal_data = $request->get('accept_personal_data');
         $declaration->accept_read_law = $request->get('accept_read_law');
@@ -403,26 +403,27 @@ class DeclarationController extends Controller
             }
         }
 
-        if (empty($request->get('document_type'))) {
-            throw new Exception('Missing required parameter: document_type');
-        }
-
-        if (!in_array($request->get('document_type'), [User::DOCUMENT_TYPE_IDENTITY_CARD, User::DOCUMENT_TYPE_PASSPORT])) {
+        if (
+            $request->has('document_type') && // optional
+            !in_array($request->get('document_type'), [User::DOCUMENT_TYPE_IDENTITY_CARD, User::DOCUMENT_TYPE_PASSPORT])
+        ) {
             throw new Exception('Invalid value for parameter: document_type');
         }
 
         if (
-            !empty($request->get('document_series')) && // optional
+            $request->has('document_series') && // optional
             (!is_string($request->get('document_series')) || strlen($request->get('document_series')) > 16)
         ) {
             throw new Exception('Invalid value for parameter: document_series');
         }
 
-        if (empty($request->get('document_number'))) {
-            throw new Exception('Missing required parameter: document_number');
-        }
-
-        if (!is_string($request->get('document_number')) || strlen($request->get('document_number')) > 32) {
+        if (
+            $request->has('document_number') && // optional
+            (
+                !is_string($request->get('document_number')) ||
+                strlen($request->get('document_number')) > 32
+            )
+        ) {
             throw new Exception('Invalid value for parameter: document_number');
         }
 
@@ -434,11 +435,13 @@ class DeclarationController extends Controller
             throw new Exception('Invalid value for parameter: travelling_from_country_code');
         }
 
-        if (empty($request->get('travelling_from_city'))) {
-            throw new Exception('Missing required parameter: travelling_from_city');
-        }
-
-        if (!is_string($request->get('travelling_from_city')) || strlen($request->get('travelling_from_city')) > 32) {
+        if (
+            $request->has('travelling_from_city') && // optional
+            (
+                !is_string($request->get('travelling_from_city')) ||
+                strlen($request->get('travelling_from_city')) > 32
+            )
+        ) {
             throw new Exception('Invalid value for parameter: travelling_from_city');
         }
 
@@ -450,10 +453,14 @@ class DeclarationController extends Controller
             }
         }
 
-        if (!empty($request->get('travel_route'))) {
-            if (!is_string($request->get('travel_route')) || strlen($request->get('travel_route') > 255)) {
-                throw new Exception('Invalid value for parameter: travel_route');
-            }
+        if (
+            $request->has('travel_route') && // optional
+            (
+                !is_string($request->get('travel_route')) ||
+                strlen($request->get('travel_route') > 255)
+            )
+        ) {
+            throw new Exception('Invalid value for parameter: travel_route');
         }
 
         if (!$request->has('home_isolated')) {
@@ -568,16 +575,15 @@ class DeclarationController extends Controller
 
         }
 
-        if (empty($request->get('vehicle_type'))) {
-            throw new Exception('Missing required parameter: vehicle_type');
-        }
-
-        if (!in_array($request->get('vehicle_type'), [User::VEHICLE_TYPE_AUTO, User::VEHICLE_TYPE_AMBULANCE])) {
+        if (
+            $request->has('vehicle_type') && // optional
+            !in_array($request->get('vehicle_type'), [User::VEHICLE_TYPE_AUTO, User::VEHICLE_TYPE_AMBULANCE])
+        ) {
             throw new Exception('Invalid value for parameter: vehicle_type');
         }
 
         if (
-            !empty($request->get('vehicle_registration_no')) && // optional
+            $request->has('vehicle_registration_no') && // optional
             (
                 !is_string($request->get('vehicle_registration_no')) ||
                 strlen($request->get('vehicle_registration_no')) > 16
