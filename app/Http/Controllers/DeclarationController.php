@@ -157,6 +157,8 @@ class DeclarationController extends Controller
         $declaration->accept_personal_data = $request->get('accept_personal_data');
         $declaration->accept_read_law = $request->get('accept_read_law');
 
+        $declaration->home_isolated = (bool)$request->get('home_isolated');
+
         $declaration->save();
 
         /**
@@ -168,8 +170,6 @@ class DeclarationController extends Controller
                 $declaration->symptoms()->attach($symptom);
             }
         }
-
-        $declaration->home_isolated = (bool)$request->get('home_isolated');
 
         if (false === $declaration->home_isolated) {
             /**
