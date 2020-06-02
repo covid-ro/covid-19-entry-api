@@ -13,13 +13,18 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('/docs');
-});
+/**
+ * Swagger documentation is not available for production environment
+ */
+if (!in_array(app()->environment(), ['prod', 'production'])) {
+    Route::get('/', function () {
+        return redirect('/docs');
+    });
 
-Route::get('/docs', function () {
-    return view('swagger');
-});
+    Route::get('/docs', function () {
+        return view('swagger');
+    });
+}
 
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/phone/validate', 'PhoneController@validatePhone');
