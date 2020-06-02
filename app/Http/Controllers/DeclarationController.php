@@ -303,6 +303,10 @@ class DeclarationController extends Controller
     {
         $perPage = $request->has('per_page') ? $request->get('per_page') : 50;
 
+        if ($perPage > 100) {
+            $perPage = 100;
+        }
+
         $responseData = [];
         $responseData['status'] = 'success';
         $responseData['message'] = 'Declaration details';
