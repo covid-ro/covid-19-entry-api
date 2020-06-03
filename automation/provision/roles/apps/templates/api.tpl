@@ -61,7 +61,7 @@ server {
 {% if item.value.env is defined %}
         fastcgi_param APP_ENV {{item.value.env}};
 {% else %}
-        fastcgi_param APP_ENV 'prod';
+        fastcgi_param APP_ENV 'staging';
 {% endif %}
 
         internal;
