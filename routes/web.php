@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Swagger documentation is not available for production environment
  */
-if (!in_array(app()->environment(), ['prod', 'production'])) {
+if (!in_array(app()->environment(), ['production'])) {
     Route::get('/', function () {
         return redirect('/docs');
     });
