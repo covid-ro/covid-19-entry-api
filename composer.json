@@ -14,6 +14,7 @@
         "ext-zip": "*",
         "alcea/cnp": "2.1.6",
         "doctrine/dbal": "2.10.1",
+        "flynsarmy/csv-seeder": "2.*",
         "fruitcake/laravel-cors": "^1.0",
         "giggsey/libphonenumber-for-php": "^8.12",
         "guzzlehttp/guzzle": "6.5.2",
