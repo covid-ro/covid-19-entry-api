@@ -1,6 +1,7 @@
 <?php
 
 use Flynsarmy\CsvSeeder\CsvSeeder;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class SirutaImportSeeder
@@ -12,15 +13,17 @@ class SirutaImportSeeder extends CsvSeeder
      */
     public function __construct()
     {
-        $this->insert_chunk_size = 100;
-        $this->csv_delimiter = ',';
+        $this->insert_chunk_size = 1;
+        $this->csv_delimiter = ';';
         $this->table = 'siruta';
         $this->filename = base_path() . '/database/seeds/csv/siruta.csv';
     }
 
     public function run()
     {
-
-        parent::run();
+        if (empty(DB::table('siruta')->count())) {
+            DB::disableQueryLog();
+            parent::run();
+        }
     }
 }

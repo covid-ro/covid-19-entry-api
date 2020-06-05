@@ -16,5 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BorderCheckpointTableSeeder::class);
         $this->call(SymptomTableSeeder::class);
+        $this->call(SirutaImportSeeder::class);
+        $this->call(SirutaCountiesSeeder::class);
+        $this->call(SirutaCitiesSeeder::class);
+        $this->call(SirutaSettlementsSeeder::class);
     }
 }
