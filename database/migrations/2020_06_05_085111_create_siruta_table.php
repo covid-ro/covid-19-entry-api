@@ -17,7 +17,7 @@ class CreateSirutaTable extends Migration
     public function up()
     {
         Schema::create('siruta', function (Blueprint $table) {
-            $table->unsignedBigInteger('SIRUTA')->primary()->unique();
+            $table->unsignedBigInteger('SIRUTA')->primary();
             $table->unsignedBigInteger('NIV');
             $table->unsignedBigInteger('SIRSUP')->index();
             $table->unsignedBigInteger('TIP');
