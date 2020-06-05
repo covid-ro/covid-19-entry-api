@@ -19,7 +19,7 @@ class CreateCountiesTable extends Migration
         Schema::create('counties', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('siruta_id');
-            $table->string('name', 255);
+            $table->string('name', 255)->index();
 
             $table->foreign('siruta_id')
                 ->references('SIRUTA')
