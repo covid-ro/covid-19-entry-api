@@ -21,7 +21,7 @@ class SirutaCountiesSeeder extends Seeder
                 ->orderBy('SIRUTA', 'ASC')
                 ->each(function ($line) {
                     DB::table('counties')->insert([
-                        ['id' => $line->JUD, 'name' => str_replace('JUDETUL ', '', $line->DENLOC)]
+                        ['id' => $line->JUD, 'siruta_id' => $line->SIRUTA, 'name' => str_replace('JUDETUL ', '', $line->DENLOC)]
                     ]);
                 });
         }
