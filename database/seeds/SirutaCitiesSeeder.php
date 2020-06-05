@@ -17,7 +17,7 @@ class SirutaCitiesSeeder extends Seeder
     {
         if (empty(DB::table('cities')->count())) {
             DB::table('siruta')
-                ->whereIn('TIP', [1, 4, 2, 5, 3, 9])
+                ->where('NIV', '=', 2)
                 ->orderBy('SIRUTA', 'ASC')
                 ->each(function ($line) {
                     DB::table('cities')->insert([

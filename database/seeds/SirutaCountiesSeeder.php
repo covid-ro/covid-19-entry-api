@@ -17,11 +17,11 @@ class SirutaCountiesSeeder extends Seeder
     {
         if (empty(DB::table('counties')->count())) {
             DB::table('siruta')
-                ->where('TIP', '=', 40)
+                ->where('NIV', '=', 1)
                 ->orderBy('SIRUTA', 'ASC')
                 ->each(function ($line) {
                     DB::table('counties')->insert([
-                        ['id' => $line->JUD, 'siruta_id' => $line->SIRUTA, 'name' => str_replace('JUDETUL ', '', $line->DENLOC)]
+                        ['id' => $line->JUD, 'siruta_id' => $line->SIRUTA, 'name' => str_replace(['JUDETUL ', 'MUNICIPIUL '], ['', ''], $line->DENLOC)]
                     ]);
                 });
         }
