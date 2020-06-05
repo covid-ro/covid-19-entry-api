@@ -21,7 +21,7 @@ class SirutaSettlementsSeeder extends Seeder
                 ->orderBy('SIRUTA', 'ASC')
                 ->each(function ($line) {
                     DB::table('settlements')->insert([
-                        ['siruta_id' => $line->SIRUTA, 'name' => $line->DENLOC]
+                        ['siruta_id' => $line->SIRUTA, 'siruta_parent_id' => $line->SIRSUP, 'name' => $line->DENLOC]
                     ]);
                 });
         }

@@ -8,6 +8,7 @@ use App\IsolationAddress;
 use App\Service\CodeGenerator;
 use App\Service\Sts\BorderClient;
 use App\Service\Sts\SmsClient;
+use App\Settlement;
 use App\Symptom;
 use App\User;
 use Carbon\Carbon;
@@ -37,17 +38,24 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        /** @var PhoneNumberUtil $phoneNumberUtil */
-        $phoneNumberUtil = app('libPhoneNumber');
+        /** @var Settlement $settlement */
+        $settlement = Settlement::find('3');
 
-        try {
-            $phone = $phoneNumberUtil->parse('722112233', $this->getRegionByCountryCode(40));
-            $isValid = $phoneNumberUtil->isValidNumber($phone);
+        dd($settlement->name);
+//        dd($settlement->city->name);
+//        dd($settlement->city->county->name);
 
-            dd($isValid);
-        } catch (NumberParseException $numberParseException) {
-            dd($numberParseException->getMessage());
-        }
+//        /** @var PhoneNumberUtil $phoneNumberUtil */
+//        $phoneNumberUtil = app('libPhoneNumber');
+
+//        try {
+//            $phone = $phoneNumberUtil->parse('722112233', $this->getRegionByCountryCode(40));
+//            $isValid = $phoneNumberUtil->isValidNumber($phone);
+//
+//            dd($isValid);
+//        } catch (NumberParseException $numberParseException) {
+//            dd($numberParseException->getMessage());
+//        }
 
 //        $result = $phoneNumberUtil->parse('72903197412', 'RO');
 //
