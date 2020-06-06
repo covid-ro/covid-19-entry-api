@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use alcea\cnp\Cnp;
 use App\BorderCheckpoint;
+use App\County;
 use App\Declaration;
 use App\DeclarationCode;
 use App\DeclarationSignature;
@@ -11,6 +12,7 @@ use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\Service\EvidentaPopulatiei\SearchClient;
 use App\Service\EvidentaPopulatiei\SearchClientException;
+use App\Settlement;
 use App\Symptom;
 use App\User;
 use Carbon\Carbon;
@@ -179,8 +181,8 @@ class DeclarationController extends Controller
             foreach ($request->get('isolation_addresses') as $isolationAddressData) {
                 $isolationAddress = new IsolationAddress();
                 $isolationAddress->declaration_id = $declaration->id;
-                $isolationAddress->city = $isolationAddressData['city'];
-                $isolationAddress->county = $isolationAddressData['county'];
+                $isolationAddress->county_id = $isolationAddressData['county_id'];
+                $isolationAddress->settlement_id = $isolationAddressData['settlement_id'];
                 $isolationAddress->street = $isolationAddressData['street'];
                 $isolationAddress->number = $isolationAddressData['number'];
                 $isolationAddress->bloc = $isolationAddressData['bloc'];
@@ -484,20 +486,26 @@ class DeclarationController extends Controller
 
             /** @var array $isolationAddress */
             foreach ($request->get('isolation_addresses') as $isolationAddress) {
-                if (empty($isolationAddress['city'])) {
-                    throw new Exception('Missing required parameter: isolation_addresses|city');
+                if (empty($isolationAddress['county_id'])) {
+                    throw new Exception('Missing required parameter: isolation_addresses|county_id');
                 }
 
-                if (!is_string($isolationAddress['city']) || strlen($isolationAddress['city']) > 64) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|city');
+                /** @var County|null $county */
+                $county = County::find($isolationAddress['county_id']);
+
+                if (empty($county)) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|county_id');
                 }
 
-                if (empty($isolationAddress['county'])) {
-                    throw new Exception('Missing required parameter: isolation_addresses|county');
+                if (empty($isolationAddress['settlement_id'])) {
+                    throw new Exception('Missing required parameter: isolation_addresses|settlement_id');
                 }
 
-                if (!is_string($isolationAddress['county']) || strlen($isolationAddress['county']) > 64) {
-                    throw new Exception('Invalid value for parameter: isolation_addresses|county');
+                /** @var Settlement|null $settlement */
+                $settlement = Settlement::find($isolationAddress['settlement_id']);
+
+                if (empty($settlement)) {
+                    throw new Exception('Invalid value for parameter: isolation_addresses|settlement_id');
                 }
 
                 if (!empty($isolationAddress['street'])) {

@@ -1398,15 +1398,17 @@
         "CreateIsolationAddress": {
             "type": "object",
             "properties": {
-                "city": {
-                    "type": "string",
-                    "example": "Craiova",
-                    "required": true
+                "county_id": {
+                    "type": "integer",
+                    "example": 40,
+                    "required": true,
+                    "description": "County ID, obtained from /siruta/county"
                 },
-                "county": {
-                    "type": "string",
-                    "example": "Olt",
-                    "required": true
+                "settlement_id": {
+                    "type": "integer",
+                    "example": 13714,
+                    "required": true,
+                    "description": "Settlement ID, obtained from /siruta/settlement/{countyId}"
                 },
                 "street": {
                     "type": "string",

@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property int $id
  * @property int $declaration_id
- * @property string $city
- * @property string $county
+ * @property int|null $county_id
+ * @property int|null $settlement_id
  * @property string|null $street
  * @property string|null $number
  * @property string|null $bloc
@@ -35,14 +35,30 @@ class IsolationAddress extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function county()
+    {
+        return $this->belongsTo(County::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function settlement()
+    {
+        return $this->belongsTo(Settlement::class);
+    }
+    
+    /**
      * @return array
      */
     public function toArray()
     {
         return [
             'id' => $this->id,
-            'city' => $this->city,
-            'county' => $this->county,
+            'city' => !empty($this->settlement) ? $this->settlement->name : null,
+            'county' => !empty($this->county) ? $this->county->name : null,
             'street' => $this->street,
             'number' => $this->number,
             'bloc' => $this->bloc,
