@@ -56,7 +56,7 @@ class Settlement extends Model
         return [
             'id' => $this->id,
             'siruta' => $this->siruta_id,
-            'name' => $this->name
+            'name' => $this->name . (!empty($this->cname) ? ', ' . $this->cname : ''),
         ];
     }
 }

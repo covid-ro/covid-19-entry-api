@@ -70,7 +70,7 @@ class SirutaController extends Controller
 
         $settlementList = Settlement::join('cities', 'cities.siruta_id', '=', 'settlements.siruta_parent_id')
             ->where('cities.siruta_parent_id', '=', $county->siruta_id)
-            ->select('settlements.*')
+            ->select(['settlements.*', 'cities.name as cname'])
             ->get();
 
         $responseData['status'] = 'success';
