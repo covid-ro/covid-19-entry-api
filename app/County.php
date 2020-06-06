@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class County
@@ -28,6 +29,14 @@ class County extends Model
     public function siruta()
     {
         return $this->belongsTo(Siruta::class, 'siruta_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
     }
 
     /**

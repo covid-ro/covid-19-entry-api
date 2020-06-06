@@ -3,12 +3,14 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\BorderCheckpoint;
+use App\County;
 use App\Declaration;
 use App\DeclarationCode;
 use App\DeclarationSignature;
 use App\IsolationAddress;
 use App\ItineraryCountry;
 use App\Service\CodeGenerator;
+use App\Settlement;
 use App\Symptom;
 use App\User;
 use Faker\Generator as Faker;
@@ -82,9 +84,15 @@ $factory->define(ItineraryCountry::class, function (Faker $faker) {
 });
 
 $factory->define(IsolationAddress::class, function (Faker $faker) {
+    /** @var County $county */
+    $county = County::all()->random();
+
+    /** @var Settlement $settlement */
+    $settlement = $county->settlements()->inRandomOrder()->first();
+
     return [
-        'city' => $faker->city,
-        'county' => $faker->country,
+        'county_id' => $county->id,
+        'settlement_id' => $settlement->id,
         'street' => $faker->streetName,
         'number' => $faker->randomNumber(2),
         'bloc' => $faker->randomNumber(3),

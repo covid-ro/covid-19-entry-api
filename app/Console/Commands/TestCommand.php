@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\County;
 use App\Declaration;
 use App\DeclarationCode;
 use App\IsolationAddress;
@@ -38,12 +39,9 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        /** @var Settlement $settlement */
-        $settlement = Settlement::find('3');
-
-        dd($settlement->name);
-//        dd($settlement->city->name);
-//        dd($settlement->city->county->name);
+//        $county = County::all()->random();
+//
+//        dd($county->name);
 
 //        /** @var PhoneNumberUtil $phoneNumberUtil */
 //        $phoneNumberUtil = app('libPhoneNumber');
