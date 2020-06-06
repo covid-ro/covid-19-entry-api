@@ -28,13 +28,13 @@
         }
     ],
     "paths": {
-        "/siruta/county": {
+        "/address/county": {
             "get": {
                 "tags": [
-                    "SIRUTA"
+                    "Address"
                 ],
-                "summary": "Get SIRUTA county list",
-                "operationId": "GetSirutaCountyList",
+                "summary": "Get county list for Romania",
+                "operationId": "GetCountyList",
                 "produces": [
                     "application/json"
                 ],
@@ -45,7 +45,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GetSirutaCountyList"
+                            "$ref": "#/definitions/GetCountyList"
                         }
                     },
                     "400": {
@@ -69,13 +69,13 @@
                 }
             }
         },
-        "/siruta/city/{countyId}": {
+        "/address/city/{countyId}": {
             "get": {
                 "tags": [
-                    "SIRUTA"
+                    "Address"
                 ],
-                "summary": "Get SIRUTA city list",
-                "operationId": "GetSirutaCityList",
+                "summary": "Get city list for Romania",
+                "operationId": "GetCityList",
                 "produces": [
                     "application/json"
                 ],
@@ -95,7 +95,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GetSirutaCityList"
+                            "$ref": "#/definitions/GetCityList"
                         }
                     },
                     "400": {
@@ -119,13 +119,13 @@
                 }
             }
         },
-        "/siruta/settlement/{countyId}": {
+        "/address/settlement/{countyId}": {
             "get": {
                 "tags": [
-                    "SIRUTA"
+                    "Address"
                 ],
-                "summary": "Get SIRUTA settlement list",
-                "operationId": "GetSirutaSettlementList",
+                "summary": "Get settlement list for Romania",
+                "operationId": "GetSettlementList",
                 "produces": [
                     "application/json"
                 ],
@@ -145,7 +145,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/GetSirutaSettlementList"
+                            "$ref": "#/definitions/GetSettlementList"
                         }
                     },
                     "400": {
@@ -1402,13 +1402,13 @@
                     "type": "integer",
                     "example": 40,
                     "required": true,
-                    "description": "County ID, obtained from /siruta/county"
+                    "description": "County ID, obtained from /address/county"
                 },
                 "settlement_id": {
                     "type": "integer",
                     "example": 13714,
                     "required": true,
-                    "description": "Settlement ID, obtained from /siruta/settlement/{countyId}"
+                    "description": "Settlement ID, obtained from /address/settlement/{countyId}"
                 },
                 "street": {
                     "type": "string",
@@ -1863,7 +1863,7 @@
                 }
             }
         },
-        "GetSirutaCountyList": {
+        "GetCountyList": {
             "type": "object",
             "properties": {
                 "status": {
@@ -1877,12 +1877,12 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Siruta"
+                        "$ref": "#/definitions/Location"
                     }
                 }
             }
         },
-        "GetSirutaCityList": {
+        "GetCityList": {
             "type": "object",
             "properties": {
                 "status": {
@@ -1896,12 +1896,12 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Siruta"
+                        "$ref": "#/definitions/Location"
                     }
                 }
             }
         },
-        "GetSirutaSettlementList": {
+        "GetSettlementList": {
             "type": "object",
             "properties": {
                 "status": {
@@ -1915,12 +1915,12 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Siruta"
+                        "$ref": "#/definitions/Location"
                     }
                 }
             }
         },
-        "Siruta": {
+        "Location": {
             "type": "object",
             "properties": {
                 "id": {

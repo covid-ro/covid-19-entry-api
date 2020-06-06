@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/declaration/search/{code}', 'DeclarationController@searchDeclaration');
 
     /** Siruta */
-    Route::get('/siruta/county', 'SirutaController@getCountyList');
-    Route::get('/siruta/city/{countyId}', 'SirutaController@getCityList');
-    Route::get('/siruta/settlement/{countyId}', 'SirutaController@getSettlementList');
+    Route::get('/address/county', 'SirutaController@getCountyList');
+    Route::get('/address/city/{countyId}', 'SirutaController@getCityList');
+    Route::get('/address/settlement/{countyId}', 'SirutaController@getSettlementList');
 });
