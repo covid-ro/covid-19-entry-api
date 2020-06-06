@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property int $siruta_id
  * @property int $siruta_parent_id
+ * @property int $county_id
  * @property string $name
  */
 class City extends Model
@@ -36,7 +37,7 @@ class City extends Model
      */
     public function county()
     {
-        return $this->belongsTo(County::class, 'siruta_parent_id', 'siruta_id');
+        return $this->belongsTo(County::class, 'county_id');
     }
 
     /**

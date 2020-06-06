@@ -504,7 +504,10 @@ class DeclarationController extends Controller
                 /** @var Settlement|null $settlement */
                 $settlement = Settlement::find($isolationAddress['settlement_id']);
 
-                if (empty($settlement)) {
+                if (
+                    empty($settlement) ||
+                    $settlement->county_id != $county->id
+                ) {
                     throw new Exception('Invalid value for parameter: isolation_addresses|settlement_id');
                 }
 

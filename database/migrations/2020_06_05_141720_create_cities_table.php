@@ -19,7 +19,8 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('siruta_id');
-            $table->unsignedBigInteger('siruta_parent_id')->nullable();
+            $table->unsignedBigInteger('siruta_parent_id');
+            $table->unsignedBigInteger('county_id');
             $table->string('name', 255)->index();
 
             $table->foreign('siruta_id')
@@ -29,6 +30,10 @@ class CreateCitiesTable extends Migration
             $table->foreign('siruta_parent_id')
                 ->references('SIRUTA')
                 ->on('siruta');
+
+            $table->foreign('county_id')
+                ->references('id')
+                ->on('counties');
         });
     }
 
