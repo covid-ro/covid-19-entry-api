@@ -18,7 +18,7 @@ class DevSeeder extends Seeder
     public function run()
     {
         if (empty(Declaration::all()->count())) {
-            factory(App\User::class, 10)->create()->each(function ($user) { // create User
+            factory(App\User::class, 500)->create()->each(function ($user) { // create User
                 try {
                     factory(App\DeclarationCode::class, rand(1, 2))->create()->each(function ($declarationCode) use ($user) { // create DeclarationCode
 
@@ -68,7 +68,7 @@ class DevSeeder extends Seeder
 
                         factory(App\Declaration::class, 1)->create( // create Declaration[]
                             $declarationData
-                        )->each(function ($declaration) {
+                        )->each(function ($declaration) use ($declarationData) {
                             $declaration->symptoms()->attach(
                                 Symptom::all()->random(rand(0, 4))
                             );
@@ -77,9 +77,11 @@ class DevSeeder extends Seeder
                                 'declaration_id' => $declaration->id
                             ]);
 
-                            factory(App\IsolationAddress::class, rand(1, 3))->create([ // create IsolationCountry[]
-                                'declaration_id' => $declaration->id
-                            ]);
+                            if (!empty($declarationData['home_isolated'])) {
+                                factory(App\IsolationAddress::class,1)->create([
+                                    'declaration_id' => $declaration->id
+                                ]);
+                            }
 
                             if (1 === rand(1, 3)) {
                                 factory(App\DeclarationSignature::class, 1)->create([ // create DeclarationSignature[]
