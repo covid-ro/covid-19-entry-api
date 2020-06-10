@@ -775,6 +775,68 @@
                 }
             }
         },
+        "/declaration-web/{declarationCode}": {
+            "get": {
+                "security": [
+                    {
+                        "API-KEY": [],
+                        "Authorization": []
+                    }
+                ],
+                "tags": [
+                    "Declaration"
+                ],
+                "summary": "Get declaration for WEB",
+                "operationId": "GetDeclarationWeb",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "declarationCode",
+                        "in": "path",
+                        "description": "Unique declaration code",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetDeclarationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/NotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/declaration/view/{declarationCode}": {
             "get": {
                 "security": [
