@@ -103,10 +103,10 @@ class DeclarationController extends Controller
         /**
          * User details
          */
-        $declaration->name = $request->get('name');
-        $declaration->surname = $request->get('surname');
-        $declaration->email = $request->get('email');
-        $declaration->cnp = $request->get('cnp');
+        $declaration->name = strip_tags($request->get('name'));
+        $declaration->surname = strip_tags($request->get('surname'));
+        $declaration->email = strip_tags($request->get('email'));
+        $declaration->cnp = strip_tags($request->get('cnp'));
         $declaration->is_romanian = (bool)$request->get('is_romanian');
         $declaration->sex = $declaration->is_romanian ? $this->getSexFromCnp($request->get('cnp')) : null;
         $declaration->birth_date = $declaration->is_romanian ? $this->getBirthDateFromCnp($request->get('cnp')) : new Carbon($request->get('birth_date'));
@@ -130,18 +130,18 @@ class DeclarationController extends Controller
         /**
          * Document details
          */
-        $declaration->document_type = $request->get('document_type');
-        $declaration->document_series = $request->get('document_series');
-        $declaration->document_number = $request->get('document_number');
+        $declaration->document_type = strip_tags($request->get('document_type'));
+        $declaration->document_series = strip_tags($request->get('document_series'));
+        $declaration->document_number = strip_tags($request->get('document_number'));
 
         /**
          * Travel details
          */
-        $declaration->travelling_from_country_code = $request->get('travelling_from_country_code');
-        $declaration->travelling_from_city = $request->get('travelling_from_city');
+        $declaration->travelling_from_country_code = strip_tags($request->get('travelling_from_country_code'));
+        $declaration->travelling_from_city = strip_tags($request->get('travelling_from_city'));
         $declaration->travelling_from_date = $request->has('travelling_from_date') ? new Carbon($request->get('travelling_from_date')) : null;
         $declaration->home_country_return_date = Carbon::now();
-        $declaration->travel_route = $request->get('travel_route', null);
+        $declaration->travel_route = strip_tags($request->get('travel_route', null));
 
         /**
          * Questions answers
@@ -153,7 +153,7 @@ class DeclarationController extends Controller
         /**
          * Vehicle details
          */
-        $declaration->vehicle_type = $request->get('vehicle_type');
+        $declaration->vehicle_type = strip_tags($request->get('vehicle_type'));
         $declaration->vehicle_registration_no = $request->has('vehicle_registration_no') ? $this->prepareVehicleRegistrationNumber($request->get('vehicle_registration_no')) : null;
 
         $declaration->accept_personal_data = $request->get('accept_personal_data');
@@ -183,11 +183,11 @@ class DeclarationController extends Controller
                 $isolationAddress->declaration_id = $declaration->id;
                 $isolationAddress->county_id = $isolationAddressData['county_id'];
                 $isolationAddress->settlement_id = $isolationAddressData['settlement_id'];
-                $isolationAddress->street = $isolationAddressData['street'];
-                $isolationAddress->number = $isolationAddressData['number'];
-                $isolationAddress->bloc = $isolationAddressData['bloc'];
-                $isolationAddress->entry = $isolationAddressData['entry'];
-                $isolationAddress->apartment = $isolationAddressData['apartment'];
+                $isolationAddress->street = strip_tags($isolationAddressData['street']);
+                $isolationAddress->number = strip_tags($isolationAddressData['number']);
+                $isolationAddress->bloc = strip_tags($isolationAddressData['bloc']);
+                $isolationAddress->entry = strip_tags($isolationAddressData['entry']);
+                $isolationAddress->apartment = strip_tags($isolationAddressData['apartment']);
                 $isolationAddress->save();
             }
         }
@@ -228,7 +228,7 @@ class DeclarationController extends Controller
      */
     private function prepareVehicleRegistrationNumber(string $vehicleRegistrationNumber): string
     {
-        return str_replace([' ', '-'], '', $vehicleRegistrationNumber);
+        return strip_tags(str_replace([' ', '-'], '', $vehicleRegistrationNumber));
     }
 
     /**
