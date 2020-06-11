@@ -797,11 +797,14 @@ class DeclarationController extends Controller
             throw new Exception('Invalid value for parameter: dsp_user_name');
         }
 
-        if (!$request->has('dsp_measure')) {
-            throw new Exception('Missing required parameter: dsp_measure');
-        }
+//        if (!$request->has('dsp_measure')) {
+//            throw new Exception('Missing required parameter: dsp_measure');
+//        }
 
-        if (empty($request->get('dsp_measure')) || strlen($request->get('dsp_measure')) > 255) {
+        if (
+//            empty($request->get('dsp_measure')) ||
+            strlen($request->get('dsp_measure')) > 255
+        ) {
             throw new Exception('Invalid value for parameter: dsp_measure');
         }
     }

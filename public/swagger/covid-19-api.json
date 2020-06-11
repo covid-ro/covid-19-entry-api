@@ -1227,7 +1227,7 @@
                 "dsp_measure": {
                     "type": "string",
                     "example": "Some measure name",
-                    "required": true
+                    "required": false
                 },
                 "is_dsp_before_border": {
                     "type": "boolean",
