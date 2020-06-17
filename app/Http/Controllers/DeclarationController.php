@@ -260,10 +260,27 @@ class DeclarationController extends Controller
         /** @var array $explodedCnp */
         $explodedCnp = str_split($cnp);
 
+        switch ($explodedCnp[0]) {
+            case 1:
+            case 2:
+                $yeasHundred = 19;
+                break;
+            case 3:
+            case 4:
+                $yeasHundred = 18;
+                break;
+            case 5:
+            case 6:
+                $yeasHundred = 20;
+                break;
+            default:
+                $yeasHundred = 19;
+        }
+
         try {
             return Carbon::createFromFormat(
-                'y-m-d',
-                $explodedCnp[1] . $explodedCnp[2] . '-' . $explodedCnp[3] . $explodedCnp[4] . '-' . $explodedCnp[5] . $explodedCnp[6]
+                'Y-m-d',
+                $yeasHundred . $explodedCnp[1] . $explodedCnp[2] . '-' . $explodedCnp[3] . $explodedCnp[4] . '-' . $explodedCnp[5] . $explodedCnp[6]
             );
         } catch (InvalidArgumentException $invalidArgumentException) {
             return null;
