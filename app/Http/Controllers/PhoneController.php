@@ -271,12 +271,12 @@ class PhoneController extends Controller
     {
         $matrix = [];
 
+        $matrix['US'] = 1;
         $matrix['CA'] = 1;
         $matrix['PR'] = 1;
-        $matrix['US'] = 1;
         $matrix['UM'] = 1;
-        $matrix['KZ'] = 7;
         $matrix['RU'] = 7;
+        $matrix['KZ'] = 7;
         $matrix['EG'] = 20;
         $matrix['ZA'] = 27;
         $matrix['GR'] = 30;
@@ -289,14 +289,14 @@ class PhoneController extends Controller
         $matrix['RO'] = 40;
         $matrix['CH'] = 41;
         $matrix['AT'] = 43;
+        $matrix['GB'] = 44;
         $matrix['GG'] = 44;
         $matrix['IM'] = 44;
         $matrix['JE'] = 44;
-        $matrix['GB'] = 44;
         $matrix['DK'] = 45;
         $matrix['SE'] = 46;
-        $matrix['BV'] = 47;
         $matrix['NO'] = 47;
+        $matrix['BV'] = 47;
         $matrix['SJ'] = 47;
         $matrix['PL'] = 48;
         $matrix['DE'] = 49;
