@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38e26238388ea061b406d68adbc9523a",
+    "content-hash": "27942c65384975bf165332539bebc292",
     "packages": [
         {
             "name": "alcea/cnp",
@@ -695,24 +695,25 @@
         },
         {
             "name": "flynsarmy/csv-seeder",
-            "version": "v1.0.7",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flynsarmy/laravel-csv-seeder.git",
-                "reference": "847905569e9921e5d184a630e2d348f929b69401"
+                "reference": "83c37df624b6d8b026de2cc6e4f21d401e10c03d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flynsarmy/laravel-csv-seeder/zipball/847905569e9921e5d184a630e2d348f929b69401",
-                "reference": "847905569e9921e5d184a630e2d348f929b69401",
+                "url": "https://api.github.com/repos/Flynsarmy/laravel-csv-seeder/zipball/83c37df624b6d8b026de2cc6e4f21d401e10c03d",
+                "reference": "83c37df624b6d8b026de2cc6e4f21d401e10c03d",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": ">=4.1.0",
-                "php": ">=5.3.0"
+                "php": ">=7.4"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.0@dev"
+                "orchestra/testbench": "5.*",
+                "squizlabs/php_codesniffer": "3.*"
             },
             "type": "library",
             "autoload": {
@@ -738,7 +739,7 @@
                 "seeding",
                 "seeds"
             ],
-            "time": "2020-03-26T14:29:37+00:00"
+            "time": "2020-05-18T11:07:35+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -6977,7 +6978,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
