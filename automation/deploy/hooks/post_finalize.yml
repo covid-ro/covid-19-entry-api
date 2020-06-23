@@ -28,7 +28,7 @@
 #  shell: cd {{deploy_helper.new_release_path}} && php bin/console doctrine:schema:update --force
 
 - name: Clear the opcache
-  service: name=php7.2-fpm state=restarted
+  service: name=php7.4-fpm state=restarted
   become: true
 
 - name: Test Nginx config before restarting the service
