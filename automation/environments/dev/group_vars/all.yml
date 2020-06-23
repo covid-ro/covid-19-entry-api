@@ -9,7 +9,7 @@ apps:
     dhparam_path: "/etc/ssl/dhparam.pem"
     fastcgi_pass: unix:/var/run/php/php{{ php_version }}-fpm.sock
 
-php_version: 7.4
+php_version: 7.2
 php_composer: true
 php_fpm_daemon: php{{ php_version }}-fpm
 php_packages:
