@@ -6,5 +6,5 @@
   roles:
     - nginx
     - php
-    #- ssl-vault
+    - certbot
     - apps
