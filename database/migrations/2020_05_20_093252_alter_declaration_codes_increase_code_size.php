@@ -14,7 +14,6 @@ class AlterDeclarationCodesIncreaseCodeSize extends Migration
     public function up()
     {
         Schema::table('declaration_codes', function (Blueprint $table) {
-            $table->dropIndex('codes_code_unique');
             $table->string('code', 7)->unique()->index()->change();
         });
     }
@@ -27,7 +26,6 @@ class AlterDeclarationCodesIncreaseCodeSize extends Migration
     public function down()
     {
         Schema::table('declaration_codes', function (Blueprint $table) {
-            $table->dropIndex('declaration_codes_code_unique');
             $table->string('code', 6)->unique()->index()->change();
         });
     }

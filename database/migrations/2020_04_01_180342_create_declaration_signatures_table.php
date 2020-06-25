@@ -20,6 +20,7 @@ class CreateDeclarationSignaturesTable extends Migration
         Schema::create('declaration_signatures', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('declaration_id');
+            $table->longText('image');
             $table->timestamps();
             $table->softDeletes();
 
@@ -27,8 +28,6 @@ class CreateDeclarationSignaturesTable extends Migration
                 ->references('id')
                 ->on('declarations');
         });
-
-        DB::statement("ALTER TABLE declaration_signatures ADD image MEDIUMBLOB AFTER declaration_id");
     }
 
     /**
