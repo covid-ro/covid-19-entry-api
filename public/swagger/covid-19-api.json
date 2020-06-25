@@ -1468,7 +1468,7 @@
                 },
                 "settlement_id": {
                     "type": "integer",
-                    "example": 13714,
+                    "example": 13725,
                     "required": true,
                     "description": "Settlement ID, obtained from /address/settlement/{countyId}"
                 },
