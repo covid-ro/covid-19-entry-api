@@ -31,7 +31,7 @@ class CreateSirutaTable extends Migration
             $table->unsignedBigInteger('FSJ');
             $table->unsignedBigInteger('FS2')->nullable();
             $table->unsignedBigInteger('FS3')->nullable();
-            $table->unsignedBigInteger('FSl');
+            $table->unsignedBigInteger('FSL');
             $table->boolean('FICTIV');
         });
     }

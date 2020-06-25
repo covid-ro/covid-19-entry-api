@@ -9,7 +9,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-pgsql": "*",
+        "ext-mysqli": "*",
         "ext-xml": "*",
         "ext-zip": "*",
         "alcea/cnp": "2.1.6",
