@@ -174,7 +174,7 @@ class PhoneController extends Controller
                 throw new Exception('Missing required parameter: phone_country_prefix');
             }
 
-            if (strlen($request->get('phone_country_prefix')) > 3) {
+            if (strlen($request->get('phone_country_prefix')) > 4) {
                 throw new Exception('Invalid value for parameter: phone_country_prefix');
             }
         }
