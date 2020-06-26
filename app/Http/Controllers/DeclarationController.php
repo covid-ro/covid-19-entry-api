@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use alcea\cnp\Cnp;
 use App\BorderCheckpoint;
 use App\County;
 use App\Declaration;
@@ -17,6 +16,7 @@ use App\Symptom;
 use App\User;
 use Carbon\Carbon;
 use Exception;
+use Filipac\Cnp\Cnp;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -440,7 +440,7 @@ class DeclarationController extends Controller
          */
         if (
             true === $request->get('is_romanian') && // only for Romanians
-            !Cnp::validate($request->get('cnp'))
+            !Cnp::valid($request->get('cnp'))
         ) {
             throw new Exception('Invalid value for parameter: cnp');
         }
