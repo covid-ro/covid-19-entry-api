@@ -395,6 +395,44 @@ class DeclarationController extends Controller
     }
 
     /**
+     * @param $declarationQR
+     * @return JsonResponse
+     */
+    public function getDeclarationForSelfPrint($declarationQR)
+    {
+
+        $declarationVars = explode(' ', $declarationQR);
+        if (count($declarationVars) != 2) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Not Found'
+            ], 404);
+        }
+        $declarationCode = $declarationVars[0];
+        $declarationCnp = $declarationVars[1];
+
+        /** @var Declaration|null $declaration */
+        $declaration = Declaration::join('declaration_codes', 'declaration_codes.id', '=', 'declarations.declarationcode_id')
+            ->where('declaration_codes.code', $declarationCode) // Make sure that the CNP is associated with Declaration Code
+            ->where('declarations.cnp', '=', $declarationCnp) // Make sure that the CNP is associated with Declaration Code
+            ->select('declarations.*')
+            ->first();
+
+        if (empty($declaration)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Not Found'
+            ], 404);
+        }
+
+        $responseData = [];
+        $responseData['status'] = 'success';
+        $responseData['message'] = 'Declaration details';
+        $responseData['declaration'] = $declaration->toArray();
+        return response()->json($responseData);
+    }
+
+    /**
      * @param Request $request
      * @throws Exception
      */
