@@ -401,7 +401,7 @@ class DeclarationController extends Controller
     public function getDeclarationForSelfPrint($declarationQR)
     {
 
-        $declarationVars = explode(' ', $declarationQR);
+        $declarationVars = explode('%20', $declarationQR);
         if (count($declarationVars) != 2) {
             return response()->json([
                 'status' => 'error',
