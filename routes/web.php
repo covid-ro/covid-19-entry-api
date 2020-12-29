@@ -37,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/declaration', 'DeclarationController@createDeclaration');
     Route::get('/declaration', 'DeclarationController@getDeclarationList');
     Route::get('/declaration-web/{declarationCode}', 'DeclarationController@getDeclarationWeb');
-    Route::get('/declaration-self-print/{declarationQR}', 'DeclarationController@getDeclarationForSelfPrint');
     Route::get('/declaration/{declarationCode}/signature', 'DeclarationController@getDeclarationSignature');
     Route::get('/declaration/{declarationCode}', 'DeclarationController@getDeclaration');
     Route::put('/declaration/{declarationCode}/dsp', 'DeclarationController@updateDeclaration');
@@ -50,3 +49,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/address/city/{countyId}', 'SirutaController@getCityList');
     Route::get('/address/settlement/{countyId}', 'SirutaController@getSettlementList');
 });
+
+//this method will not be publicly accesible, rather behind the firewall
+Route::get('/declaration-self-print/{declarationQR}', 'DeclarationController@getDeclarationForSelfPrint');
