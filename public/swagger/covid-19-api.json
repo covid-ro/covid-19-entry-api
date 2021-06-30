@@ -282,6 +282,113 @@
                 }
             }
         },
+        "/email/validate": {
+            "post": {
+                "tags": [
+                    "Email validation"
+                ],
+                "summary": "Validate email address",
+                "operationId": "ValidateEmailAddress",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ValidateEmailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ValidateEmailResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/ConflictResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/email/check": {
+            "post": {
+                "tags": [
+                    "Email validation"
+                ],
+                "summary": "Check email validation code",
+                "operationId": "CheckEmailAddress",
+                "description": "Use either email OR phone_identifier",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CheckEmailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CheckEmailResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequestResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/border/checkpoint": {
             "post": {
                 "tags": [
@@ -1278,6 +1385,71 @@
                 }
             }
         },
+        "ValidateEmailRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "username@domain.com",
+                    "required": true
+                },
+                "phone_identifier": {
+                    "type": "string",
+                    "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+                    "required": false
+                }
+            }
+        },
+        "ValidateEmailResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Code sent via email"
+                }
+            }
+        },
+        "CheckEmailRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "username@domain.com",
+                    "required": false
+                },
+                "phone_identifier": {
+                    "type": "string",
+                    "example": "ae30c823-a6ef-4606-a60d-bf9513a4305a",
+                    "required": false
+                },
+                "phone_validation_code": {
+                    "type": "integer",
+                    "example": 123456,
+                    "required": true
+                }
+            }
+        },
+        "CheckEmailResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Email validated"
+                },
+                "token": {
+                    "type": "string",
+                    "example": "3415d1e8ee3b65e1641326512eef739a"
+                }
+            }
+        },
         "UpdateDeclarationRequest": {
             "type": "object",
             "properties": {
@@ -2109,7 +2281,7 @@
                 },
                 "message": {
                     "type": "string",
-                    "example": "Failed to send SMS to phone"
+                    "example": "Failed to send code"
                 },
                 "details": {
                     "type": "string",

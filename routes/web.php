@@ -29,6 +29,8 @@ if (!in_array(app()->environment(), ['production'])) {
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/phone/validate', 'PhoneController@validatePhone');
     Route::post('/phone/check', 'PhoneController@checkPhone');
+    Route::post('/email/validate', 'EmailController@validateEmail');
+    Route::post('/email/check', 'EmailController@checkEmail');
     Route::post('/border/checkpoint', 'BorderController@createCheckpoint');
     Route::get('/border/checkpoint', 'BorderController@getCheckpointList');
     Route::get('/border/checkpoint/{id}', 'BorderController@getCheckpoint');
