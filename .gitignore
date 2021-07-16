@@ -5,3 +5,9 @@ Homestead.yaml
 .env
 .phpunit.result.cache
 ansible.cfg
+bootstrap/cache/*
+/storage/*.index
+/storage/*.key
+/storage/app/*
+/storage/framework/*
+/storage/logs
