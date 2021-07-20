@@ -21,6 +21,11 @@ class EmailController extends Controller
             throw new Exception('Missing required parameter: email');
         }
 
+        if (!empty($request->get('email')) &&
+            !filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) { // required & valid
+            throw new Exception('Invalid value for parameter: email');
+        }
+
         if ($request->has('phone_identifier')) { // optional
             if (strlen($request->get('phone_identifier')) > 255) {
                 throw new Exception('Invalid value for parameter: phone_identifier');
