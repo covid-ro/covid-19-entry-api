@@ -333,7 +333,7 @@
     </style>
 </head>
 <body class="">
-<span class="preheader">Codul de validare pentru adresa de email.</span>
+<span class="preheader">Email address validation code</span>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
     <tr>
         <td>&nbsp;</td>
@@ -349,10 +349,10 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Bună,</p>
-                                        <p>Mai jos găsești codul de validare adresă de email necesar pentru Covid Safe@Frontieră.</p>
-                                        <p>Cod: <strong>{{ $code }}</strong></p>
-                                        <p>Vă mulțumim!</p>
+                                        <p>Hi,</p>
+                                        <p>Below you can find the code to validate your email address in app Covid Safe@Frontieră.</p>
+                                        <p>Code: <strong>{{ $code }}</strong></p>
+                                        <p>Thank you!</p>
                                     </td>
                                 </tr>
                             </table>
@@ -368,8 +368,8 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <span class="apple-link">Platformă gestionată de Serviciul de Telecomunicații Speciale,
-                                    dezvoltată de Citizen Next cu sprijin din partea Unicredit Bank</span>
+                                <span class="apple-link">Platform managed by Special Telecommunication Service,
+                                    developed by Citizen Next with support from Unicredit Bank</span>
                             </td>
                         </tr>
                     </table>

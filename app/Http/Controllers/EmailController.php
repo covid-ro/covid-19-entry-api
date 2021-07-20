@@ -14,27 +14,6 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
-    /**
-     * @param Request $request
-     * @throws Exception
-     */
-    private function validateEmailRequest(Request $request)
-    {
-        if (empty($request->get('email'))) { // required
-            throw new Exception('Missing required parameter: email');
-        }
-
-        if (!empty($request->get('email')) &&
-            !filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) { // required & valid
-            throw new Exception('Invalid value for parameter: email');
-        }
-
-        if ($request->has('phone_identifier')) { // optional
-            if (strlen($request->get('phone_identifier')) > 255) {
-                throw new Exception('Invalid value for parameter: phone_identifier');
-            }
-        }
-    }
 
     /**
      * @param Request $request
@@ -81,8 +60,8 @@ class EmailController extends Controller
             $emailCode->status = EmailCode::STATUS_ACTIVE;
             $emailCode->save();
 
-// TODO: Make sure SMTP is set
-            Mail::to($request->get('email'))->send(new EmailValidationCode($emailCode->code));
+            $language = $request->get('language') ?? 'ro';
+            Mail::to($request->get('email'))->send(new EmailValidationCode($emailCode->code, $language));
             DB::commit();
         } catch (\Throwable $exception) {
             DB::rollBack();
@@ -90,7 +69,6 @@ class EmailController extends Controller
             $responseData['message'] = $exception->getMessage();
             return response()->json($responseData, 400);
         }
-
 
         $responseData['status'] = 'success';
         $responseData['message'] = 'Code sent to email address.';
@@ -109,5 +87,32 @@ class EmailController extends Controller
         // TODO
 
         return response()->json($responseData);
+    }
+
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    private function validateEmailRequest(Request $request)
+    {
+        if (empty($request->get('email'))) { // required
+            throw new Exception('Missing required parameter: email');
+        }
+
+        if (!empty($request->get('email')) &&
+            !filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) { // required & valid
+            throw new Exception('Invalid value for parameter: email');
+        }
+
+        if ($request->has('phone_identifier')) { // optional
+            if (strlen($request->get('phone_identifier')) > 255) {
+                throw new Exception('Invalid value for parameter: phone_identifier');
+            }
+        }
+
+        if (!empty($request->get('language')) &&
+            !in_array($request->get('language'), ['ro', 'en'])) {
+            throw new Exception('Invalid value for parameter: language');
+        }
     }
 }

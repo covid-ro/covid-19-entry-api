@@ -17,12 +17,18 @@ class EmailValidationCode extends Mailable
     private string $code;
 
     /**
+     * @var string
+     */
+    private string $language;
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($code)
+    public function __construct($code, $language)
     {
+        $this->language = $language;
         $this->code = $code;
     }
 
@@ -33,7 +39,7 @@ class EmailValidationCode extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.ro.email_validation_code')
+        return $this->view("emails.$this->language.email_validation_code")
             ->subject('Codul de validare adresa de email - Covid Safe@Frontiera')
             ->with(['code' => $this->code]);
     }
