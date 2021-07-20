@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\EmailCode;
+use App\Mail\EmailValidationCode;
 use App\Service\CodeGenerator;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
@@ -69,17 +72,28 @@ class EmailController extends Controller
             return response()->json($responseData, 429);
         }
 
-        // TODO: send email
+        try {
+            DB::beginTransaction(); // we should make sure the code is not saved if it can't be sent
+            $emailCode = new EmailCode();
+            $emailCode->code = (new CodeGenerator())->generateSmsCode();
+            $emailCode->email = $request->get('email');
+            $emailCode->phone_identifier = $request->get('phone_identifier', '');
+            $emailCode->status = EmailCode::STATUS_ACTIVE;
+            $emailCode->save();
 
-        $emailCode = new EmailCode();
-        $emailCode->code = (new CodeGenerator())->generateSmsCode();
-        $emailCode->email = $request->get('email');
-        $emailCode->phone_identifier = $request->get('phone_identifier', '');
-        $emailCode->status = EmailCode::STATUS_ACTIVE;
-        $emailCode->save();
+// TODO: Make sure SMTP is set
+            Mail::to($request->get('email'))->send(new EmailValidationCode($emailCode->code));
+            DB::commit();
+        } catch (\Throwable $exception) {
+            DB::rollBack();
+            $responseData['status'] = 'error';
+            $responseData['message'] = $exception->getMessage();
+            return response()->json($responseData, 400);
+        }
+
 
         $responseData['status'] = 'success';
-        $responseData['message'] = 'Code sent to email';
+        $responseData['message'] = 'Code sent to email address.';
 
         return response()->json($responseData);
     }

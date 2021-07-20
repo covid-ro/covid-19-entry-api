@@ -109,6 +109,7 @@ $app->register(App\Providers\StsBorderServiceProvider::class);
 $app->register(App\Providers\EvidentaPopulatieiProvider::class);
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 $app->register(OwenIt\Auditing\AuditingServiceProvider::class);
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 
 
 
@@ -132,5 +133,14 @@ $app->router->group([
 $app->configure('cors');
 
 $app->configure('audit');
+
+$app->configure('mail');
+
+$app->alias('mail.manager', Illuminate\Mail\MailManager::class);
+$app->alias('mail.manager', Illuminate\Contracts\Mail\Factory::class);
+
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 return $app;
