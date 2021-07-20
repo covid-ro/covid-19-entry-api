@@ -33,7 +33,7 @@ class EmailValidationCode extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.email_validation_code')
+        return $this->view('emails.ro.email_validation_code')
             ->subject('Codul de validare adresa de email - Covid Safe@Frontiera')
             ->with(['code' => $this->code]);
     }
